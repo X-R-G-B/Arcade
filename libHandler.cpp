@@ -21,16 +21,26 @@ void libHandler::loadLib(const std::string &lib)
     }
 }
 
-int libHandler::deleteLib()
+void libHandler::deleteLib()
 {
     if (_lib) {
-        return dlclose(_lib);
+        if (dlclose(_lib) < 0) {
+            throw std::runtime_error(dlerror());
+        }
     }
-    return -1;
 }
 
 template<typename FuncType>
-std::function<FuncType> libHandler::loadFunction()
+std::function<FuncType> libHandler::loadFunction(const std::string &function)
 {
-    //dlsym
+    void *func = nullptr;
+
+    if (_lib == nullptr) {
+        throw std::runtime_error("No library loaded");
+    }
+    func = loadFunction(_lib, function.c_str());
+    if (!func) {
+        throw std::runtime_error(dlerror());
+    }
+    return reinterpret_cast<FuncType *>(func);
 }
