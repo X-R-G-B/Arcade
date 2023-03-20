@@ -12,7 +12,7 @@ libHandler::~libHandler() {
     deleteLib();
 }
 
-extern "C" void libHandler::loadLib(const std::string &lib)
+void libHandler::loadLib(const std::string &lib)
 {
     deleteLib();
     _lib = dlopen(lib.c_str(), RTLD_LAZY);
@@ -21,7 +21,7 @@ extern "C" void libHandler::loadLib(const std::string &lib)
     }
 }
 
-extern "C" int libHandler::deleteLib()
+int libHandler::deleteLib()
 {
     if (_lib) {
         return dlclose(_lib);
@@ -30,7 +30,7 @@ extern "C" int libHandler::deleteLib()
 }
 
 template<typename FuncType>
-extern "C" std::function<FuncType> libHandler::loadFunction()
+std::function<FuncType> libHandler::loadFunction()
 {
     //dlsym
 }
