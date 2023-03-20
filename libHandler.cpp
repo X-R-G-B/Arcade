@@ -21,11 +21,12 @@ extern "C" void libHandler::loadLib(const std::string &lib)
     }
 }
 
-extern "C" void libHandler::deleteLib()
+extern "C" int libHandler::deleteLib()
 {
     if (_lib) {
-        dlclose(_lib);
+        return dlclose(_lib);
     }
+    return -1;
 }
 
 template<typename FuncType>

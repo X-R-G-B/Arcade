@@ -7,7 +7,7 @@ class libHandler {
         libHandler(const std::string &);
         ~libHandler();
         void loadLib(const std::string &);
-        void deleteLib();
+        int deleteLib();
         template<typename FuncType>
         std::function<FuncType> loadFunction();
     private:
