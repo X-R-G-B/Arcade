@@ -1,11 +1,16 @@
 #include <string>
+#include <functional>
 
 class libHandler {
     public:
-        loadLib(const std::string &);
+        libHandler();
+        libHandler(const std::string &);
+        ~libHandler();
+        void loadLib(const std::string &);
+        void deleteLib();
+        template<typename FuncType>
+        std::function<FuncType> loadFunction();
     private:
         void *_lib;
         void *loadFunction(void *handle, const char *symbol);
 };
-// ton extern met le dans le cpp
-
