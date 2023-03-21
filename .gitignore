@@ -30,4 +30,5 @@
 *.exe
 *.out
 *.app
+update-archi.sh
 .vscode/
