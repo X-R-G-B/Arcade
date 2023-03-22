@@ -8,16 +8,12 @@
 #include "AMusic.hpp"
 
 Arcade::Graph::AMusic::AMusic()
+    : _Path(""), _Loop(false), _IsPlaying(false), _Volume(0)
 {
 }
 
 Arcade::Graph::AMusic::~AMusic()
 {
-}
-
-const std::string &Arcade::Graph::AMusic::getId() const
-{
-    return (this->_Id);
 }
 
 const std::string &Arcade::Graph::AMusic::getPath() const
