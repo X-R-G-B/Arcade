@@ -1,0 +1,7 @@
+-Isrc/
+-Isrc/Arcade
+-Isrc/Arcade/Core
+-Isrc/Arcade/ECS
+-Isrc/Arcade/Game
+-Isrc/Arcade/Graph
+-std=c++20

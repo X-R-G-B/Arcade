@@ -1,0 +1,43 @@
+name: Publish to Mirror
+
+on: [push, pull_request]
+
+env:
+  MIRROR_URL: git@github.com:EpitechPromo2026/B-OOP-400-TLS-4-1-arcade-xavier.mitault.git
+  BINARY: "arcade"
+
+jobs:
+  compil:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker:latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: make
+      run: |
+        timeout 2m cmake .
+        timeout 2m make
+
+    - name: check binary
+      run: |
+        if [[ ! -f $BINARY ]]; then
+          echo "::error title=Executable not found::$BINARY"
+        fi
+
+  publish:
+    needs: [compil]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url:
+          ${{ env.MIRROR_URL }}
+        ssh_private_key:
+          ${{ secrets.KEY_GIT_PUSH }}

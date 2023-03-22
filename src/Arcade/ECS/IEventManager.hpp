@@ -9,9 +9,9 @@
 
 #include <memory>
 #include <optional>
-#include <queue>
 #include <string>
 #include <tuple>
+#include <vector>
 #include "ArcadeStruct.hpp"
 #include "IComponent.hpp"
 
@@ -94,7 +94,11 @@ namespace Arcade {
          * "WINDOW_MINIMIZE"
          *
          * "GAME_END" Is the event create by game system to tell core to quit
-         * game
+         * game and go main menu
+         *
+         * "QUIT" Is the event create by game or main menu to tell core to quit
+         * program
+         *
          */
         class IEventManager {
             public:
@@ -113,11 +117,14 @@ namespace Arcade {
                  *
                  * @return A pair of
                  * bool (True if the event was trigered, False if the event was
-                 * not trigered) and std::optional<std::shared_ptr<IComponent>>
-                 * (The parameter passed as parameter to `addEvent` method)
+                 * not trigered) and
+                 * std::vector<std::optional<std::shared_ptr<IComponent>>> (list
+                 * of the parameter passed as parameter to `addEvent` method)
+                 * Why a vector of optional? Because event of same type can be
+                 * trigered more than one time in one frame
                  */
                 virtual std::pair<bool,
-                std::optional<std::shared_ptr<IComponent>>>
+                std::vector<std::optional<std::shared_ptr<IComponent>>>>
                 isEventTriggered(const std::string &event) const = 0;
                 /**
                  * @brief Add an event to list of trigered events
