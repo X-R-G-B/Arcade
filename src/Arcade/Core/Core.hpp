@@ -20,6 +20,7 @@ namespace Arcade {
             public:
                 Core();
                 void loadGraphicLibFromPath(const std::string &path);
+                void update();
 
                 const std::string libFolderPath = "./lib";
                 const std::string libPathStart = "./lib/arcade_";

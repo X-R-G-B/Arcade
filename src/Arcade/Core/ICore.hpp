@@ -27,6 +27,7 @@ namespace Arcade {
                 virtual ~ICore() = default;
 
                 void loadGraphicLibFromPath(const std::string &path);
+                void update();
         };
     } // namespace Core
 } // namespace Arcade

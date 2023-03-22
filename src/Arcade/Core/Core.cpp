@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <stdexcept>
 #include "Core.hpp"
+#include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 
@@ -70,4 +71,11 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     }
     //_displayModule.changeGraphicLib(path.substr(start + 7, end))
     //TODO uncomment when DisplayModule attribute is emplemented
+}
+
+void Arcade::Core::Core::update()
+{
+    std::unique_ptr<Arcade::ECS::IEventManager> eventManager = std::make_unique<Arcade::ECS::IEventManager>();
+
+    for (eventManager.isEventTri)
 }
