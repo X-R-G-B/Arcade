@@ -30,18 +30,17 @@ void libHandler::deleteLib()
     }
 }
 
-template<typename FuncType>
-std::function<FuncType> libHandler::loadFunction(const std::string &function)
+template<typename resType>
+resType libHandler::loadFunction(const std::string &function)
 {
-    std::function<FuncType> *func = FuncType;
-    void *loadedFunction = NULL;
+    resType (*func)() = NULL;
 
     if (_lib == nullptr) {
         throw std::runtime_error("No library loaded");
     }
-    loadedFunction = dlsym(_lib, function);
+    func = dlsym(_lib, function.c_str());
     if (!func) {
-        throw std::runtime_error(dlerror());
+        throw std::invalid_argument("A library in lib/ don't respect entry points doc");
     }
-    return reinterpret_cast<func>(loadedFunction);
+    return func();
 }

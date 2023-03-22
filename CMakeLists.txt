@@ -7,7 +7,7 @@ project(
 )
 
 add_executable(arcade)
-add_subdirectory(src/Arcade)
+add_subdirectory(src)
 
 include(ExternalProject)
 ##############################################################################

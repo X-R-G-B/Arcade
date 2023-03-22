@@ -8,8 +8,8 @@ class libHandler {
         ~libHandler();
         void loadLib(const std::string &);
         void deleteLib();
-        template<typename FuncType>
-        std::function<FuncType> loadFunction(const std::string &function);
+        template<typename resType>
+        resType loadFunction(const std::string &function);
     private:
         void *_lib;
 };
