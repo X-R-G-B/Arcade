@@ -15,10 +15,14 @@ include(ExternalProject)
 ExternalProject_Add(
     GameLibs
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/GameLibs/"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
 ##############################################################################
 # Graphics .so libs
 ExternalProject_Add(
     GraphicLibs
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/GraphicLibs/"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
