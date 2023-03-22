@@ -7,6 +7,7 @@ project(
 )
 
 add_executable(arcade)
+set_property(TARGET arcade PROPERTY CXX_STANDARD 20)
 add_subdirectory(src)
 
 include(ExternalProject)

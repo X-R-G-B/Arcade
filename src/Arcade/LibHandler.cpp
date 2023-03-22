@@ -1,18 +1,18 @@
 #include <dlfcn.h>
 #include <stdexcept>
-#include "libHandler.hpp"
+#include "LibHandler.hpp"
 
-libHandler::libHandler() : _lib(0) {}
+LibHandler::LibHandler() : _lib(0) {}
 
-libHandler::libHandler(const std::string &lib) : _lib(0) {
+LibHandler::LibHandler(const std::string &lib) : _lib(0) {
     loadLib(lib);
 }
 
-libHandler::~libHandler() {
+LibHandler::~LibHandler() {
     deleteLib();
 }
 
-void libHandler::loadLib(const std::string &lib)
+void LibHandler::loadLib(const std::string &lib)
 {
     deleteLib();
     _lib = dlopen(lib.c_str(), RTLD_LAZY);
@@ -21,7 +21,7 @@ void libHandler::loadLib(const std::string &lib)
     }
 }
 
-void libHandler::deleteLib()
+void LibHandler::deleteLib()
 {
     if (_lib) {
         if (dlclose(_lib) < 0) {
@@ -31,7 +31,7 @@ void libHandler::deleteLib()
 }
 
 template<typename resType>
-resType libHandler::loadFunction(const std::string &function)
+resType LibHandler::loadFunction(const std::string &function)
 {
     resType (*func)() = NULL;
 

@@ -12,7 +12,7 @@
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "Api.hpp"
-#include "libHandler.hpp"
+#include "LibHandler.hpp"
 
 namespace Arcade {
     namespace Core {
@@ -31,7 +31,7 @@ namespace Arcade {
                 //TODO DisplayModule concrete class
 
                 void getSharedLibsNames();
-                void addNameToList(LibType type, libHandler &libHandler);
+                void addNameToList(LibType type, LibHandler &LibHandler);
         };
     }
 }

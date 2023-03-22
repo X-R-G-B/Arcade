@@ -1,11 +1,11 @@
 #include <string>
 #include <functional>
 
-class libHandler {
+class LibHandler {
     public:
-        libHandler();
-        libHandler(const std::string &);
-        ~libHandler();
+        LibHandler();
+        LibHandler(const std::string &);
+        ~LibHandler();
         void loadLib(const std::string &);
         void deleteLib();
         template<typename resType>
