@@ -20,7 +20,8 @@ void launchCore(int ac, char **av)
         core.loadGraphicLibFromPath(*str);
         delete str;
     }
-    core.update();
+    //core.update();
+    //TODO uncomment when update is emplemented
 }
 
 int main(int ac, char **av)

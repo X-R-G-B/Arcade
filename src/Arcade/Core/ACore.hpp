@@ -19,7 +19,7 @@ namespace Arcade {
         class ACore : public ICore {
             public:
                 ACore();
-                loadGraphicLibFromPath(const std::string &path);
+                void loadGraphicLibFromPath(const std::string &path);
 
                 const std::string libFolderPath = "./lib";
                 const std::string libPathStart = "./lib/arcade_";

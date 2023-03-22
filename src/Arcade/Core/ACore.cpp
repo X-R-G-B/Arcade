@@ -5,8 +5,10 @@
 ** Core Abstract
 */
 
+#include <iostream>
 #include <functional>
 #include <filesystem>
+#include <stdexcept>
 #include "ACore.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
@@ -14,6 +16,8 @@
 Arcade::Core::ACore::ACore()
 {
     getSharedLibsNames();
+    std::cout << _gamesNames.front() << std::endl;
+    std::cout << _graphicLibsNames.front() << std::endl;
     //TODO call GameModule constructor
     //TODO call DisplayModule constructor
 }
@@ -39,8 +43,7 @@ void Arcade::Core::ACore::getSharedLibsNames()
     for (const auto &entry : std::filesystem::directory_iterator(libFolderPath)) {
         pos = entry.path().find(".so");
         if (pos == std::string::npos || pos + 3 != entry.path().length()) {
-            //TODO wrong file in lib/ folder exception
-            throw std::exception;
+            throw std::invalid_argument("File is not a shared library: " + entry.path());
         }
         libHandler.loadLib(entry.path());
         _getType = libHandler.loadFunction<LibType()>("getType");
@@ -48,7 +51,7 @@ void Arcade::Core::ACore::getSharedLibsNames()
     }
 }
 
-Arcade::Core::ACore::loadGraphicLibFromPath(const std::string &path)
+void Arcade::Core::ACore::loadGraphicLibFromPath(const std::string &path)
 {
     libHandler libHandler;
     std::size_t start = path.find("arcade_");
@@ -56,14 +59,13 @@ Arcade::Core::ACore::loadGraphicLibFromPath(const std::string &path)
     std::function<LibType()> _getType;
 
     if (start == std::string::npos || end == std::string::npos) {
-        //TODO wrong argument exception
-        throw std::exception;
+        throw std::invalid_argument("Invalid path");
     }
     libHandler.loadLib(path);
     _getType = libHandler.loadFunction<LibType()>("getType");
     if (_getType() == LibType::GAME) {
-        //TODO wrong argument exception
-        throw std::exception;
+        throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
-    _displayModule.changeGraphicLib(path.substr(start + 7, end))
+    //_displayModule.changeGraphicLib(path.substr(start + 7, end))
+    //TODO uncomment when DisplayModule attribute is emplemented
 }
