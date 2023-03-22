@@ -12,26 +12,26 @@
 namespace Arcade {
     namespace ECS {
         /**
-         * @brief The AEntity interface
+         * @brief The Entity interface
          */
-        class AEntity : public Arcade::ECS::IEntity {
+        class Entity : public Arcade::ECS::IEntity {
             public:
-                AEntity(const std::string &id);
-                virtual ~AEntity() = default;
+                Entity(const std::string &id);
+                virtual ~Entity() = default;
                 /**
                  * @brief Get the entity id
                  *
                  * @return The entity id
                  */
-                std::string getId() const override;
+                std::string getId() const final;
                 /**
                  * @brief Get all components
                  *
                  * @return The list of components
                  */
                 const std::map<CompType,
-                std::vector<std::unique_ptr<IComponent>>> &
-                getComponents() override;
+                std::vector<std::shared_ptr<IComponent>>> &
+                getComponents() final;
                 /**
                  * @brief Get all components of type `compType`
                  *
@@ -39,31 +39,31 @@ namespace Arcade {
                  *
                  * @return The list of components filtered
                  */
-                const std::vector<std::unique_ptr<IComponent>> &getComponents(
-                CompType type) override;
+                const std::vector<std::shared_ptr<IComponent>> &getComponents(
+                CompType type) final;
                 /**
                  * @brief Add a component
                  *
                  * @param component The component to add
                  */
                 void addComponent(
-                std::unique_ptr<IComponent> component) override;
+                std::shared_ptr<IComponent> component) final;
                 /**
                  * @brief Remove a component
                  *
                  * @param std::string The component id to remove
                  */
-                void removeComponent(const std::string &id) override;
+                void removeComponent(const std::string &id) final;
                 /**
                  * @brief Remove all components of type `CompType`
                  *
                  * @param type The type of component to remove
                  */
-                void removeComponents(CompType type) override;
+                void removeComponents(CompType type) final;
 
             private:
                 std::string _id;
-                std::map<CompType, std::vector<std::unique_ptr<IComponent>>>
+                std::map<CompType, std::vector<std::shared_ptr<IComponent>>>
                 _components;
         };
     } // namespace ECS
