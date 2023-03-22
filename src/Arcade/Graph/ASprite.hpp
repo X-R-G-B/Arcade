@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ISprite.hpp"
+#include "AComponent.hpp"
 
 namespace Arcade {
     namespace Graph {
