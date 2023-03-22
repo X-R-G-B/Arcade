@@ -8,7 +8,6 @@
 #include "ASprite.hpp"
 
 Arcade::Graph::ASprite::ASprite(std::string &id)
-    : Arcade::ECS::AComponent::AComponent(Arcade::ECS::CompType::SPRITE, id)
 {
 }
 
