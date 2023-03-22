@@ -12,5 +12,4 @@ class libHandler {
         std::function<FuncType> loadFunction(const std::string &function);
     private:
         void *_lib;
-        void *loadFunction(void *handle, const char *symbol);
 };

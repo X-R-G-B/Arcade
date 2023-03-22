@@ -33,14 +33,15 @@ void libHandler::deleteLib()
 template<typename FuncType>
 std::function<FuncType> libHandler::loadFunction(const std::string &function)
 {
-    void *func = nullptr;
+    std::function<FuncType> *func = FuncType;
+    void *loadedFunction = NULL;
 
     if (_lib == nullptr) {
         throw std::runtime_error("No library loaded");
     }
-    func = loadFunction(_lib, function.c_str());
+    loadedFunction = dlsym(_lib, function);
     if (!func) {
         throw std::runtime_error(dlerror());
     }
-    return reinterpret_cast<FuncType *>(func);
+    return reinterpret_cast<func>(loadedFunction);
 }
