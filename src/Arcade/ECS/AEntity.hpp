@@ -7,19 +7,14 @@
 
 #pragma once
 
-#include <cstddef>
-#include <map>
-#include <memory>
-#include <string>
-#include <vector>
-#include "IComponent.hpp"
+#include "IEntity.hpp"
 
 namespace Arcade {
     namespace ECS {
         /**
          * @brief The AEntity interface
          */
-        class AEntity {
+        class AEntity : public Arcade::ECS::IEntity {
             public:
                 AEntity(const std::string &id);
                 virtual ~AEntity() = default;
