@@ -8,10 +8,11 @@
 #pragma once
 
 #include "IMusic.hpp"
+#include "AComponent.hpp"
 
 namespace Arcade {
     namespace Graph {
-        class AMusic : public IMusic {
+        class AMusic : public IMusic, public Arcade::ECS::AComponent {
             public:
                 AMusic();
                 ~AMusic();
