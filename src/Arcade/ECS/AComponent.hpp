@@ -22,7 +22,7 @@ namespace Arcade {
             MUSIC = 2,
         };
 
-        class AComponent: public Arcade::ECS::IComponent {
+        class AComponent : public Arcade::ECS::IComponent {
             public:
                 AComponent(CompType type, const std::string &id);
                 virtual ~AComponent() = default;
@@ -39,6 +39,7 @@ namespace Arcade {
                  * @return The component id
                  */
                 const std::string &getId();
+
             private:
                 CompType _type;
                 std::string _id;

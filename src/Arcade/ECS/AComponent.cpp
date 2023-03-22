@@ -7,7 +7,8 @@
 
 #include "AComponent.hpp"
 
-Arcade::ECS::AComponent::AComponent(Arcade::ECS::CompType type, const std::string &id)
+Arcade::ECS::AComponent::AComponent(
+Arcade::ECS::CompType type, const std::string &id)
     : _type(type), _id(id)
 {
 }
