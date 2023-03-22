@@ -6,13 +6,8 @@ project(
     LANGUAGES CXX
 )
 
-set(CXX_STANDARD 20)
-
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE debug)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 add_executable(arcade)
-target_link_options(arcade PUBLIC -std=c++20)
+set_property(TARGET arcade PROPERTY CXX_STANDARD 20)
 add_subdirectory(src)
 
 include(ExternalProject)
