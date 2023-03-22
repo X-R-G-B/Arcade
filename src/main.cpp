@@ -7,7 +7,6 @@
 */
 
 #include "Core.hpp"
-#include <fstream>
 #include <exception>
 
 void launchCore(int ac, char **av)
