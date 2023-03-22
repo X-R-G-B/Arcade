@@ -4,7 +4,13 @@ target_include_directories(arcade PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-file(GLOB SOURCES LibHandler.cpp)
+target_sources(arcade PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/LibHandler.cpp"
+)
+
+find_library(LDL dl)
+target_link_libraries(arcade PUBLIC ${LDL})
 
 add_subdirectory(Core)
 add_subdirectory(ECS)

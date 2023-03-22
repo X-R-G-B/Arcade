@@ -25,7 +25,7 @@ Arcade::Core::Core::Core()
 void Arcade::Core::Core::addNameToList(LibType type, LibHandler &LibHandler)
 {
     std::string name;
-    
+ 
     name = LibHandler.loadFunction<std::string>("getName");
     if (type == LibType::GAME) {
         _gamesNames.push_back(name);

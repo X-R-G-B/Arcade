@@ -1,5 +1,7 @@
 #include <string>
+#include <dlfcn.h>
 #include <functional>
+#include <stdexcept>
 
 class LibHandler {
     public:
@@ -8,8 +10,20 @@ class LibHandler {
         ~LibHandler();
         void loadLib(const std::string &);
         void deleteLib();
-        template<typename resType>
-        resType loadFunction(const std::string &function);
+        template<typename resType> resType loadFunction(const std::string &function)
+        {
+            typedef resType (*retType_t)();
+            retType_t func = NULL;
+
+            if (_lib == nullptr) {
+                throw std::runtime_error("No library loaded");
+            }
+            func = (retType_t) dlsym(_lib, function.c_str());
+            if (!func) {
+                throw std::invalid_argument("A library in lib/ don't respect entry points doc");
+            }
+            return func();
+        }
     private:
         void *_lib;
 };
