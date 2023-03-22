@@ -8,6 +8,7 @@
 #pragma once
 
 #include <string>
+#include "IComponent.hpp"
 
 namespace Arcade {
     namespace ECS {
@@ -22,7 +23,7 @@ namespace Arcade {
             MUSIC = 2,
         };
 
-        class AComponent {
+        class AComponent: public Arcade::ECS::IComponent {
             public:
                 AComponent(CompType type, const std::string &id);
                 virtual ~AComponent() = default;
