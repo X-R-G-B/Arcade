@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <string>
 #include "IComponent.hpp"
 
 namespace Arcade {
