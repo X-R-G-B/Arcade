@@ -33,16 +33,17 @@ Arcade::ECS::AEntity::getComponents(Arcade::ECS::CompType type)
 void Arcade::ECS::AEntity::addComponent(
 std::unique_ptr<Arcade::ECS::IComponent> component)
 {
-    if (this->_components.find(component->getType())
-    == this->_components.end()) {
-        this->_components.insert(
-        {component->getType(), {std::move(component)}});
+    Arcade::ECS::CompType compType = component->getType();
+    auto it = _components.find(compType);
+
+    if (it == _components.end()) {
+        _components[compType] = {std::move(component)};
     } else {
-        this->_components[component->getType()].push_back(std::move(component));
+        it->second.push_back(component);
     }
 }
 
-void Arcade::ECS::AEntity::removeComponent(std::string &id)
+void Arcade::ECS::AEntity::removeComponent(const std::string &id)
 {
     for (auto &component : this->_components) {
         std::remove_if(component.second.begin(), component.second.end(),

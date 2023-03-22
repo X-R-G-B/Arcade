@@ -52,7 +52,7 @@ namespace Arcade {
                  *
                  * @param std::string The component id to remove
                  */
-                void removeComponent(std::string &id);
+                void removeComponent(const std::string &id);
                 /**
                  * @brief Remove all components of type `CompType`
                  *
