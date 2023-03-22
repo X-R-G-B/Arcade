@@ -16,15 +16,15 @@ namespace Arcade {
                 AMusic();
                 ~AMusic();
 
-                const std::string &getPath() const override;
-                bool getLoop() const override;
-                bool getIsPlaying() const override;
-                float getVolume() const override;
+                const std::string &getPath() const final;
+                bool getLoop() const final;
+                bool getIsPlaying() const final;
+                float getVolume() const final;
 
-                void setVolume(float volume) override;
-                void setIsPlaying(bool isPlaying) override;
-                void setLoop(bool loop) override;
-                void setPath(const std::string &path) override;
+                void setVolume(float volume) final;
+                void setIsPlaying(bool isPlaying) final;
+                void setLoop(bool loop) final;
+                void setPath(const std::string &path) final;
 
 
             protected:
