@@ -13,12 +13,12 @@ Arcade::ECS::CompType type, const std::string &id)
 {
 }
 
-Arcade::ECS::CompType Arcade::ECS::AComponent::getType()
+Arcade::ECS::CompType Arcade::ECS::AComponent::getType() const
 {
     return _type;
 }
 
-const std::string &Arcade::ECS::AComponent::getId()
+const std::string &Arcade::ECS::AComponent::getId() const
 {
     return _id;
 }

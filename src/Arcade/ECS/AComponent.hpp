@@ -32,13 +32,13 @@ namespace Arcade {
                  *
                  * @return The component type (CompType)
                  */
-                CompType getType();
+                CompType getType() const override;
                 /**
                  * @brief Get the id of the component.
                  *
                  * @return The component id
                  */
-                const std::string &getId();
+                const std::string &getId() const override;
 
             private:
                 CompType _type;
