@@ -75,7 +75,11 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
 
 void Arcade::Core::Core::update()
 {
-    std::unique_ptr<Arcade::ECS::IEventManager> eventManager = std::make_unique<Arcade::ECS::IEventManager>();
+    std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO uncomment when EventManager is implemented
+    Arcade::Game::IScene *current_scene;
 
-    for (eventManager.isEventTri)
+    for (eventManager->isEventTriggered("QUIT").first == false) {
+        //current_scene = _gameModule.getCurrentScene TODO when GameModule is emplemented
+        //current_scene.run TODO when Scene is emplemented
+    }
 }
