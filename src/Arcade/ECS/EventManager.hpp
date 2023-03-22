@@ -22,7 +22,7 @@ namespace Arcade {
                 ~EventManager() = default;
 
                 bool eventsIsEmpty() const override;
-                std::pair<bool, std::vector<std::optional<std::shared_ptr<IComponent>>>>
+                std::pair<bool, std::optional<std::vector<std::optional<std::shared_ptr<IComponent>>>>>
                     isEventTriggered(const std::string &event) const override;
                 void addEvent(const std::string &event,
                     std::optional<std::shared_ptr<IComponent>> component =
