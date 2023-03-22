@@ -8,7 +8,7 @@
 #include <algorithm>
 #include "AEntity.hpp"
 
-Arcade::ECS::AEntity::AEntity(const std::string &id) : _id(id)
+Arcade::ECS::AEntity::AEntity(const std::string &id) : _id(id), _components({})
 {
 }
 

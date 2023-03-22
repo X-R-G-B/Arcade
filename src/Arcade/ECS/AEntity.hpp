@@ -23,7 +23,7 @@ namespace Arcade {
                  *
                  * @return The entity id
                  */
-                std::string getId() const;
+                std::string getId() const override;
                 /**
                  * @brief Get all components
                  *
@@ -31,7 +31,7 @@ namespace Arcade {
                  */
                 const std::map<CompType,
                 std::vector<std::unique_ptr<IComponent>>> &
-                getComponents();
+                getComponents() override;
                 /**
                  * @brief Get all components of type `compType`
                  *
@@ -40,30 +40,31 @@ namespace Arcade {
                  * @return The list of components filtered
                  */
                 const std::vector<std::unique_ptr<IComponent>> &getComponents(
-                CompType type);
+                CompType type) override;
                 /**
                  * @brief Add a component
                  *
                  * @param component The component to add
                  */
-                void addComponent(std::unique_ptr<IComponent> component);
+                void addComponent(
+                std::unique_ptr<IComponent> component) override;
                 /**
                  * @brief Remove a component
                  *
                  * @param std::string The component id to remove
                  */
-                void removeComponent(const std::string &id);
+                void removeComponent(const std::string &id) override;
                 /**
                  * @brief Remove all components of type `CompType`
                  *
                  * @param type The type of component to remove
                  */
-                void removeComponents(CompType type);
+                void removeComponents(CompType type) override;
 
             private:
                 std::string _id;
                 std::map<CompType, std::vector<std::unique_ptr<IComponent>>>
-                _components = {};
+                _components;
         };
     } // namespace ECS
 } // namespace Arcade
