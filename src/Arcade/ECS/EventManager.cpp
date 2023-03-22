@@ -6,6 +6,7 @@
 //
 
 #include "EventManager.hpp"
+#include <optional>
 
 bool Arcade::ECS::EventManager::eventsIsEmpty() const
 {
@@ -13,12 +14,12 @@ bool Arcade::ECS::EventManager::eventsIsEmpty() const
 }
 
 std::pair<bool,
-std::vector<std::optional<std::shared_ptr<Arcade::ECS::IComponent>>>>
+std::optional<std::vector<std::optional<std::shared_ptr<Arcade::ECS::IComponent>>>>>
 Arcade::ECS::EventManager::isEventTriggered(const std::string &event) const
 {
     auto it = _events.find(event);
     if (it == _events.end()) {
-        return std::make_pair(false, std::vector<std::optional<std::shared_ptr<Arcade::ECS::IComponent>>>());
+        return std::make_pair(false, std::nullopt);
     }
     return std::make_pair(true, it->second);
 }
