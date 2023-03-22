@@ -40,11 +40,11 @@ int main()
         std::cout << "Event manager has not event1. WTF" << std::endl;
         return 1;
     }
-    if (evt1.second.size() == 0) {
+    if (evt1.second.has_value() == false || evt1.second.value().size() == 0) {
         std::cout << "That is not right, there is one std::nullopt in the vector" << std::endl;
         return 1;
     }
-    if (evt1.second[0] != std::nullopt) {
+    if (evt1.second.value()[0] != std::nullopt) {
         std::cout << "That is not right, there is one std::nullopt in the vector" << std::endl;
         return 1;
     }
@@ -59,12 +59,12 @@ int main()
         std::cout << "Event manager has not event2. WTF" << std::endl;
         return 1;
     }
-    if (evt2.second.size() == 0) {
+    if (evt2.second.value().size() == 0) {
         std::cout << "That is not right, there is one parameter in the vector" << std::endl;
         return 1;
     }
-    if ((*evt2.second[0])->getType() != Arcade::ECS::CompType::SOMETHING ||
-            (*evt2.second[0])->getId() != "Comp") {
+    if ((*evt2.second.value()[0])->getType() != Arcade::ECS::CompType::SOMETHING ||
+            (*evt2.second.value()[0])->getId() != "Comp") {
         std::cout << "That is not right, the parameter is not the good one" << std::endl;
         return 1;
     }
@@ -75,12 +75,12 @@ int main()
         std::cout << "Event manager has not event2. WTF" << std::endl;
         return 1;
     }
-    if (evt2.second.size() != 2) {
+    if (evt2.second.value().size() != 2) {
         std::cout << "That is not right, there is two parameter in the vector" << std::endl;
         return 1;
     }
-    if ((evt2.second[0].has_value() == true && evt2.second[1].has_value() == false) ||
-        (evt2.second[0].has_value() == false && evt2.second[1].has_value() == true)) {
+    if ((evt2.second.value()[0].has_value() == true && evt2.second.value()[1].has_value() == false) ||
+        (evt2.second.value()[0].has_value() == false && evt2.second.value()[1].has_value() == true)) {
     } else {
         return 1;
     }
