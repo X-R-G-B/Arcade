@@ -5,7 +5,8 @@ project(
     DESCRIPTION "Snake game lib"
     LANGUAGES CXX
 )
+
 add_library(arcade_snake SHARED)
 target_sources(arcade_snake PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Snake.cpp"
 )

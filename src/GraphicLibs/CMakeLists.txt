@@ -8,14 +8,20 @@ project(
 
 include(ExternalProject)
 ExternalProject_Add(
-    SDL,
+    SDL
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SDL"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
 ExternalProject_Add(
-    SFML,
+    SFML
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
 ExternalProject_Add(
-    ncurses,
+    ncurses
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ncurses"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
