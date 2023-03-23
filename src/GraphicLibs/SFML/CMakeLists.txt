@@ -5,7 +5,8 @@ project(
     DESCRIPTION "SFML graphical lib"
     LANGUAGES CXX
 )
+
 add_library(arcade_sfml SHARED)
-target_sources(arcade_sfml PRIVATE
+target_sources(arcade_sfml PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/SFML.cpp"
 )

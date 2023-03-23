@@ -6,13 +6,16 @@ project(
     LANGUAGES CXX
 )
 
-
 include(ExternalProject)
 ExternalProject_Add(
     Nibleur
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Nibleur"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )
 ExternalProject_Add(
     Snake
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Snake"
+    BUILD_IN_SOURCE 1
+    INSTALL_COMMAND ""
 )

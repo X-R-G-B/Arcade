@@ -7,16 +7,17 @@
 */
 
 #include <exception>
+#include <iostream>
 #include "Core.hpp"
 
 void launchCore(int ac, char **av)
 {
-    std::unique_ptr<Arcade::Core::ICore> core = std::make_unique<Arcade::Core::Core>();
-    std::unique_ptr<std::string> str;
+    std::unique_ptr<Arcade::Core::Core> core = std::make_unique<Arcade::Core::Core>();
+    std::string str;
 
     if (ac == 2) {
-        str = std::make_unique<std::string>(av[1]);
-        core->loadGraphicLibFromPath(*(str.get()));
+        str = av[1];
+        core->loadGraphicLibFromPath(str);
     }
     //core.update();
     //TODO uncomment when update is emplemented
@@ -30,6 +31,7 @@ int main(int ac, char **av)
     try {
         launchCore(ac, av);
     } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
         return 84;
     }
 }

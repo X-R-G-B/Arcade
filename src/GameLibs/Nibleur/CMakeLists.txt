@@ -5,7 +5,8 @@ project(
     DESCRIPTION "Nibleur game lib"
     LANGUAGES CXX
 )
+
 add_library(arcade_nibbler SHARED)
-target_sources(arcade_nibbler PRIVATE
+target_sources(arcade_nibbler PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/Nibleur.cpp"
 )
