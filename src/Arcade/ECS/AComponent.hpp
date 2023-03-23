@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Archi Arcade Promo 2026 Toulouse
+** Arcade Promo 2026 Toulouse
 ** File description:
 ** Components that will be added to entity
 */
