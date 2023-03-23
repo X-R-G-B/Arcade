@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** AMusic
+** Music
 */
 
 #pragma once
@@ -12,10 +12,10 @@
 
 namespace Arcade {
     namespace Graph {
-        class AMusic : public IMusic, public Arcade::ECS::AComponent {
+        class Music : public IMusic, public Arcade::ECS::AComponent {
             public:
-                AMusic();
-                ~AMusic();
+                Music(const std::string &id);
+                ~Music();
 
                 const std::string &getPath() const final;
                 bool getLoop() const final;
