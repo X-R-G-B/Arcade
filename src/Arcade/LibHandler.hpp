@@ -10,7 +10,7 @@ class LibHandler {
         ~LibHandler();
         void loadLib(const std::string &);
         void deleteLib();
-        template<typename resType> resType loadMainFunction(const std::string &function, resType param)
+        template<typename resType> resType loadMainFunction(const std::string &function, resType arg)
         {
             typedef resType (*retType_t)(resType);
             retType_t func = NULL;
@@ -18,15 +18,15 @@ class LibHandler {
             if (_lib == nullptr) {
                 throw std::runtime_error("No library loaded");
             }
-            func = (retType) dlsym(_lib, function.c_str());
+            func = (retType_t) dlsym(_lib, function.c_str());
             if (!func) {
                 throw std::invalid_argument("A library in lib/ don't respect entry points doc");
             }
-            return func();
+            return func(arg);
         }
         template<typename resType> resType loadFunction(const std::string &function)
         {
-            typedef retType_t (*retType_t)();
+            typedef resType (*retType_t)();
             retType_t func = NULL;
 
             if (_lib == nullptr) {
