@@ -61,12 +61,12 @@ void Arcade::Graph::Text::setText(const std::string &text)
     this->_Text = text;
 }
 
-void Arcade::Graph::Text::setBackgroundColor(Arcade::Graph::Color &color) 
+void Arcade::Graph::Text::setBackgroundColor(const Arcade::Graph::Color &color) 
 {
     this->_BackgroundColor = color;
 }
 
-void Arcade::Graph::Text::setForegroundColor(Arcade::Graph::Color &color) 
+void Arcade::Graph::Text::setForegroundColor(const Arcade::Graph::Color &color) 
 {
     this->_ForegroundColor = color;
 }
@@ -76,7 +76,7 @@ void Arcade::Graph::Text::setPoliceSize(float size)
     this->_PoliceSize = size;
 }
 
-void Arcade::Graph::Text::setPos(Arcade::Vector2f &pos) 
+void Arcade::Graph::Text::setPos(const Arcade::Vector2f &pos) 
 {
     this->_Pos = pos;
 }

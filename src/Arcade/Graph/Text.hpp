@@ -28,10 +28,10 @@ namespace Arcade {
 
                 void setFontPath(const std::string &path) final;
                 void setText(const std::string &text) final;
-                void setBackgroundColor(Arcade::Graph::Color &color) final;
-                void setForegroundColor(Arcade::Graph::Color &color) final;
+                void setBackgroundColor(const Arcade::Graph::Color &color) final;
+                void setForegroundColor(const Arcade::Graph::Color &color) final;
                 void setPoliceSize(float size) final;
-                void setPos(Arcade::Vector2f &pos) final;
+                void setPos(const Arcade::Vector2f &pos) final;
 
             protected:
             private:
