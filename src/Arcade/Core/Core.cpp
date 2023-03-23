@@ -9,6 +9,7 @@
 #include <functional>
 #include <filesystem>
 #include <stdexcept>
+#include <chrono>
 #include "Core.hpp"
 #include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
@@ -81,10 +82,12 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
 void Arcade::Core::Core::update()
 {
     std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO uncomment when EventManager is implemented
-    Arcade::Game::IScene *current_scene;
+    std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
+    std::chrono::duration<double> delta(0);
 
-    for (eventManager->isEventTriggered("QUIT").first == false) {
-        //current_scene = _gameModule.getCurrentScene TODO when GameModule is emplemented
-        //current_scene.run TODO when Scene is emplemented
-    }
+    //for (eventManager->isEventTriggered("QUIT").first == false) { TODO uncomment when EventManager is emplemented
+        delta = start - std::chrono::steady_clock::now();
+        //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO uncomment when All is emplemented
+        start = std::chrono::steady_clock::now();
+    //}
 }

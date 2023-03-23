@@ -19,8 +19,7 @@ void launchCore(int ac, char **av)
         str = av[1];
         core->loadGraphicLibFromPath(str);
     }
-    //core.update();
-    //TODO uncomment when update is emplemented
+    core->update();
 }
 
 int main(int ac, char **av)
