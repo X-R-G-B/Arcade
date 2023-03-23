@@ -1,3 +1,12 @@
+/*
+** EPITECH PROJECT, 2023
+** Arcade
+** File description:
+** LibHandler class
+*/
+
+#pragma once
+
 #include <string>
 #include <dlfcn.h>
 #include <functional>

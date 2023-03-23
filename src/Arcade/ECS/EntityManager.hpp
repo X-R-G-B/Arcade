@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Archi Arcade Promo 2026 Toulouse
+** Arcade Promo 2026 Toulouse
 ** File description:
 ** Manager for entity that add some usefull abstraction
 */
@@ -9,16 +9,17 @@
 
 #include <memory>
 #include <string>
-#include "IEntity.hpp"
+#include "IEntityManager.hpp"
 
 namespace Arcade {
     namespace ECS {
         /**
          * @brief Manage the creation of entities and their access
          */
-        class IEntityManager {
+        class EntityManager : public IEntityManager {
             public:
-                virtual ~IEntityManager() = default;
+                EntityManager() = default;
+                ~EntityManager() = default;
                 /**
                  * @brief Add an entity to the manager
                  *
@@ -26,14 +27,14 @@ namespace Arcade {
                  *
                  * @return The entity created
                  */
-                virtual IEntity &createEntity(const std::string &id) = 0;
+                IEntity &createEntity(const std::string &id) final;
                 /**
                  * @brief Get all entities created by this manager
                  *
                  * @return A vector of all entities created by this manager
                  */
-                virtual const std::vector<std::shared_ptr<IEntity>> &
-                getEntities() const = 0;
+                const std::vector<std::shared_ptr<IEntity>> &
+                getEntities() const final;
                 /**
                  * @brief Get all entities created by this manager that have at
                  * least one component of type CompType
@@ -42,18 +43,21 @@ namespace Arcade {
                  *
                  * @return The vector
                  */
-                virtual std::unique_ptr<std::vector<std::shared_ptr<IEntity>>>
-                getEntitiesByComponentType(CompType comp) const = 0;
+                std::unique_ptr<std::vector<std::shared_ptr<IEntity>>>
+                getEntitiesByComponentType(CompType comp) const final;
                 /**
                  * @brief Remove an entity from the manager
                  *
                  * @param id The entity id to remove
                  */
-                virtual void removeEntity(const std::string &id) = 0;
+                void removeEntity(const std::string &id) final;
                 /**
                  * @brief Remove all entities from the manager
                  */
-                virtual void removeAllEntities() = 0;
+                void removeAllEntities() final;
+
+            private:
+                std::vector<std::shared_ptr<IEntity>> _entities;
         };
     } // namespace ECS
 } // namespace Arcade
