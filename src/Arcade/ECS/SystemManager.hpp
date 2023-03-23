@@ -21,7 +21,7 @@ namespace Arcade {
         class SystemManager : public ISystemManager {
             public:
                 SystemManager() = default;
-                virtual ~SystemManager() = default;
+                ~SystemManager() = default;
                 /**
                  * @brief Add a system to the system manager
                  *
