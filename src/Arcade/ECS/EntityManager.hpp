@@ -27,14 +27,14 @@ namespace Arcade {
                  *
                  * @return The entity created
                  */
-                IEntity &createEntity(const std::string &id) override;
+                IEntity &createEntity(const std::string &id) final;
                 /**
                  * @brief Get all entities created by this manager
                  *
                  * @return A vector of all entities created by this manager
                  */
                 const std::vector<std::shared_ptr<IEntity>> &
-                getEntities() const override;
+                getEntities() const final;
                 /**
                  * @brief Get all entities created by this manager that have at
                  * least one component of type CompType
@@ -44,17 +44,17 @@ namespace Arcade {
                  * @return The vector
                  */
                 std::unique_ptr<std::vector<std::shared_ptr<IEntity>>>
-                getEntitiesByComponentType(CompType comp) const override;
+                getEntitiesByComponentType(CompType comp) const final;
                 /**
                  * @brief Remove an entity from the manager
                  *
                  * @param id The entity id to remove
                  */
-                void removeEntity(const std::string &id) override;
+                void removeEntity(const std::string &id) final;
                 /**
                  * @brief Remove all entities from the manager
                  */
-                void removeAllEntities() override;
+                void removeAllEntities() final;
 
             private:
                 std::vector<std::shared_ptr<IEntity>> _entities;
