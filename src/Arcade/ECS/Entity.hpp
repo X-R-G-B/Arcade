@@ -7,35 +7,31 @@
 
 #pragma once
 
-#include <cstddef>
-#include <map>
-#include <memory>
-#include <string>
-#include <vector>
-#include "IComponent.hpp"
+#include "IEntity.hpp"
 
 namespace Arcade {
     namespace ECS {
         /**
-         * @brief The IEntity interface
+         * @brief The Entity interface
          */
-        class IEntity {
+        class Entity : public Arcade::ECS::IEntity {
             public:
-                virtual ~IEntity() = default;
+                Entity(const std::string &id);
+                virtual ~Entity() = default;
                 /**
                  * @brief Get the entity id
                  *
                  * @return The entity id
                  */
-                virtual std::string getId() const = 0;
+                std::string getId() const final;
                 /**
                  * @brief Get all components
                  *
                  * @return The list of components
                  */
-                virtual const std::map<CompType,
+                const std::map<CompType,
                 std::vector<std::shared_ptr<IComponent>>> &
-                getComponents() const = 0;
+                getComponents() const final;
                 /**
                  * @brief Get all components of type `compType`
                  *
@@ -43,27 +39,32 @@ namespace Arcade {
                  *
                  * @return The list of components filtered
                  */
-                virtual const std::vector<std::shared_ptr<IComponent>> &
-                getComponents(CompType type) const = 0;
+                const std::vector<std::shared_ptr<IComponent>> &getComponents(
+                CompType type) const final;
                 /**
                  * @brief Add a component
                  *
                  * @param component The component to add
                  */
-                virtual void addComponent(
-                std::shared_ptr<IComponent> component) = 0;
+                void addComponent(
+                std::shared_ptr<IComponent> component) final;
                 /**
                  * @brief Remove a component
                  *
                  * @param std::string The component id to remove
                  */
-                virtual void removeComponent(const std::string &id) = 0;
+                void removeComponent(const std::string &id) final;
                 /**
                  * @brief Remove all components of type `CompType`
                  *
                  * @param type The type of component to remove
                  */
-                virtual void removeComponents(CompType type) = 0;
+                void removeComponents(CompType type) final;
+
+            private:
+                std::string _id;
+                std::map<CompType, std::vector<std::shared_ptr<IComponent>>>
+                _components;
         };
     } // namespace ECS
 } // namespace Arcade
