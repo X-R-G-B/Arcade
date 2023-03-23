@@ -13,18 +13,19 @@ namespace Arcade {
     namespace Game {
         class AScene : public IScene {
             public:
-                AScene();
+                AScene(std::shared_ptr<ECS::ISystemManager> sysManager,
+                    std::shared_ptr<ECS::IEntityManager> entManager);
                 ~AScene() = default;
 
                 bool init() override;
-                void close() override;
+                void close() override {}
 
-                ECS::IEntityManager &getEntityManager() final;
-                ECS::ISystemManager &getSystemManager() final;
+                const std::shared_ptr<ECS::IEntityManager> &getEntityManager() final;
+                const std::shared_ptr<ECS::ISystemManager> &getSystemManager() final;
             protected:
             private:
-                ECS::ISystemManager &_SystemManager;
-                ECS::IEntityManager &_EntityManager;
+                std::shared_ptr<ECS::ISystemManager> _SystemManager;
+                std::shared_ptr<ECS::IEntityManager> _EntityManager;
         };
     }
 }

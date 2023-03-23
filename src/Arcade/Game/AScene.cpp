@@ -7,16 +7,24 @@
 
 #include "AScene.hpp"
 
-Arcade::Game::AScene::AScene()
+Arcade::Game::AScene::AScene(std::shared_ptr<ECS::ISystemManager> sysManager,
+    std::shared_ptr<ECS::IEntityManager> entManager)
 {
+    _SystemManager = sysManager;
+    _EntityManager = entManager;
 }
 
-Arcade::ECS::IEntityManager &Arcade::Game::AScene::getEntityManager()
+const std::shared_ptr<Arcade::ECS::IEntityManager> &Arcade::Game::AScene::getEntityManager()
 {
     return (this->_EntityManager);
 }
 
-Arcade::ECS::ISystemManager &Arcade::Game::AScene::getSystemManager()
+const std::shared_ptr<Arcade::ECS::ISystemManager> &Arcade::Game::AScene::getSystemManager()
 {
     return (this->_SystemManager);
+}
+
+bool Arcade::Game::AScene::init()
+{
+    return (true);
 }
