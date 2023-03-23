@@ -13,12 +13,12 @@
 #include "Core.hpp"
 #include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
-#include "IGameModule.hpp"
+#include "GameModule.hpp"
 
 Arcade::Core::Core::Core()
 {
     getSharedLibsNames();
-    //TODO call GameModule constructor
+    _gameModule = std::make_unique<GameModule>(_gamesNames);
     //TODO call DisplayModule constructor
 }
 
