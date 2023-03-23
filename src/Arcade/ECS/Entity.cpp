@@ -28,7 +28,12 @@ Arcade::ECS::Entity::getComponents() const
 const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &
 Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
 {
-    return this->_components.at(type);
+    auto it = this->_components.find(type);
+
+    if (it == this->_components.end()) {
+        throw std::runtime_error("Component not found");
+    }
+    return it->second;
 }
 
 static bool isAlreadyStored(
