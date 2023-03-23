@@ -18,7 +18,7 @@ namespace Arcade {
                 std::shared_ptr<Arcade::Game::ISceneManager> &getSceneManager() final;
                 void changeGame(const std::string &gameName) final;
                 void changeGame() final;
-                std::vector<std::string> getGamesNames() final;
+                std::vector<std::string> &getGamesNames() final;
                 bool isGameLoaded() final;
             private:
                 void loadGame(const std::string &gameName);

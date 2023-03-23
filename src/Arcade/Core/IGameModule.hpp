@@ -47,7 +47,7 @@ namespace Arcade {
                  *
                  */
                 virtual void changeGame() = 0;
-                virtual std::vector<std::string> getGamesNames() = 0;
+                virtual std::vector<std::string> &getGamesNames() = 0;
                 virtual bool isGameLoaded() = 0;
         };
     } // namespace Core

@@ -37,7 +37,7 @@ void Arcade::Core::GameModule::loadGame(const std::string &gameName)
     _sceneManager = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::ISceneManager>>("getScenes", _sceneManager);
 }
 
-std::vector<std::string> Arcade::Core::GameModule::getGamesNames()
+std::vector<std::string> &Arcade::Core::GameModule::getGamesNames()
 {
     return _libsNames;
 }

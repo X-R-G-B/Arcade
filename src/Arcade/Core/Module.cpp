@@ -8,7 +8,7 @@
 #include <algorithm>
 #include "Module.hpp"
 
-Arcade::Core::Module::Module(std::vector<std::string> libsNames) : _libsNames(libsNames), _currentLib("")
+Arcade::Core::Module::Module(std::vector<std::string> libsNames) : _libsNames(libsNames)
 {
 }
 
@@ -19,9 +19,8 @@ std::unique_ptr<LibHandler> Arcade::Core::Module::getLibHandler(const std::strin
 
 void Arcade::Core::Module::nextLib()
 {
-    std::vector<std::string>::iterator it;
+    auto it = find(_libsNames.begin(), _libsNames.end(), _currentLib);
 
-    it = find(_libsNames.begin(), _libsNames.end(), _currentLib);
     ++it;
     if (it == _libsNames.end()) {
         _currentLib = _libsNames.front();
@@ -32,7 +31,7 @@ void Arcade::Core::Module::nextLib()
 
 void Arcade::Core::Module::changelib()
 {
-    if (_currentLib == "" && _libsNames.size() > 0) {
+    if (_currentLib.empty() && _libsNames.size() > 0) {
         _currentLib = _libsNames.front();
     } else {
         nextLib();
