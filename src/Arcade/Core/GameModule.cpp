@@ -33,9 +33,7 @@ void Arcade::Core::GameModule::changeGame()
 
 void Arcade::Core::GameModule::loadGame(const std::string &gameName)
 {
-    std::string path = Core::libPathStart + gameName + Core::libPathEnd;
-
-    
+    _sceneManager
 }
 
 std::vector<std::string> Arcade::Core::GameModule::getGamesNames()
@@ -43,7 +41,10 @@ std::vector<std::string> Arcade::Core::GameModule::getGamesNames()
     return _libsNames;
 }
 
-bool isGameLoaded()
+bool Arcade::Core::GameModule::isGameLoaded()
 {
-    if 
+    if (_sceneManager.get() == nullptr) {
+        return false;
+    }
+    return true;
 }
