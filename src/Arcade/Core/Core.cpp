@@ -16,8 +16,6 @@
 Arcade::Core::Core::Core()
 {
     getSharedLibsNames();
-    std::cout << _gamesNames.front() << std::endl;
-    std::cout << _graphicLibsNames.front() << std::endl;
     //TODO call GameModule constructor
     //TODO call DisplayModule constructor
 }
@@ -40,8 +38,12 @@ void Arcade::Core::Core::getSharedLibsNames()
     LibHandler LibHandler;
     LibType type;
     std::string path;
+    bool empty = true;
 
     for (const auto &entry : std::filesystem::directory_iterator(libFolderPath)) {
+        if (empty == true) {
+            empty = false;
+        }
         path = std::string(entry.path());
         pos = path.find(".so");
         if (pos == std::string::npos || pos + 3 != path.length()) {
@@ -50,6 +52,9 @@ void Arcade::Core::Core::getSharedLibsNames()
         LibHandler.loadLib(path);
         type = LibHandler.loadFunction<LibType>("getType");
         addNameToList(type, LibHandler);
+    }
+    if (empty) {
+        throw std::invalid_argument("Empty lib folder");
     }
 }
 
