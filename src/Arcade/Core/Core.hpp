@@ -23,8 +23,6 @@ namespace Arcade {
                 void update() final;
 
                 const std::string libFolderPath = "./lib";
-                const std::string libPathStart = "./lib/arcade_";
-                const std::string libPathEnd = ".so";
             private:
                 std::vector<std::string> _gamesNames;
                 std::vector<std::string> _graphicLibsNames;
