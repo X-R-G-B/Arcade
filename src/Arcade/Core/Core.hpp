@@ -19,8 +19,8 @@ namespace Arcade {
         class Core : public ICore {
             public:
                 Core();
-                void loadGraphicLibFromPath(const std::string &path);
-                void update();
+                void loadGraphicLibFromPath(const std::string &path) final;
+                void update() final;
 
                 const std::string libFolderPath = "./lib";
                 const std::string libPathStart = "./lib/arcade_";
