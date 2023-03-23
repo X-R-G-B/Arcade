@@ -7,5 +7,5 @@ LibType getType()
 
 std::string getName()
 {
-    return "fst";
+    return "trd";
 }

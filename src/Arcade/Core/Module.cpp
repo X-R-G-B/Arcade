@@ -25,6 +25,16 @@ void Arcade::Core::Module::nextLib()
     ++it;
     if (it == _libsNames.end()) {
         _currentLib = _libsNames.front();
+        return;
     }
     _currentLib = *it;
+}
+
+void Arcade::Core::Module::changelib()
+{
+    if (_currentLib == "" && _libsNames.size() > 0) {
+        _currentLib = _libsNames.front();
+    } else {
+        nextLib();
+    }
 }

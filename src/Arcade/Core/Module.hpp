@@ -16,6 +16,7 @@ namespace Arcade {
                 Module(std::vector<std::string> libsNames);
             protected:
                 std::unique_ptr<LibHandler> getLibHandler(const std::string &libName);
+                void changelib();
                 void nextLib();
                 std::vector<std::string> _libsNames;
                 std::string _currentLib;
