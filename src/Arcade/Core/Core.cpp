@@ -75,19 +75,24 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (type == LibType::GAME) {
         throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
-    //_displayModule.changeGraphicLib(path.substr(start + 7, end))
-    //TODO uncomment when DisplayModule attribute is emplemented
+    //_displayModule.changeGraphicLib(path.substr(start + 7, end))TODO need DisplayModule
 }
 
 void Arcade::Core::Core::update()
 {
-    std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO uncomment when EventManager is implemented
+    std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO need EventManager
     std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
     std::chrono::duration<double> delta(0);
+    //std::unique_ptr<IScene> mainMenu = getMainMenu() TODO need main menu
 
-    //for (eventManager->isEventTriggered("QUIT").first == false) { TODO uncomment when EventManager is emplemented
+    //for (eventManager->isEventTriggered("QUIT").first == false) { TODO need EventManager
         delta = start - std::chrono::steady_clock::now();
-        //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO uncomment when All is emplemented
+        //if (_gameModule->isGameLoaded()) { TODO need GameModule
+        //  mainMenu->getSystemManager->->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
+        //}
+        //else {
+            //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO need All
+        //}
         start = std::chrono::steady_clock::now();
     //}
 }
