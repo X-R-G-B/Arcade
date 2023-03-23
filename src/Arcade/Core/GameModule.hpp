@@ -8,10 +8,11 @@
 #pragma once
 
 #include "IGameModule.hpp"
+#include "Module.hpp"
 
 namespace Arcade {
     namespace Core {
-        class GameModule : public IGameModule {
+        class GameModule : public IGameModule, public Module {
             public:
                 GameModule(std::vector<std::string> libsNames);
                 std::unique_ptr<Arcade::Game::ISceneManager> &getSceneManager() final;
@@ -22,8 +23,6 @@ namespace Arcade {
             private:
                 void loadGame(const std::string &gameName);
                 std::unique_ptr<Arcade::Game::ISceneManager> _sceneManager;
-                std::vector<std::string> _libsNames;
-                std::string _currentLib;
         };
     }
 }
