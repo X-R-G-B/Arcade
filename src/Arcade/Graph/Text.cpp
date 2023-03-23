@@ -18,32 +18,32 @@ Arcade::Graph::Text::~Text()
 
 const std::string &Arcade::Graph::Text::getId() const
 {
-       return (this->_Id);
+    return (this->_Id);
 }
 
 const std::string &Arcade::Graph::Text::getFontPath() const
 {
-       return (this->_FontPath);
+    return (this->_FontPath);
 }
 
 const std::string &Arcade::Graph::Text::getText() const
 {
-       return (this->_Text);
+    return (this->_Text);
 }
 
 const Arcade::Graph::Color &Arcade::Graph::Text::getForegroundColor() const
 {
-       return (this->_ForegroundColor);
+    return (this->_ForegroundColor);
 }
 
 const Arcade::Graph::Color &Arcade::Graph::Text::getBackgroundColor() const
 {
-       return (this->_BackgroundColor);
+   return (this->_BackgroundColor);
 }
 
 const Arcade::Vector2f &Arcade::Graph::Text::getPos() const
 {
-       return (this->_Pos);
+    return (this->_Pos);
 }
 
 float Arcade::Graph::Text::getPoliceSize() const 
