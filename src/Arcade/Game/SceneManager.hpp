@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** ASceneManager
+** SceneManager
 */
 
 #pragma once
@@ -11,10 +11,10 @@
 
 namespace Arcade {
     namespace Game {
-        class ASceneManager {
+        class SceneManager : public ISceneManager {
             public:
-                ASceneManager();
-                ~ASceneManager();
+                SceneManager();
+                ~SceneManager();
 
                 void registerScene(const std::string &sceneName,
                 std::unique_ptr<IScene> scene);
@@ -24,8 +24,8 @@ namespace Arcade {
                 void changeScene(const std::string &sceneName);
             protected:
             private:
-                std::unique_ptr<IScene> _CurrentScene;
-                // TODO attribute to stock all the map
+                std::string _CurrentScene;
+                std::map<const std::string, std::unique_ptr<IScene>> _Scenes;
         };
     }
 }
