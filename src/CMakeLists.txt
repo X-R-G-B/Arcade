@@ -4,6 +4,4 @@ target_include_directories(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-target_sources(arcade PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Core.cpp"
-)
+add_subdirectory(Arcade)
