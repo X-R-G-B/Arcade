@@ -31,7 +31,7 @@ namespace Arcade {
                  */
                 const std::map<CompType,
                 std::vector<std::shared_ptr<IComponent>>> &
-                getComponents() final;
+                getComponents() const final;
                 /**
                  * @brief Get all components of type `compType`
                  *
@@ -40,7 +40,7 @@ namespace Arcade {
                  * @return The list of components filtered
                  */
                 const std::vector<std::shared_ptr<IComponent>> &getComponents(
-                CompType type) final;
+                CompType type) const final;
                 /**
                  * @brief Add a component
                  *

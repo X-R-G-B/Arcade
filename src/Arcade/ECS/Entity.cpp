@@ -20,15 +20,15 @@ std::string Arcade::ECS::Entity::getId() const
 
 const std::map<Arcade::ECS::CompType,
 std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> &
-Arcade::ECS::Entity::getComponents()
+Arcade::ECS::Entity::getComponents() const
 {
     return this->_components;
 }
 
 const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &
-Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type)
+Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
 {
-    return this->_components[type];
+    return this->_components.at(type);
 }
 
 static bool isAlreadyStored(
