@@ -9,7 +9,6 @@
 #include <memory>
 
 Arcade::Game::SceneManager::SceneManager()
-    : _CurrentScene("")
 {
 }
 
@@ -35,5 +34,6 @@ std::unique_ptr<Arcade::Game::IScene> &Arcade::Game::SceneManager::getCurrentSce
         return (data->second);
     } else {
         throw std::__throw_runtime_error;
+        //TODO change the error by the good one
     }
 }
