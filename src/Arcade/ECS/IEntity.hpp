@@ -35,7 +35,11 @@ namespace Arcade {
                  */
                 virtual const std::map<CompType,
                 std::vector<std::shared_ptr<IComponent>>> &
+<<<<<<< HEAD
                 getComponents() const = 0;
+=======
+                getComponents() = 0;
+>>>>>>> dev
                 /**
                  * @brief Get all components of type `compType`
                  *
@@ -44,7 +48,11 @@ namespace Arcade {
                  * @return The list of components filtered
                  */
                 virtual const std::vector<std::shared_ptr<IComponent>> &
+<<<<<<< HEAD
                 getComponents(CompType type) const = 0;
+=======
+                getComponents(CompType type) = 0;
+>>>>>>> dev
                 /**
                  * @brief Add a component
                  *
