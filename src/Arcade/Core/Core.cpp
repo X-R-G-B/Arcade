@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** Core Abstract
+** Core code
 */
 
 #include <iostream>
