@@ -87,7 +87,7 @@ void Arcade::Core::Core::update()
 
     //for (eventManager->isEventTriggered("QUIT").first == false) { TODO need EventManager
         delta = start - std::chrono::steady_clock::now();
-        //if (_gameModule->isGameLoaded()) { TODO need GameModule
+        //if (_gameModule->isGameLoaded() == false) { TODO need GameModule
         //  mainMenu->getSystemManager->->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
         //}
         //else {
