@@ -17,7 +17,6 @@ namespace Arcade {
                 Text(const std::string &id);
                 ~Text();
 
-                const std::string &getId() const final;
                 const std::string &getFontPath() const final;
                 const std::string &getText() const final;
                 const Arcade::Graph::Color &getForegroundColor() const final;

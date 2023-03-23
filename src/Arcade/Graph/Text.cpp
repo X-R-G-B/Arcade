@@ -16,11 +16,6 @@ Arcade::Graph::Text::~Text()
 {
 }
 
-const std::string &Arcade::Graph::Text::getId() const
-{
-    return (this->_Id);
-}
-
 const std::string &Arcade::Graph::Text::getFontPath() const
 {
     return (this->_FontPath);
