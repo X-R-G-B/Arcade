@@ -7,6 +7,6 @@ project(
 )
 
 add_library(arcade_nibbler SHARED)
-target_sources(arcade_nibbler PUBLIC
+target_sources(arcade_nibbler PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Nibleur.cpp"
 )

@@ -7,6 +7,6 @@ project(
 )
 
 add_library(arcade_sfml SHARED)
-target_sources(arcade_sfml PUBLIC
+target_sources(arcade_sfml PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/SFML.cpp"
 )
