@@ -1,24 +1,28 @@
 /*
 ** EPITECH PROJECT, 2023
-** Archi Arcade Promo 2026 Toulouse
+** Arcade
 ** File description:
-** GameModule that will be passed to all systems, implemented in the core (it
-** contains the Scene Manager created in the game lib)
+** GameModule header
 */
 
 #pragma once
 
 #include "IGameModule.hpp"
+#include <vector> //TODO remove when merge with CORE
+#include <string> //same
 
 namespace Arcade {
     namespace Core {
         class GameModule : public IGameModule {
             public:
+                GameModule(std::vector<std::string> libsNames);
                 std::unique_ptr<Arcade::Game::ISceneManager> &getSceneManager() final;
                 void changeGame(const std::string &gameName) final;
                 void changeGame() final;
             private:
                 std::unique_ptr<Arcade::Game::ISceneManager> _sceneManager;
+                std::vector<std::string> _libsNames;
+                std::string _currentLib;
         };
     }
 }
