@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Archi Arcade Promo 2026 Toulouse
+** Arcade Promo 2026 Toulouse
 ** File description:
 ** Entity is the most little thing in the ECS (you can add component to it)
 */
