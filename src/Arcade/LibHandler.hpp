@@ -5,6 +5,8 @@
 ** LibHandler class
 */
 
+#pragma once
+
 #include <string>
 #include <dlfcn.h>
 #include <functional>
