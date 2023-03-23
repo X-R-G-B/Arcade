@@ -25,7 +25,7 @@ namespace Arcade {
             protected:
             private:
                 std::string _CurrentScene;
-                std::map<const std::string, std::unique_ptr<IScene>> _Scenes;
+                std::map<std::string, std::unique_ptr<IScene>> _Scenes;
         };
     }
 }

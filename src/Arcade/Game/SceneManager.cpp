@@ -6,8 +6,10 @@
 */
 
 #include "SceneManager.hpp"
+#include <memory>
 
 Arcade::Game::SceneManager::SceneManager()
+    : _CurrentScene("")
 {
 }
 
@@ -17,7 +19,7 @@ Arcade::Game::SceneManager::~SceneManager()
 
 void Arcade::Game::SceneManager::registerScene(const std::string &sceneName, std::unique_ptr<Arcade::Game::IScene> scene)
 {
-    this->_Scenes.emplace(sceneName, scene);
+    _Scenes[sceneName].swap(scene);
 }
 
 void Arcade::Game::SceneManager::changeScene(const std::string &sceneName)
@@ -29,5 +31,9 @@ std::unique_ptr<Arcade::Game::IScene> &Arcade::Game::SceneManager::getCurrentSce
 {
     auto data = this->_Scenes.find(this->_CurrentScene);
 
-    return (data->second);
+    if (data != _Scenes.end()) {
+        return (data->second);
+    } else {
+        throw std::__throw_runtime_error;
+    }
 }
