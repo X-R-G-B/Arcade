@@ -14,11 +14,11 @@ namespace Arcade {
     namespace Core {
         class GameModule : public IGameModule {
             public:
-                Arcade::Game::ISceneManager &getSceneManager() final;
+                std::unique_ptr<Arcade::Game::ISceneManager> &getSceneManager() final;
                 void changeGame(const std::string &gameName) final;
                 void changeGame() final;
             private:
-
+                std::unique_ptr<Arcade::Game::ISceneManager> _sceneManager;
         };
     }
 }
