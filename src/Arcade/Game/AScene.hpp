@@ -17,9 +17,6 @@ namespace Arcade {
                     std::shared_ptr<ECS::IEntityManager> entManager);
                 ~AScene() = default;
 
-                bool init() override;
-                void close() override {}
-
                 const std::shared_ptr<ECS::IEntityManager> &getEntityManager() final;
                 const std::shared_ptr<ECS::ISystemManager> &getSystemManager() final;
             protected:

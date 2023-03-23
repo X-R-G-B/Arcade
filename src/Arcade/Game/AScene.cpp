@@ -23,8 +23,3 @@ const std::shared_ptr<Arcade::ECS::ISystemManager> &Arcade::Game::AScene::getSys
 {
     return (this->_SystemManager);
 }
-
-bool Arcade::Game::AScene::init()
-{
-    return (true);
-}
