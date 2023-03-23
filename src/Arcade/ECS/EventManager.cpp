@@ -1,9 +1,9 @@
-//
-// EPITECH PROJECT, 2023
-// Arcade
-// File description:
-// Event Manager
-//
+/*
+** EPITECH PROJECT, 2023
+** Arcade Promo 2026 Toulouse
+** File description:
+** Event Manager
+*/
 
 #include "EventManager.hpp"
 #include <optional>
