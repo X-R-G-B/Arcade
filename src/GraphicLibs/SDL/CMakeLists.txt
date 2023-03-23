@@ -7,6 +7,6 @@ project(
 )
 
 add_library(arcade_sdl2 SHARED)
-target_sources(arcade_sdl2 PRIVATE
+target_sources(arcade_sdl2 PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/SDL.cpp"
 )

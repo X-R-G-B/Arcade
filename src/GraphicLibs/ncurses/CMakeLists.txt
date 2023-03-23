@@ -7,6 +7,6 @@ project(
 )
 
 add_library(arcade_ncurses SHARED)
-target_sources(arcade_ncurses PRIVATE
+target_sources(arcade_ncurses PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/Ncurses.cpp"
 )

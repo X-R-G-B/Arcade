@@ -7,6 +7,6 @@ project(
 )
 
 add_library(arcade_snake SHARED)
-target_sources(arcade_snake PRIVATE
+target_sources(arcade_snake PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/Snake.cpp"
 )

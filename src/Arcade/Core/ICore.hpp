@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace Arcade {
     namespace Core {
         /**
@@ -23,6 +25,8 @@ namespace Arcade {
         class ICore {
             public:
                 virtual ~ICore() = default;
+
+                void loadGraphicLibFromPath(const std::string &path);
         };
     } // namespace Core
 } // namespace Arcade
