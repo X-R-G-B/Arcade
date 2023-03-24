@@ -8,14 +8,13 @@
 #pragma once
 
 #include "IEntity.hpp"
-#include "ComponentManager.hpp"
 
 namespace Arcade {
     namespace ECS {
         /**
          * @brief The Entity interface
          */
-        class Entity : public Arcade::ECS::IEntity, public ComponentManager {
+        class Entity : public Arcade::ECS::IEntity {
             public:
                 Entity(const std::string &id);
                 virtual ~Entity() = default;
@@ -64,6 +63,8 @@ namespace Arcade {
 
             private:
                 std::string _id;
+                std::map<CompType, std::vector<std::shared_ptr<IComponent>>>
+                _components;
         };
     } // namespace ECS
 } // namespace Arcade
