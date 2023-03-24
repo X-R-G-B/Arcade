@@ -5,7 +5,7 @@
 ** Manager for entity that add some usefull abstraction
 */
 
-#include "EcsException.hpp"
+#include "ECSException.hpp"
 #include "EntityManager.hpp"
 #include "Entity.hpp"
 

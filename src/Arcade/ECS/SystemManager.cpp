@@ -5,18 +5,19 @@
 ** System manager class
 */
 
-#include "SystemManager.hpp"
 #include <algorithm>
+#include <memory>
+#include "SystemManager.hpp"
 
 namespace Arcade {
     namespace ECS {
-        void SystemManager::addSystem(const std::string &name, Arcade::ECS::ISystem *system)
+        void SystemManager::addSystem(const std::string &name, std::unique_ptr<Arcade::ECS::ISystem> system)
         {
             auto it = _systems.find(name);
             if (it != _systems.end()) {
                 throw std::invalid_argument("System already exists");
             }
-            _systems[name].reset(system);
+            _systems[name].swap(system);
         }
 
         void SystemManager::removeSystem(const std::string &name)

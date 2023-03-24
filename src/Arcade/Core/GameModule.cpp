@@ -12,7 +12,7 @@ Arcade::Core::GameModule::GameModule(std::vector<std::string> libsNames) : Modul
 {
 }
 
-std::shared_ptr<Arcade::Game::ISceneManager> &Arcade::Core::GameModule::getSceneManager()
+std::shared_ptr<Arcade::Game::ISceneManager> Arcade::Core::GameModule::getSceneManager()
 {
     return _sceneManager;
 }

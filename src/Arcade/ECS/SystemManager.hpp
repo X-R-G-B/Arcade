@@ -29,7 +29,7 @@ namespace Arcade {
                  * @param system The system to add
                  */
                 void addSystem(
-                const std::string &name, Arcade::ECS::ISystem *system) final;
+                const std::string &name, std::unique_ptr<Arcade::ECS::ISystem> system) final;
                 /**
                  * @brief Remove a system from the system manager
                  *
