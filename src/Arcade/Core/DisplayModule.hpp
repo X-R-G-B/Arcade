@@ -21,6 +21,12 @@ namespace Arcade {
                 void changeGraphicLib(
                 const std::string &libGraphicName) final;
                 void changeGraphicLib() final;
+                void addComponent(std::shared_ptr<ECS::IComponent> component);
+                void removeComponent(const std::string &componentId);
+                std::optional<std::shared_ptr<ECS::IComponent>>
+                getComponent(const std::string &componentId) const;
+                const std::vector<std::shared_ptr<ECS::IComponent>> &
+                getComponents(ECS::CompType type) const;
                 Arcade::Vector2f &getWindowSize() final;
                 void setWindowSize(const Arcade::Vector2f &newSize) final;
             private:

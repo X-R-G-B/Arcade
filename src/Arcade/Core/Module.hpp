@@ -5,16 +5,15 @@
 ** module class
 */
 
+#pragma once
+
 #include <memory>
 #include <vector>
 #include "LibHandler.hpp"
 
-namespace Arcade
-{
-    namespace Core
-    {
-        class Module
-        {
+namespace Arcade {
+    namespace Core {
+        class Module {
         public:
             Module(std::vector<std::string> libsNames);
 

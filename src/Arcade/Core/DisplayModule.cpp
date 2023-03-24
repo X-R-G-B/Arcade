@@ -27,15 +27,41 @@ void Arcade::Core::DisplayModule::changeGraphicLib(const std::string &libGraphic
 void Arcade::Core::DisplayModule::changeGraphicLib()
 {
     changelib();
+    if (_currentLib.empty()) {
+        //TODO custom exception
+        throw std::invalid_argument("No graphic shared lib in lib/");
+    }
     loadGraphicLib(_currentLib);
 }
 
-void Arcade::Core::DisplayModule::loadGraphicLib(const std::string &gameName)
+#include <iostream>
+void Arcade::Core::DisplayModule::loadGraphicLib(const std::string &libName)
 {
-    std::unique_ptr<LibHandler> libHandler = getLibHandler(gameName);
+    std::unique_ptr<LibHandler> libHandler = getLibHandler(libName);
 
     _systemManager.reset(); // TODO add params if need when SystemManager implemented
-    _systemManager = libHandler->loadMainFunction<std::shared_ptr<Arcade::ECS::ISystemManager>>("getScenes", _systemManager);
+    std::cout << libName << std::endl;
+    //_systemManager = libHandler->loadMainFunction<std::shared_ptr<Arcade::ECS::ISystemManager>>("getScenes", _systemManager);
+}
+
+void Arcade::Core::DisplayModule::addComponent(std::shared_ptr<ECS::IComponent> component)
+{
+    ComponentManager::addComponent(component);
+}
+
+void Arcade::Core::DisplayModule::removeComponent(const std::string &componentId)
+{
+    ComponentManager::removeComponent(componentId);
+}
+
+std::optional<std::shared_ptr<Arcade::ECS::IComponent>> Arcade::Core::DisplayModule::getComponent(const std::string &componentId) const
+{
+    return ComponentManager::getComponent(componentId);
+}
+
+const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &Arcade::Core::DisplayModule::getComponents(ECS::CompType type) const
+{
+    return ComponentManager::getComponents(type);
 }
 
 Arcade::Vector2f &Arcade::Core::DisplayModule::getWindowSize()

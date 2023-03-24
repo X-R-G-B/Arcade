@@ -33,7 +33,7 @@ void Arcade::Core::Module::changelib()
 {
     if (_currentLib.empty() && _libsNames.size() > 0) {
         _currentLib = _libsNames.front();
-    } else {
+    } else if (_currentLib.empty() == false) {
         nextLib();
     }
 }

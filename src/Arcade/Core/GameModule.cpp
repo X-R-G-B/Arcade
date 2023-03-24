@@ -41,11 +41,3 @@ std::vector<std::string> &Arcade::Core::GameModule::getGamesNames()
 {
     return _libsNames;
 }
-
-bool Arcade::Core::GameModule::isGameLoaded()
-{
-    if (_sceneManager.get() == nullptr) {
-        return false;
-    }
-    return true;
-}
