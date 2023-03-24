@@ -5,6 +5,7 @@
 ** DisplayModule
 */
 
+#include <iostream>
 #include <algorithm>
 #include "DisplayModule.hpp"
 
@@ -34,7 +35,6 @@ void Arcade::Core::DisplayModule::changeGraphicLib()
     loadGraphicLib(_currentLib);
 }
 
-#include <iostream>
 void Arcade::Core::DisplayModule::loadGraphicLib(const std::string &libName)
 {
     std::unique_ptr<LibHandler> libHandler = getLibHandler(libName);

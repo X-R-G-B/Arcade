@@ -5,3 +5,6 @@
 -Isrc/Arcade/Game
 -Isrc/Arcade/Graph
 -std=c++20
+-Wall
+-Wextra
+-Wpedantic

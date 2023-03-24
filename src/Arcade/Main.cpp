@@ -35,6 +35,7 @@
 //}
 
 #include <iostream>
+#include <memory>
 #include "DisplayModule.hpp"
 #include "Sprite.hpp"
 
@@ -56,7 +57,7 @@ int main(int ac, char **)
     displayModule->addComponent(std::make_unique<Arcade::Graph::Sprite>(Arcade::ECS::CompType::SPRITE, "comp1"));
 
     try {
-        displayModule->addComponent(std::make_unique<Arcade::Graph::Sprite>(Arcade::ECS::CompType::SPRITE, "comp1"));
+        displayModule->addComponent(std::make_shared<Arcade::Graph::Sprite>(Arcade::ECS::CompType::SPRITE, "comp1"));
         FALSE("displayModule->addComponent(std::make_unique<Arcade::Graph::Sprite>(Arcade::ECS::CompType::SPRITE));");
     } catch (const std::exception &e) {
     }
