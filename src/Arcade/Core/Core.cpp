@@ -13,12 +13,12 @@
 #include "Core.hpp"
 #include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
-#include "IGameModule.hpp"
+#include "GameModule.hpp"
 
 Arcade::Core::Core::Core()
 {
     getSharedLibsNames();
-    //TODO call GameModule constructor
+    _gameModule = std::make_unique<GameModule>(_gamesNames);
     //TODO call DisplayModule constructor
 }
 
@@ -88,11 +88,12 @@ void Arcade::Core::Core::update()
     //for (eventManager->isEventTriggered("QUIT").first == false) { TODO need EventManager
         delta = start - std::chrono::steady_clock::now();
         //if (_gameModule->isGameLoaded() == false) { TODO need GameModule
-        //  mainMenu->getSystemManager->->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
+        //  mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
         //}
         //else {
             //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO need All
         //}
+        //_displayModule()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule)
         start = std::chrono::steady_clock::now();
     //}
 }

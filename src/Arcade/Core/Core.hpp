@@ -26,7 +26,7 @@ namespace Arcade {
             private:
                 std::vector<std::string> _gamesNames;
                 std::vector<std::string> _graphicLibsNames;
-                //TODO GameModule concrete class
+                std::unique_ptr<IGameModule> _gameModule;
                 //TODO DisplayModule concrete class
 
                 void getSharedLibsNames();
