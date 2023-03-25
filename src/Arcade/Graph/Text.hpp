@@ -14,7 +14,7 @@ namespace Arcade {
     namespace Graph {
         struct Text : public IText {
             public :
-                Text(std::string id);
+                Text(const std::string &id);
         };
     }
 }
