@@ -9,17 +9,17 @@
 
 #include <vector>
 #include "ICore.hpp"
-#include "EventManager.hpp"
+#include "IDisplayModule.hpp"
+#include "IGameModule.hpp"
 #include "Api.hpp"
 #include "LibHandler.hpp"
-#include "IGameModule.hpp"
-#include "IDisplayModule.hpp"
 
 namespace Arcade {
     namespace Core {
         class Core : public ICore {
             public:
-                Core(const std::string &path);
+                Core();
+                void loadGraphicLibFromPath(const std::string &path);
                 void update();
 
                 const std::string libFolderPath = "./lib";
@@ -29,7 +29,7 @@ namespace Arcade {
                 std::string _currentGame;
                 std::string _currentGraphicLib;
                 std::unique_ptr<IGameModule> _gameModule;
-                std::unique_ptr<IDisplayModule> _displayModule;
+                //TODO DisplayModule concrete class
 
                 void getSharedLibsNames();
                 void addNameToList(LibType type, LibHandler &LibHandler);

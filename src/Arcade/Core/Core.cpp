@@ -5,15 +5,17 @@
 ** Core code
 */
 
+#include <iostream>
 #include <functional>
 #include <filesystem>
 #include <stdexcept>
 #include <chrono>
 #include "Core.hpp"
+#include "IEventManager.hpp"
+#include "IDisplayModule.hpp"
 #include "GameModule.hpp"
-#include "DisplayModule.hpp"
 
-Arcade::Core::Core::Core(const std::string &path)
+Arcade::Core::Core::Core()
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -76,31 +78,32 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (type == LibType::GAME) {
         throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
+<<<<<<< HEAD
     _currentGraphicLib = path.substr(start + 7, end);
     changelib(LibType::GRAPH);
+=======
+    //_displayModule.changeGraphicLib(path.substr(start + 7, end))TODO need DisplayModule
+>>>>>>> dev
 }
 
 void Arcade::Core::Core::update()
 {
-    std::unique_ptr<Arcade::ECS::IEventManager> eventManager = std::make_unique<Arcade::ECS::EventManager>();
+    std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO need EventManager
     std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
     std::chrono::duration<double> delta(0);
     //std::unique_ptr<IScene> mainMenu = getMainMenu() TODO need main menu
 
-    while (eventManager->isEventTriggered("QUIT").first == false) {
+    //for (eventManager->isEventTriggered("QUIT").first == false) { TODO need EventManager
         delta = start - std::chrono::steady_clock::now();
-        if (_gameModule->getSceneManager().get() == nullptr) {
+        //if (_gameModule->isGameLoaded() == false) { TODO need GameModule
         //  mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
-        } else {
-            //_gameModule->getSceneManager()->getCurrentScene()->
-            //    getSystemManager().update(delta.count(), *(eventManager.get()),
-            //    *(_displayModule.get()), *(_gameModule.get()));
-            //TODO when Scene and SceneManager emplemented
-        }
-        _displayModule->getSystemManager()->update(delta.count(),
-            *(eventManager.get()), *(_displayModule.get()), *(_gameModule.get()));
+        //}
+        //else {
+            //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO need All
+        //}
+        //_displayModule()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule)
         start = std::chrono::steady_clock::now();
-    }
+    //}
 }
 
 void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)

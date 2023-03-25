@@ -40,13 +40,3 @@ void Arcade::ECS::EventManager::clearEvents()
 {
     _events.clear();
 }
-
-const Arcade::Vector2f &Arcade::ECS::EventManager::getMousePosition() const
-{
-    return _mousePosition;
-}
-
-void Arcade::ECS::EventManager::setMousePosition(const Arcade::Vector2f &mousePosition)
-{
-    _mousePosition = mousePosition;
-}

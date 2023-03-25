@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -18,7 +17,7 @@
 
 namespace Arcade {
     namespace ECS {
-        class SystemManager : public ISystemManager {
+        class SystemManager : ISystemManager {
             public:
                 SystemManager() = default;
                 ~SystemManager() = default;
@@ -28,8 +27,8 @@ namespace Arcade {
                  * @param name The name of the system
                  * @param system The system to add
                  */
-                void addSystem(
-                const std::string &name, std::unique_ptr<Arcade::ECS::ISystem> system) final;
+                void addSystem(const std::string &name,
+                std::unique_ptr<Arcade::ECS::ISystem> system) final;
                 /**
                  * @brief Remove a system from the system manager
                  *
@@ -43,11 +42,10 @@ namespace Arcade {
                  * @param entityManager The list of entities
                  * @param eventManager The list of events
                  */
-                void update(std::size_t deltaTime,
+                void update(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
-                Arcade::Core::IDisplayModule &displayModule,
-                Arcade::Core::IGameModule &gameModule) final;
-            public:
+                Arcade::ECS::IEntityManager &currentScene) final;
+            private:
                 std::map<std::string, std::unique_ptr<Arcade::ECS::ISystem>> _systems;
         };
     } // namespace ECS
