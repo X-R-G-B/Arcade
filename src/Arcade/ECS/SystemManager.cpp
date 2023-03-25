@@ -29,13 +29,12 @@ namespace Arcade {
             _systems.erase(it);
         }
 
-        void SystemManager::update(std::size_t deltaTime,
+        void SystemManager::update(float deltaTime,
             Arcade::ECS::IEventManager &eventManager,
-            Arcade::Core::IDisplayModule &displayModule,
-            Arcade::Core::IGameModule &gameModule)
+            Arcade::ECS::IEntityManager &currentScene)
         {
             for (auto &system : _systems) {
-                system.second->run(deltaTime, eventManager, displayModule, gameModule);
+                system.second->run(deltaTime, eventManager, currentScene);
             }
         }
     }
