@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <stdexcept>
 #include <chrono>
+#include "Api.hpp"
 #include "Core.hpp"
 #include "EventManager.hpp"
 #include "IDisplayModule.hpp"
@@ -136,14 +137,15 @@ std::unique_ptr<LibHandler> Arcade::Core::Core::getLibHandler(const std::string 
 
 void Arcade::Core::Core::nextLib(LibType libType)
 {
-    auto it = std::find(_libsNames.begin(), _libsNames.end(), _currentLib);
+    const std::vector<std::string> &it2 = (libType == LibType::GAME) ? _gamesNames : _graphicLibsNames;
+    std::string &currentLib = (libType == LibType::GAME) ? _currentGame : _currentGraphicLib;
 
+    auto it = std::find(it2.begin(), it2.end(), currentLib);
     ++it;
-    if (it == _libsNames.end()) {
-        _currentLib = _libsNames.front();
-        return;
+    if (it == it2.end()) {
+        ++it;
     }
-    _currentLib = *it;
+    currentLib = *it;
 }
 
 void Arcade::Core::Core::changeLib(LibType libType)
