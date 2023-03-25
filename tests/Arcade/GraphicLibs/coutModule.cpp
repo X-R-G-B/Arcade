@@ -40,10 +40,10 @@ void Arcade::Graph::ouiSystem::run(float deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
-    auto sprite = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::SPRITE);
+    auto sprite = entityManager.getComponentsByComponentType(Arcade::ECS::CompType::SPRITE);
 
     for (auto &it : *(sprite.get())) {
-        std::cout << *(it.get()).id << std::endl;
+        std::cout << (*it.get()).id << std::endl;
     }
     std::cout << "Running system ouiSystem" << std::endl;
 }
