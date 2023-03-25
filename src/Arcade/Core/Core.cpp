@@ -11,10 +11,10 @@
 #include <stdexcept>
 #include <chrono>
 #include "Core.hpp"
-#include "IEventManager.hpp"
+#include "EventManager.hpp"
 #include "IDisplayModule.hpp"
 
-Arcade::Core::Core::Core()
+Arcade::Core::Core::Core(const std::string &path)
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -78,37 +78,38 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
         throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
     _currentGraphicLib = path.substr(start + 7, end);
-    changelib(LibType::GRAPH);
+    changeLib(LibType::GRAPH);
 }
 
 void Arcade::Core::Core::update()
 {
-    std::unique_ptr<Arcade::ECS::IEventManager> eventManager;// = std::make_unique<Arcade::ECS::EventManager>(); TODO need EventManager
+    Arcade::ECS::EventManager eventManager;
     std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
     std::chrono::duration<double> delta(0);
     //std::unique_ptr<IScene> mainMenu = getMainMenu() TODO need main menu
 
-    //for (eventManager->isEventTriggered("QUIT").first == false) { TODO need EventManager
+    while (eventManager.isEventTriggered("QUIT").first) {
         delta = start - std::chrono::steady_clock::now();
-        //if (_gameModule->isGameLoaded() == false) { TODO need GameModule
-        //  mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule) // TODO need main menu
-        //}
-        //else {
-            //_gameModule->getSceneManager()->getCurrentScene()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule); TODO need All
-        //}
-        //_displayModule()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule)
+        if (_gameModule.get() == nullptr) {
+          //mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule)
+        } else {
+            _gameModule->update(delta.count(), eventManager);
+        }
+        checkChangeLib(eventManager);
+        eventManager.clearEvents();
+        _displayModule()->update(delta.count(), eventManager, _gameModule.getCurrentEntityManager());
         start = std::chrono::steady_clock::now();
-    //}
+    }
 }
 
 void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
 {
     if (eventManager.isEventTriggered("CHANGE_GAME").first) {
         changeLib(LibType::GAME);
-        loadLib();
+        loadLib(LibType::GAME);
     } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first) {
         changeLib(LibType::GRAPH);
-        loadLib();
+        loadLib(LibType::GRAPH);
     }
 }
 
@@ -142,7 +143,7 @@ void Arcade::Core::Core::nextLib(LibType libType)
     _currentLib = *it;
 }
 
-void Arcade::Core::Core::changelib(LibType libType)
+void Arcade::Core::Core::changeLib(LibType libType)
 {
     if (libType == LibType::Game) {
         if (_currentGame.empty() && _gamesNames.size() > 0) {

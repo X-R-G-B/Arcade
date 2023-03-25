@@ -11,14 +11,14 @@
 
 void launchCore(int ac, char **av)
 {
-    Arcade::Core::Core core = Arcade::Core::Core();
+    std::unique_ptr<Arcade::Core::Core> core;
     std::string str;
 
     if (ac == 2) {
         str = av[1];
-        core.loadGraphicLibFromPath(str);
+        core = std::make_unique<Arcade::Core::Core>(str);
     }
-    core.update();
+    core->update();
 }
 
 int main(int ac, char **av)
