@@ -10,5 +10,4 @@ target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/SystemManager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/EntityManager.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/GameModule.cpp"
 )
