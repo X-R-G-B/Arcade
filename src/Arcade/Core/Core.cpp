@@ -13,13 +13,15 @@
 #include "Core.hpp"
 #include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
-#include "GameModule.hpp"
 
 Arcade::Core::Core::Core()
 {
     getSharedLibsNames();
-    _gameModule = std::make_unique<GameModule>(_gamesNames);
-    //TODO call DisplayModule constructor
+    if (path.empty()) {
+        changeLib(LibType::GRAPH);
+    } else {
+        loadGraphicLibFromPath(path);
+    }
 }
 
 void Arcade::Core::Core::addNameToList(LibType type, LibHandler &LibHandler)
@@ -75,7 +77,8 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (type == LibType::GAME) {
         throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
-    //_displayModule.changeGraphicLib(path.substr(start + 7, end))TODO need DisplayModule
+    _currentGraphicLib = path.substr(start + 7, end);
+    changelib(LibType::GRAPH);
 }
 
 void Arcade::Core::Core::update()
@@ -96,4 +99,64 @@ void Arcade::Core::Core::update()
         //_displayModule()->getSystemManager()->update(delta.count(), eventManager, _displayModule, _gameModule)
         start = std::chrono::steady_clock::now();
     //}
+}
+
+void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
+{
+    if (eventManager.isEventTriggered("CHANGE_GAME").first) {
+        changeLib(LibType::GAME);
+        loadLib();
+    } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first) {
+        changeLib(LibType::GRAPH);
+        loadLib();
+    }
+}
+
+void Arcade::Core::Core::loadLib(LibType type)
+{
+    std::unique_ptr<LibHandler> libHandler = getLibHandler(gameName);
+
+    if (type == LibType::GAME) {
+        _gameModule.reset();
+        _gameModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IGameModule>>("getGameModule", _sceneManager);
+    } else {
+        _displayModule.reset();
+        _displayModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IDisplayModule>>("getDisplayModule", _sceneManager);
+    }
+}
+
+std::unique_ptr<LibHandler> Arcade::Core::Core::getLibHandler(const std::string &libName)
+{
+    return std::make_unique<LibHandler>("./lib/arcade_" + libName + ".so");
+}
+
+void Arcade::Core::Core::nextLib(LibType libType)
+{
+    auto it = find(_libsNames.begin(), _libsNames.end(), _currentLib);
+
+    ++it;
+    if (it == _libsNames.end()) {
+        _currentLib = _libsNames.front();
+        return;
+    }
+    _currentLib = *it;
+}
+
+void Arcade::Core::Core::changelib(LibType libType)
+{
+    if (libType == LibType::Game) {
+        if (_currentGame.empty() && _gamesNames.size() > 0) {
+            _currentGame = _gamesNames.front();
+        } else {
+            nextLib(libType);
+        }
+    } else {
+        if (_graphicLibsNames.empty()) {
+            throw std::invalid_argument("No shared graphic lib in lib/ folder");
+        } else if (_currentGraphicLib.empty()) {
+            _currentGraphicLib = _graphicLibsNames.front();
+        } else {
+            nextLib(libType);
+        }
+    }
 }
