@@ -28,8 +28,6 @@ namespace Arcade {
                     std::optional<std::shared_ptr<IComponent>> component =
                     std::nullopt) override;
                 void clearEvents() override;
-                const Arcade::Vector2f &getMousePosition() const override;
-                void setMousePosition(const Arcade::Vector2f &mousePosition) override;
 
             private:
                 std::map<std::string, std::vector<std::optional<std::shared_ptr<Arcade::ECS::IComponent>>>> _events;
