@@ -6,6 +6,7 @@
 */
 
 #include "Text.hpp"
+#include "CompType.hpp"
 
 Arcade::Graph::Text::Text(const std::string &id)
 {

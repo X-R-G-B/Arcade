@@ -6,6 +6,7 @@
 */
 
 #include "Sprite.hpp"
+#include "CompType.hpp"
 
 Arcade::Graph::Sprite::Sprite(const std::string &id)
 {

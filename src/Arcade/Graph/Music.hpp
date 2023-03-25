@@ -8,7 +8,6 @@
 #pragma once
 
 #include "IMusic.hpp"
-#include "AComponent.hpp"
 
 namespace Arcade {
     namespace Graph {

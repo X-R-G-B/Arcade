@@ -12,7 +12,7 @@
 namespace Arcade {
     namespace ECS {
         /**
-         * @brief The AComponents interface
+         * @brief The components types enum
          *
          * defaultComponent type to implement: TEXT, SPRITE, MUSIC
          */

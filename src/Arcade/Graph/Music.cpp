@@ -6,6 +6,7 @@
 */
 
 #include "Music.hpp"
+#include "CompType.hpp"
 
 Arcade::Graph::Music::Music(const std::string &id)
 {
