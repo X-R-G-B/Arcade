@@ -16,7 +16,7 @@ namespace Arcade {
          *
          * defaultComponent type to implement: TEXT, SPRITE, MUSIC
          */
-        enum class CompType {
+        enum class CompType : int {
             TEXT = 0,
             SPRITE = 1,
             MUSIC = 2,
