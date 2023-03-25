@@ -16,7 +16,7 @@ namespace Arcade {
                 AScene(std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager);
                 ~AScene() = default;
 
-                ECS::IEntityManager &getEntityManager();
+                ECS::IEntityManager &getEntityManager() final;
             protected:
             private:
                 std::unique_ptr<ECS::IEntityManager> _EntityManager;
