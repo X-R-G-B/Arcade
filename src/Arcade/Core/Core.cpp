@@ -124,7 +124,7 @@ void Arcade::Core::Core::loadLib(LibType type)
         _gameModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IGameModule>>("getGameModule", _sceneManager);
     } else {
         libHandler = std::make_unique<LibHandler>(_currentGraphicLib);
-        _displayModule.reset();
+        
         _displayModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IDisplayModule>>("getDisplayModule", _sceneManager);
     }
 }

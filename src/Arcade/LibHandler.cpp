@@ -2,12 +2,14 @@
 #include <stdexcept>
 #include "LibHandler.hpp"
 
-LibHandler::LibHandler(const std::string &lib) : _lib(0) {
+LibHandler::LibHandler(const std::string &, LibType type) : _lib(nullptr), _module(nullptr), _type(std::nullopt) {
     loadLib(lib);
+    _module = loadFunction();
 }
 
 LibHandler::~LibHandler() {
     deleteLib();
+    callDestroyFunction();
 }
 
 void LibHandler::loadLib(const std::string &lib)

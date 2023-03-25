@@ -11,14 +11,50 @@
 #include <dlfcn.h>
 #include <functional>
 #include <stdexcept>
+#include <type_traits>
+#include "IDisplayModule.hpp"
+#include "IGameModule.hpp"
 
+template<typename resType>
 class LibHandler {
     public:
-        LibHandler(const std::string &);
+        LibHandler(const std::string &) : _lib(nullptr), _module(nullptr), _type(std::nullopt)
+        {
+            loadLib(lib);
+            if (std::is_same(resType, Arcade::Graph::IDisplayModule)) {
+                getType
+            }
+            getType();
+            _module = loadFunction<resType>("");
+        }
         ~LibHandler();
         void loadLib(const std::string &);
         void deleteLib();
-        template<typename resType> resType loadDestroyFunction(const std::string &function, resType arg)
+        const std::string getName()
+        {
+            return loadFunction<std::string>("getName");
+        }
+        const LibType getType()
+        {
+            if (_type == std::nullopt) {
+                _type = loadFunction<LibType>("getType");
+            }
+            return _type;
+        }
+        const resType getModule()
+        {
+            if (_module) {
+                deleteLib();
+                _module = nullptr;
+            }
+            if (type == LibType::GAME) {
+                _module = loadFunction<resType>("");
+            } else {
+                _module = loadFunction
+            }
+            return _module;
+        }
+        void callDestroyFunction()
         {
             typedef void (*retType_t)(resType);
             retType_t func = NULL;
@@ -30,9 +66,10 @@ class LibHandler {
             if (!func) {
                 throw std::invalid_argument("A library in lib/ don't respect entry points doc");
             }
-            return func(arg);
+            func(arg);
         }
-        template<typename resType> resType loadFunction(const std::string &function)
+        
+        resType *loadFunction(const std::string &function)
         {
             typedef resType (*retType_t)();
             retType_t func = NULL;
@@ -48,5 +85,7 @@ class LibHandler {
         }
     private:
         void *_lib;
-        std::string path;
+        resType *_module;
+        std::optional<LibType> _type;
+        std::string _name;
 };
