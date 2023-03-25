@@ -32,11 +32,8 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     std::string name;
     LibType type;
  
-    std::cout << "Loading " << path << std::endl;
     name = LibHandler<Graph::IDisplayModule>::getLibName(path);
-    std::cout << "Loading1 " << path << std::endl;
     type = LibHandler<Graph::IDisplayModule>::getLibType(path);
-    std::cout << "Loading2 " << path << std::endl;
     if (type == LibType::GAME) {
         _gamesNames.push_back(name);
     } else {
@@ -75,9 +72,7 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (start == std::string::npos || end == std::string::npos) {
         throw std::invalid_argument("Invalid path");
     }
-    std::cout << "Loading graphic lib: " << path << std::endl;
     _graphLibHandler.loadLib(path);
-    std::cout << "Loading graphic lib1: " << path << std::endl;
 }
 
 void Arcade::Core::Core::update()
