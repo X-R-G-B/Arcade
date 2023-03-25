@@ -14,16 +14,9 @@ namespace Arcade {
 class Comp : public Arcade::ECS::IComponent {
     public:
         Comp() {
-            _id = "Comp";
+            this->id = "Comp";
+            this->type = Arcade::ECS::CompType::SOMETHING;
         }
-        ~Comp() = default;
-        Arcade::ECS::CompType getType() const override {
-            return Arcade::ECS::CompType::SOMETHING;
-        }
-        const std::string &getId() const override {
-            return _id;
-        }
-        std::string _id;
 };
 
 int main()
@@ -63,8 +56,8 @@ int main()
         std::cout << "That is not right, there is one parameter in the vector" << std::endl;
         return 1;
     }
-    if ((*evt2.second.value()[0])->getType() != Arcade::ECS::CompType::SOMETHING ||
-            (*evt2.second.value()[0])->getId() != "Comp") {
+    if ((*evt2.second.value()[0])->type != Arcade::ECS::CompType::SOMETHING ||
+            (*evt2.second.value()[0])->id != "Comp") {
         std::cout << "That is not right, the parameter is not the good one" << std::endl;
         return 1;
     }
