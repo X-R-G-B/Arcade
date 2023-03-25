@@ -7,7 +7,7 @@
 
 #include "Text.hpp"
 
-Arcade::Graph::Text::Text(const std::string &textId)
+Arcade::Graph::Text::Text(const std::string &id)
 {
     this->id = textId;
     this->type = Arcade::ECS::CompType::TEXT;
