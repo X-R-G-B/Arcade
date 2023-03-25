@@ -6,5 +6,4 @@ target_include_directories(arcade PRIVATE
 
 target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Core.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Module.cpp"
 )
