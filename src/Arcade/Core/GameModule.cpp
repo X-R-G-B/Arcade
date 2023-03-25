@@ -29,6 +29,11 @@ void Arcade::Core::GameModule::changeGame()
     loadGame(_currentLib);
 }
 
+std::shared_ptr<Arcade::ECS::IEventManager> Arcade::Core::GameModule::getGameEventManager()
+{
+    return _eventManager;
+}
+
 void Arcade::Core::GameModule::loadGame(const std::string &gameName)
 {
     std::unique_ptr<LibHandler> libHandler = getLibHandler(gameName);

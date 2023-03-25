@@ -64,7 +64,7 @@ const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &Arcade::Core::Displ
     return ComponentManager::getComponents(type);
 }
 
-const Arcade::Vector2f &Arcade::Core::DisplayModule::getWindowSize()
+const Arcade::Vector2f &Arcade::Core::DisplayModule::getWindowSize() const
 {
     return _windowSize;
 }

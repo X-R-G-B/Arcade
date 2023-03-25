@@ -18,9 +18,11 @@ namespace Arcade {
                 std::shared_ptr<Arcade::Game::ISceneManager> getSceneManager() final;
                 void changeGame(const std::string &gameName) final;
                 void changeGame() final;
+                std::shared_ptr<Arcade::ECS::IEventManager> getGameEventManager() final;
                 std::vector<std::string> &getGamesNames();
             private:
                 void loadGame(const std::string &gameName);
+                std::shared_ptr<Arcade::ECS::IEventManager> _eventManager;
                 std::shared_ptr<Arcade::Game::ISceneManager> _sceneManager;
         };
     }
