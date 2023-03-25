@@ -43,7 +43,7 @@ const std::string &id)
 {
     for (auto &component : components) {
         for (auto &comp : component.second) {
-            if (comp->getId() == id)
+            if (comp->id == id)
                 return true;
         }
     }
@@ -53,10 +53,10 @@ const std::string &id)
 void Arcade::ECS::Entity::addComponent(
 std::shared_ptr<Arcade::ECS::IComponent> component)
 {
-    Arcade::ECS::CompType compType = component->getType();
+    Arcade::ECS::CompType compType = component->type;
     auto it = _components.find(compType);
 
-    if (isAlreadyStored(_components, component->getId())) {
+    if (isAlreadyStored(_components, component->id)) {
         throw std::runtime_error("Component already stored");
     }
     if (it == _components.end()) {
@@ -73,12 +73,12 @@ void Arcade::ECS::Entity::removeComponent(const std::string &id)
     for (auto &component : this->_components) {
         std::remove_if(component.second.begin(), component.second.end(),
         [&id](const std::shared_ptr<Arcade::ECS::IComponent> &component) {
-            return component->getId() == id;
+            return component->id == id;
         });
     }
 }
 
-void Arcade::ECS::Entity::removeComponents(Arcade::ECS::CompType type)
+void Arcade::ECS::Entity::removeComponent(Arcade::ECS::CompType type)
 {
     this->_components.erase(type);
 }
