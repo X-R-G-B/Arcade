@@ -13,8 +13,9 @@
 #include "Core.hpp"
 #include "EventManager.hpp"
 #include "IDisplayModule.hpp"
+#include "IGameModule.hpp"
 
-Arcade::Core::Core::Core(const std::string &path)
+Arcade::Core::Core::Core(const std::string &path) : _gameModule(nullptr), _displayModule(nullptr)
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -90,14 +91,14 @@ void Arcade::Core::Core::update()
 
     while (eventManager.isEventTriggered("QUIT").first) {
         delta = start - std::chrono::steady_clock::now();
-        if (_gameModule.get() == nullptr) {
+        if (_gameModule == nullptr) {
           //mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule)
         } else {
             _gameModule->update(delta.count(), eventManager);
         }
         checkChangeLib(eventManager);
         eventManager.clearEvents();
-        _displayModule()->update(delta.count(), eventManager, _gameModule.getCurrentEntityManager());
+        _displayModule->update(delta.count(), eventManager, _gameModule->getCurrentEntityManager());
         start = std::chrono::steady_clock::now();
     }
 }
@@ -115,12 +116,14 @@ void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
 
 void Arcade::Core::Core::loadLib(LibType type)
 {
-    std::unique_ptr<LibHandler> libHandler = getLibHandler(gameName);
+    std::unique_ptr<LibHandler> libHandler = nullptr;
 
     if (type == LibType::GAME) {
+        libHandler = std::make_unique<LibHandler>(_currentGame);
         _gameModule.reset();
         _gameModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IGameModule>>("getGameModule", _sceneManager);
     } else {
+        libHandler = std::make_unique<LibHandler>(_currentGraphicLib);
         _displayModule.reset();
         _displayModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IDisplayModule>>("getDisplayModule", _sceneManager);
     }
@@ -133,7 +136,7 @@ std::unique_ptr<LibHandler> Arcade::Core::Core::getLibHandler(const std::string 
 
 void Arcade::Core::Core::nextLib(LibType libType)
 {
-    auto it = find(_libsNames.begin(), _libsNames.end(), _currentLib);
+    auto it = std::find(_libsNames.begin(), _libsNames.end(), _currentLib);
 
     ++it;
     if (it == _libsNames.end()) {
@@ -145,7 +148,7 @@ void Arcade::Core::Core::nextLib(LibType libType)
 
 void Arcade::Core::Core::changeLib(LibType libType)
 {
-    if (libType == LibType::Game) {
+    if (libType == LibType::GAME) {
         if (_currentGame.empty() && _gamesNames.size() > 0) {
             _currentGame = _gamesNames.front();
         } else {

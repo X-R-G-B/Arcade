@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include "LibHandler.hpp"
 
-LibHandler::LibHandler() : _lib(0) {}
-
 LibHandler::LibHandler(const std::string &lib) : _lib(0) {
     loadLib(lib);
 }

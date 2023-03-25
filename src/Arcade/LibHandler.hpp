@@ -14,7 +14,6 @@
 
 class LibHandler {
     public:
-        LibHandler();
         LibHandler(const std::string &);
         ~LibHandler();
         void loadLib(const std::string &);
@@ -49,4 +48,5 @@ class LibHandler {
         }
     private:
         void *_lib;
+        std::string path;
 };

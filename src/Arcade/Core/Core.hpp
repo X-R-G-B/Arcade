@@ -28,13 +28,14 @@ namespace Arcade {
                 std::vector<std::string> _graphicLibsNames;
                 std::string _currentGame;
                 std::string _currentGraphicLib;
-                std::unique_ptr<IGameModule> _gameModule;
-                std::unique_ptr<IDisplayModule> _displayModule;
+                Arcade::Game::IGameModule *_gameModule;
+                Arcade::Graph::IDisplayModule *_displayModule;
 
                 void getSharedLibsNames();
                 void addNameToList(LibType type, LibHandler &LibHandler);
                 std::unique_ptr<LibHandler> getLibHandler(const std::string &libName);
                 void checkChangeLib(ECS::IEventManager &eventManager);
+                void loadLib(LibType type);
                 void nextLib(LibType libType);
                 void changeLib(LibType libType);
         };

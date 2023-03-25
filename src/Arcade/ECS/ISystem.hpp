@@ -12,11 +12,6 @@
 #include "IEventManager.hpp"
 
 namespace Arcade {
-    namespace Core {
-        class IDisplayModule;
-        class IGameModule;
-    } // namespace Core
-
     namespace ECS {
         /**
          * @brief The ISystem interface

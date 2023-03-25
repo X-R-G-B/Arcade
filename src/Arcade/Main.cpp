@@ -11,7 +11,7 @@
 
 void launchCore(int ac, char **av)
 {
-    std::unique_ptr<Arcade::Core::Core> core;
+    std::unique_ptr<Arcade::Core::Core> core = nullptr;
     std::string str;
 
     if (ac == 2) {
