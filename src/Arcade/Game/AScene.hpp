@@ -13,13 +13,12 @@ namespace Arcade {
     namespace Game {
         class AScene : public IScene {
             public:
-                AScene();
+                AScene(std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager);
                 ~AScene() = default;
 
                 ECS::IEntityManager &getEntityManager();
             protected:
             private:
-                std::unique_ptr<ECS::ISystemManager> _SystemManager;
                 std::unique_ptr<ECS::IEntityManager> _EntityManager;
         };
     }

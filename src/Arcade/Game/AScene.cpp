@@ -7,8 +7,9 @@
 
 #include "AScene.hpp"
 
-Arcade::Game::AScene::AScene()
+Arcade::Game::AScene::AScene(std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager)
 {
+    this->_EntityManager.swap(enitityManager);
 }
 
 Arcade::ECS::IEntityManager &Arcade::Game::AScene::getEntityManager()
