@@ -41,10 +41,21 @@ namespace Arcade {
                  *
                  * @param type The type of component to get
                  *
+                 * !!!ATTENTION!!!: You need to use .at()
+                 * in order to manipulate your map or vector because of const
+                 *
                  * @return The list of components filtered
                  */
                 virtual const std::vector<std::shared_ptr<IComponent>> &
                 getComponents(CompType type) const = 0;
+                /**
+                 * @brief Get component by its id
+                 *
+                 * @param id The id of the component to get
+                 *
+                 * @return The component (if it doesn't exists: throw)
+                 */
+                virtual IComponent &getComponents(const std::string &id) = 0;
                 /**
                  * @brief Add a component
                  *
@@ -63,7 +74,7 @@ namespace Arcade {
                  *
                  * @param type The type of component to remove
                  */
-                virtual void removeComponents(CompType type) = 0;
+                virtual void removeComponent(CompType type) = 0;
         };
     } // namespace ECS
 } // namespace Arcade

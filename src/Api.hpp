@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "ISceneManager.hpp"
 #include "ISystemManager.hpp"
 
 #ifdef _WIN32
@@ -23,27 +22,38 @@
 
 extern "C"
 {
-    enum class LibType { GRAPH, GAME };
+    enum LibType { GRAPH, GAME };
 
     /**
-     * @brief The game shared lib main entry point to get scenes
+     * @brief The Games shared lib main entry point to get GameModule
      *
-     * @return A unique_ptr on ISceneManager instance
+     * @return A ptr on IGameModule
      *
      * All game shared lib must have this function
-     *
      */
-    std::unique_ptr<Arcade::Game::ISceneManager> getScenes();
+    EXPORT Arcade::Core::IGameModule *getGameModule();
+    /**
+     * @brief Destroy the GameModule created by getGameModule
+     *
+     * @param gameModule A ptr on IGameModule
+     */
+    EXPORT void destroyGameModule(Arcade::Core::IGameModule *gameModule);
 
     /**
-     * @brief The Graph shared lib main entry point to get systems
+     * @brief The Graphs shared lib main entry point to get DisplayModule
      *
-     * @return A unique_ptr on ISystemManager instance
+     * @return A ptr on IDisplayModule
      *
      * All graph shared lib must have this function
-     *
      */
-    std::unique_ptr<Arcade::ECS::ISystemManager> getSystems();
+    EXPORT Arcade::Core::IDisplayModule *getDisplayModule();
+    /**
+     * @brief Destroy the DisplayModule created by getDisplayModule
+     *
+     * @param displayModule A ptr on IDisplayModule
+     */
+    EXPORT void destroyDisplayModule(
+    Arcade::Core::IDisplayModule *displayModule);
 
     /**
      * @brief The Shared lib entry point to get lib name
@@ -51,9 +61,8 @@ extern "C"
      * @return Lib's name in std::string
      *
      * All shared lib must have this function
-     *
      */
-    std::string getName();
+    EXPORT const char *getName();
 
     /**
      * @brief The Shared lib entry point to get lib type
@@ -61,7 +70,6 @@ extern "C"
      * @return LibType enum
      *
      * All shared lib must have this function
-     *
      */
-    LibType getType();
+    EXPORT LibType getType();
 }

@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2023
-** Archi Arcade Promo 2026 Toulouse
+** Arcade
 ** File description:
-** System manager interface
+** System manager class
 */
 
 #pragma once
@@ -13,26 +13,28 @@
 #include "IEntityManager.hpp"
 #include "IEventManager.hpp"
 #include "ISystem.hpp"
+#include "ISystemManager.hpp"
 
 namespace Arcade {
     namespace ECS {
-        class ISystemManager {
+        class SystemManager : ISystemManager {
             public:
-                virtual ~ISystemManager() = default;
+                SystemManager() = default;
+                ~SystemManager() = default;
                 /**
                  * @brief Add a system to the system manager
                  *
                  * @param name The name of the system
                  * @param system The system to add
                  */
-                virtual void addSystem(const std::string &name,
-                std::unique_ptr<Arcade::ECS::ISystem> system) = 0;
+                void addSystem(const std::string &name,
+                std::unique_ptr<Arcade::ECS::ISystem> system) final;
                 /**
                  * @brief Remove a system from the system manager
                  *
                  * @param name The name of the system to remove
                  */
-                virtual void removeSystem(const std::string &name) = 0;
+                void removeSystem(const std::string &name) final;
                 /**
                  * @brief Update all systems of the system manager
                  *
@@ -40,9 +42,11 @@ namespace Arcade {
                  * @param entityManager The list of entities
                  * @param eventManager The list of events
                  */
-                virtual void update(float deltaTime,
+                void update(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentScene) = 0;
+                Arcade::ECS::IEntityManager &currentScene) final;
+            private:
+                std::map<std::string, std::unique_ptr<Arcade::ECS::ISystem>> _systems;
         };
     } // namespace ECS
 } // namespace Arcade

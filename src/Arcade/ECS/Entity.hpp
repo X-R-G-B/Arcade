@@ -17,7 +17,7 @@ namespace Arcade {
         class Entity : public Arcade::ECS::IEntity {
             public:
                 Entity(const std::string &id);
-                virtual ~Entity() = default;
+                ~Entity() = default;
                 /**
                  * @brief Get the entity id
                  *
@@ -59,7 +59,7 @@ namespace Arcade {
                  *
                  * @param type The type of component to remove
                  */
-                void removeComponents(CompType type) final;
+                void removeComponent(CompType type) final;
 
             private:
                 std::string _id;
