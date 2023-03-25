@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <dlfcn.h>
 #include <functional>
@@ -48,6 +49,7 @@ class LibHandler {
                 destroyAfter = false;
             }
             if (lib == nullptr) {
+                std::cout << "Error1: " << path << std::endl;
                 throw std::runtime_error("Failed to load library");
             }
             func = (retType_t) dlsym(lib, "getType");
@@ -70,6 +72,7 @@ class LibHandler {
                 destroyAfter = false;
             }
             if (lib == nullptr) {
+                std::cout << "Error2: " << path << std::endl;
                 throw std::runtime_error("Failed to load library");
             }
             func = (retType_t) dlsym(lib, "getName");
@@ -85,16 +88,19 @@ class LibHandler {
             typedef T *(*retType_t)();
             retType_t func = nullptr;
 
-            if (_lib == nullptr) {
-                dlclose(_lib);
-            }
+            std::cout << "Loading lib reeeee: " << path << std::endl;
+            destroyLib();
+            std::cout << "Loading lib raaaaa: " << path << std::endl;
             _lib = dlopen(path.c_str(), RTLD_LAZY);
+            std::cout << "Loading lib rbbbbb: " << path << std::endl;
             if (_lib == nullptr) {
+                std::cout << "Error3: " << path << std::endl;
                 throw std::runtime_error("Failed to load library");
             }
             if (_type != LibHandler::getLibType(path, _lib)) {
                 throw std::runtime_error("Bad library type");
             }
+            std::cout << "Loading lib rccccc: " << path << std::endl;
             try {
                 _name = LibHandler::getLibName(path, _lib);
             } catch (std::exception &e) {
@@ -102,8 +108,14 @@ class LibHandler {
                 _lib = nullptr;
                 throw std::runtime_error(e.what());
             }
+            std::cout << "Loading lib rddddd: " << path << std::endl;
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
+            if (func == nullptr) {
+                throw std::runtime_error("Failed to load function " + _funcCreator);
+            }
+            std::cout << "Loading lib rfffff: " << path << std::endl;
             _module = func();
+            std::cout << "Loading lib rggggg: " << path << std::endl;
         }
 
         T *getModule()
@@ -122,9 +134,15 @@ class LibHandler {
             if (_lib == nullptr) {
                 return;
             }
-            func = (retType_t) dlsym(_lib, _funcDestructor.c_str());
-            func(_module);
+            if (_module != nullptr) {
+                func = (retType_t) dlsym(_lib, _funcDestructor.c_str());
+                if (func != nullptr) {
+                    func(_module);
+                }
+                _module = nullptr;
+            }
             dlclose(_lib);
+            _lib = nullptr;
         }
 
         LibType getType()

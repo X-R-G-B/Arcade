@@ -8,6 +8,7 @@
 #include <iostream>
 #include <functional>
 #include <filesystem>
+#include <ostream>
 #include <stdexcept>
 #include <chrono>
 #include "EventManager.hpp"
@@ -31,8 +32,11 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     std::string name;
     LibType type;
  
+    std::cout << "Loading " << path << std::endl;
     name = LibHandler<Graph::IDisplayModule>::getLibName(path);
+    std::cout << "Loading1 " << path << std::endl;
     type = LibHandler<Graph::IDisplayModule>::getLibType(path);
+    std::cout << "Loading2 " << path << std::endl;
     if (type == LibType::GAME) {
         _gamesNames.push_back(name);
     } else {
@@ -53,9 +57,10 @@ void Arcade::Core::Core::getSharedLibsNames()
         path = std::string(entry.path());
         pos = path.find(".so");
         if (pos == std::string::npos || pos + 3 != path.length()) {
-            throw std::invalid_argument("File is not a shared library: " + path);
+            std::cerr << "File is not a shared library: " << path << std::endl;
+        } else {
+            addNameToList(path);
         }
-        addNameToList(path);
     }
     if (empty) {
         throw std::invalid_argument("Empty lib folder");
@@ -70,7 +75,9 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (start == std::string::npos || end == std::string::npos) {
         throw std::invalid_argument("Invalid path");
     }
+    std::cout << "Loading graphic lib: " << path << std::endl;
     _graphLibHandler.loadLib(path);
+    std::cout << "Loading graphic lib1: " << path << std::endl;
 }
 
 void Arcade::Core::Core::update()
