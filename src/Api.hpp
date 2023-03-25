@@ -22,7 +22,7 @@
 
 extern "C"
 {
-    enum LibType { GRAPH, GAME };
+    enum LibType {GRAPH, GAME};
 
     /**
      * @brief The Games shared lib main entry point to get GameModule

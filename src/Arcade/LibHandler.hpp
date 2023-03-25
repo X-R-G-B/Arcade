@@ -19,9 +19,9 @@ class LibHandler {
         ~LibHandler();
         void loadLib(const std::string &);
         void deleteLib();
-        template<typename resType> resType loadMainFunction(const std::string &function, resType arg)
+        template<typename resType> resType loadDestroyFunction(const std::string &function, resType arg)
         {
-            typedef resType (*retType_t)(resType);
+            typedef void (*retType_t)(resType);
             retType_t func = NULL;
 
             if (_lib == nullptr) {
