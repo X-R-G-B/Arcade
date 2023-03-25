@@ -13,7 +13,6 @@
 #include "Core.hpp"
 #include "IEventManager.hpp"
 #include "IDisplayModule.hpp"
-#include "GameModule.hpp"
 
 Arcade::Core::Core::Core()
 {
@@ -78,12 +77,8 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     if (type == LibType::GAME) {
         throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
     }
-<<<<<<< HEAD
     _currentGraphicLib = path.substr(start + 7, end);
     changelib(LibType::GRAPH);
-=======
-    //_displayModule.changeGraphicLib(path.substr(start + 7, end))TODO need DisplayModule
->>>>>>> dev
 }
 
 void Arcade::Core::Core::update()
