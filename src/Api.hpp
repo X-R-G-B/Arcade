@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include "ISystemManager.hpp"
+#include "IGameModule.hpp"
+#include "IDisplayModule.hpp"
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -31,13 +32,13 @@ extern "C"
      *
      * All game shared lib must have this function
      */
-    EXPORT Arcade::Core::IGameModule *getGameModule();
+    EXPORT Arcade::Game::IGameModule *getGameModule();
     /**
      * @brief Destroy the GameModule created by getGameModule
      *
      * @param gameModule A ptr on IGameModule
      */
-    EXPORT void destroyGameModule(Arcade::Core::IGameModule *gameModule);
+    EXPORT void destroyGameModule(Arcade::Game::IGameModule *gameModule);
 
     /**
      * @brief The Graphs shared lib main entry point to get DisplayModule
@@ -46,14 +47,14 @@ extern "C"
      *
      * All graph shared lib must have this function
      */
-    EXPORT Arcade::Core::IDisplayModule *getDisplayModule();
+    EXPORT Arcade::Graph::IDisplayModule *getDisplayModule();
     /**
      * @brief Destroy the DisplayModule created by getDisplayModule
      *
      * @param displayModule A ptr on IDisplayModule
      */
     EXPORT void destroyDisplayModule(
-    Arcade::Core::IDisplayModule *displayModule);
+    Arcade::Graph::IDisplayModule *displayModule);
 
     /**
      * @brief The Shared lib entry point to get lib name
