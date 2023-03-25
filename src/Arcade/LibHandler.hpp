@@ -14,78 +14,133 @@
 #include <type_traits>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
+#include "Api.hpp"
 
-template<typename resType>
+template<typename T>
 class LibHandler {
     public:
-        LibHandler(const std::string &) : _lib(nullptr), _module(nullptr), _type(std::nullopt)
+        LibHandler() : _lib(nullptr), _module(nullptr)
         {
-            loadLib(lib);
-            if (std::is_same(resType, Arcade::Graph::IDisplayModule)) {
-                getType
+            if (std::is_same<T, Arcade::Graph::IDisplayModule>::value) {
+                _type = LibType::GRAPH;
+                _funcCreator = "getDisplayModule";
+                _funcDestructor = "destroyDisplayModule";
+            } else if (std::is_same<T, Arcade::Game::IGameModule>::value) {
+                _type = LibType::GAME;
+                _funcCreator = "getGameModule";
+                _funcDestructor = "destroyGameModule";
             }
-            getType();
-            _module = loadFunction<resType>("");
         }
-        ~LibHandler();
-        void loadLib(const std::string &);
-        void deleteLib();
-        const std::string getName()
-        {
-            return loadFunction<std::string>("getName");
+
+        ~LibHandler() {
+            destroyLib();
         }
-        const LibType getType()
+
+        static LibType getLibType(const std::string &path, void *lib = nullptr)
         {
-            if (_type == std::nullopt) {
-                _type = loadFunction<LibType>("getType");
+            typedef LibType (*retType_t)();
+            retType_t func = nullptr;
+            LibType type;
+            bool destroyAfter = true;
+ 
+            if (lib == nullptr) {
+                lib = dlopen(path.c_str(), RTLD_LAZY);
+                destroyAfter = false;
             }
-            return _type;
-        }
-        const resType getModule()
-        {
-            if (_module) {
-                deleteLib();
-                _module = nullptr;
+            if (lib == nullptr) {
+                throw std::runtime_error("Failed to load library");
             }
-            if (type == LibType::GAME) {
-                _module = loadFunction<resType>("");
-            } else {
-                _module = loadFunction
+            func = (retType_t) dlsym(lib, "getType");
+            type = func();
+            if (destroyAfter) {
+                dlclose(lib);
+            }
+            return type;
+        }
+
+        static std::string getLibName(const std::string &path, void *lib = nullptr)
+        {
+            typedef const char *(*retType_t)();
+            retType_t func = nullptr;
+            std::string name;
+            bool destroyAfter = true;
+ 
+            if (lib == nullptr) {
+                lib = dlopen(path.c_str(), RTLD_LAZY);
+                destroyAfter = false;
+            }
+            if (lib == nullptr) {
+                throw std::runtime_error("Failed to load library");
+            }
+            func = (retType_t) dlsym(lib, "getName");
+            name = func();
+            if (destroyAfter) {
+                dlclose(lib);
+            }
+            return name;
+        }
+
+        void loadLib(const std::string &path)
+        {
+            typedef T *(*retType_t)();
+            retType_t func = nullptr;
+
+            if (_lib == nullptr) {
+                dlclose(_lib);
+            }
+            _lib = dlopen(path.c_str(), RTLD_LAZY);
+            if (_lib == nullptr) {
+                throw std::runtime_error("Failed to load library");
+            }
+            if (_type != LibHandler::getLibType(path, _lib)) {
+                throw std::runtime_error("Bad library type");
+            }
+            try {
+                _name = LibHandler::getLibName(path, _lib);
+            } catch (std::exception &e) {
+                dlclose(_lib);
+                _lib = nullptr;
+                throw std::runtime_error(e.what());
+            }
+            func = (retType_t) dlsym(_lib, _funcCreator.c_str());
+            _module = func();
+        }
+
+        T *getModule()
+        {
+            if (_module == nullptr) {
+                throw std::runtime_error("Module not loaded");
             }
             return _module;
         }
-        void callDestroyFunction()
+
+        void destroyLib()
         {
-            typedef void (*retType_t)(resType);
-            retType_t func = NULL;
+            typedef void (*retType_t)(T *);
+            retType_t func = nullptr;
 
             if (_lib == nullptr) {
-                throw std::runtime_error("No library loaded");
+                return;
             }
-            func = (retType_t) dlsym(_lib, function.c_str());
-            if (!func) {
-                throw std::invalid_argument("A library in lib/ don't respect entry points doc");
-            }
-            func(arg);
+            func = (retType_t) dlsym(_lib, _funcDestructor.c_str());
+            func(_module);
+            dlclose(_lib);
         }
-        
-        resType *loadFunction(const std::string &function)
-        {
-            typedef resType (*retType_t)();
-            retType_t func = NULL;
 
-            if (_lib == nullptr) {
-                throw std::runtime_error("No library loaded");
-            }
-            func = (retType_t) dlsym(_lib, function.c_str());
-            if (!func) {
-                throw std::invalid_argument("A library in lib/ don't respect entry points doc");
-            }
-            return func();
+        LibType getType()
+        {
+            return _type;
         }
+        const std::string &getName()
+        {
+            return _name;
+        }
+
     private:
+        std::string _funcCreator;
+        std::string _funcDestructor;
         void *_lib;
-        resType *_module;
-        std::optional<LibType> _type;
+        T *_module;
+        LibType _type;
         std::string _name;
 };

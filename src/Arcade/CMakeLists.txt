@@ -6,7 +6,6 @@ target_include_directories(arcade PRIVATE
 
 target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/LibHandler.cpp"
 )
 
 find_library(LDL dl)

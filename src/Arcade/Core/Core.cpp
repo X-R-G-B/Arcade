@@ -10,27 +10,29 @@
 #include <filesystem>
 #include <stdexcept>
 #include <chrono>
-#include "Api.hpp"
-#include "Core.hpp"
 #include "EventManager.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
+#include "Api.hpp"
+#include "Core.hpp"
 
 Arcade::Core::Core::Core(const std::string &path) : _gameModule(nullptr), _displayModule(nullptr)
 {
     getSharedLibsNames();
     if (path.empty()) {
-        changeLib(LibType::GRAPH);
+        nextLib(LibType::GRAPH);
     } else {
         loadGraphicLibFromPath(path);
     }
 }
 
-void Arcade::Core::Core::addNameToList(LibType type, LibHandler &LibHandler)
+void Arcade::Core::Core::addNameToList(const std::string &path)
 {
     std::string name;
+    LibType type;
  
-    name = LibHandler.loadFunction<std::string>("getName");
+    name = LibHandler<Graph::IDisplayModule>::getLibName(path);
+    type = LibHandler<Graph::IDisplayModule>::getLibType(path);
     if (type == LibType::GAME) {
         _gamesNames.push_back(name);
     } else {
@@ -41,12 +43,10 @@ void Arcade::Core::Core::addNameToList(LibType type, LibHandler &LibHandler)
 void Arcade::Core::Core::getSharedLibsNames()
 {
     std::size_t pos;
-    LibHandler LibHandler;
-    LibType type;
     std::string path;
     bool empty = true;
 
-    for (const auto &entry : std::filesystem::directory_iterator(libFolderPath)) {
+    for (const auto &entry : std::filesystem::directory_iterator(_libFolderPath)) {
         if (empty == true) {
             empty = false;
         }
@@ -55,9 +55,7 @@ void Arcade::Core::Core::getSharedLibsNames()
         if (pos == std::string::npos || pos + 3 != path.length()) {
             throw std::invalid_argument("File is not a shared library: " + path);
         }
-        LibHandler.loadLib(path);
-        type = LibHandler.loadFunction<LibType>("getType");
-        addNameToList(type, LibHandler);
+        addNameToList(path);
     }
     if (empty) {
         throw std::invalid_argument("Empty lib folder");
@@ -66,21 +64,13 @@ void Arcade::Core::Core::getSharedLibsNames()
 
 void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
 {
-    LibHandler LibHandler;
     std::size_t start = path.find("arcade_");
     std::size_t end = path.find(".so");
-    LibType type;
 
     if (start == std::string::npos || end == std::string::npos) {
         throw std::invalid_argument("Invalid path");
     }
-    LibHandler.loadLib(path);
-    type = LibHandler.loadFunction<LibType>("getType");
-    if (type == LibType::GAME) {
-        throw std::invalid_argument("Wrong shared library type, you must load a graphic lib");
-    }
-    _currentGraphicLib = path.substr(start + 7, end);
-    changeLib(LibType::GRAPH);
+    _graphLibHandler.loadLib(path);
 }
 
 void Arcade::Core::Core::update()
@@ -107,62 +97,27 @@ void Arcade::Core::Core::update()
 void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
 {
     if (eventManager.isEventTriggered("CHANGE_GAME").first) {
-        changeLib(LibType::GAME);
-        loadLib(LibType::GAME);
+        nextLib(LibType::GAME);
     } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first) {
-        changeLib(LibType::GRAPH);
-        loadLib(LibType::GRAPH);
+        nextLib(LibType::GRAPH);
     }
-}
-
-void Arcade::Core::Core::loadLib(LibType type)
-{
-    std::unique_ptr<LibHandler> libHandler = nullptr;
-
-    if (type == LibType::GAME) {
-        libHandler = std::make_unique<LibHandler>(_currentGame);
-        _gameModule.reset();
-        _gameModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IGameModule>>("getGameModule", _sceneManager);
-    } else {
-        libHandler = std::make_unique<LibHandler>(_currentGraphicLib);
-        
-        _displayModule = libHandler->loadMainFunction<std::shared_ptr<Arcade::Game::IDisplayModule>>("getDisplayModule", _sceneManager);
-    }
-}
-
-std::unique_ptr<LibHandler> Arcade::Core::Core::getLibHandler(const std::string &libName)
-{
-    return std::make_unique<LibHandler>("./lib/arcade_" + libName + ".so");
 }
 
 void Arcade::Core::Core::nextLib(LibType libType)
 {
     const std::vector<std::string> &it2 = (libType == LibType::GAME) ? _gamesNames : _graphicLibsNames;
-    std::string &currentLib = (libType == LibType::GAME) ? _currentGame : _currentGraphicLib;
+    const std::string &currentLib = (libType == LibType::GAME) ? _gameLibHandler.getName() : _graphLibHandler.getName();
+    std::string path;
 
     auto it = std::find(it2.begin(), it2.end(), currentLib);
     ++it;
     if (it == it2.end()) {
         ++it;
     }
-    currentLib = *it;
-}
-
-void Arcade::Core::Core::changeLib(LibType libType)
-{
+    path = "./lib/arcade_" + *it + ".so";
     if (libType == LibType::GAME) {
-        if (_currentGame.empty() && _gamesNames.size() > 0) {
-            _currentGame = _gamesNames.front();
-        } else {
-            nextLib(libType);
-        }
+        _gameLibHandler.loadLib(path);
     } else {
-        if (_graphicLibsNames.empty()) {
-            throw std::invalid_argument("No shared graphic lib in lib/ folder");
-        } else if (_currentGraphicLib.empty()) {
-            _currentGraphicLib = _graphicLibsNames.front();
-        } else {
-            nextLib(libType);
-        }
+        _graphLibHandler.loadLib(path);
     }
 }
