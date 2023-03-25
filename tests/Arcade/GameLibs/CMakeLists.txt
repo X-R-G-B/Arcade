@@ -12,8 +12,8 @@ target_include_directories(arcade_test_game_cout PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/Arcade/ECS"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/Arcade/Game"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/Arcade/Graph"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/Arcade/Core"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/Arcade"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src"
 )
 
 target_sources(arcade_test_game_cout PRIVATE

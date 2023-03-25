@@ -4,6 +4,7 @@
 #include "../../../src/Arcade/ECS/SystemManager.hpp"
 #include "../../../src/Arcade/Game/AScene.hpp"
 #include "../../../src/Arcade/Game/IGameModule.hpp"
+#include "../../../src/Arcade/Graph/Sprite.hpp"
 
 namespace Arcade {
     namespace ECS {
@@ -65,6 +66,15 @@ namespace Arcade::ECS {
             int _y;
     };
 } // namespace Arcade::ECS
+
+namespace Arcade::ECS {
+    class PlayerSprite : public Arcade::Graph::Sprite {
+        public:
+            PlayerSprite(const std::string &id);
+            ~PlayerSprite() = default;
+    };
+} // namespace Arcade::ECS
+
 // ---------------------------------------------------------
 
 // ------------------------- Scene -------------------------
@@ -88,10 +98,30 @@ bool test_scene::init()
     this->getEntityManager().getEntitiesById("player")->addComponent(
     std::make_shared<Arcade::ECS::PositionComponent>(
     Arcade::ECS::PositionComponent(0, 0)));
+    this->getEntityManager().getEntitiesById("player")->addComponent(
+    std::make_shared<Arcade::ECS::PlayerSprite>(
+    Arcade::ECS::PlayerSprite("player sprite")));
+    Arcade::Graph::Sprite &sprite_player =  static_cast<Arcade::Graph::Sprite &>(this->getEntityManager().getEntitiesById("player")->getComponents("player sprite"));
+    sprite_player.path = "/assets/leplayer.png";
+    sprite_player.pos = {0, 10, 15};
+    sprite_player.rect = {10, 10, 80, 80};
+    sprite_player.ttyData = {"@", {1, 2, 3, 4}};
+    sprite_player.type = Arcade::ECS::CompType::SPRITE;
+
     this->getEntityManager().createEntity("enemy");
     this->getEntityManager().getEntitiesById("enemy")->addComponent(
     std::make_shared<Arcade::ECS::PositionComponent>(
     Arcade::ECS::PositionComponent(100, 100)));
+    this->getEntityManager().getEntitiesById("player")->addComponent(
+    std::make_shared<Arcade::ECS::PlayerSprite>(
+    Arcade::ECS::PlayerSprite("Enemy sprite")));
+    Arcade::Graph::Sprite &sprite_enemy =  static_cast<Arcade::Graph::Sprite &>(this->getEntityManager().getEntitiesById("enemy")->getComponents("Enemy sprite"));
+    sprite_enemy.path = "/assets/leennemy.png";
+    sprite_enemy.pos = {0, 10, 15};
+    sprite_enemy.rect = {10, 10, 80, 80};
+    sprite_enemy.ttyData = {"@", {1, 2, 3, 4}};
+    sprite_enemy.type = Arcade::ECS::CompType::SPRITE;
+
     return true;
 }
 
