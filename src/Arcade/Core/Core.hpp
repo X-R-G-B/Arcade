@@ -23,21 +23,18 @@ namespace Arcade {
 
                 void loadGraphicLibFromPath(const std::string &path);
             private:
-                const std::string libFolderPath = "./lib";
+                const std::string _libFolderPath = "./lib";
                 std::vector<std::string> _gamesNames;
                 std::vector<std::string> _graphicLibsNames;
-                std::string _currentGame;
-                std::string _currentGraphicLib;
                 Arcade::Game::IGameModule *_gameModule;
                 Arcade::Graph::IDisplayModule *_displayModule;
+                LibHandler<Graph::IDisplayModule> _graphLibHandler;
+                LibHandler<Game::IGameModule> _gameLibHandler;
 
                 void getSharedLibsNames();
-                void addNameToList(LibType type, LibHandler &LibHandler);
-                std::unique_ptr<LibHandler> getLibHandler(const std::string &libName);
+                void addNameToList(const std::string &path);
                 void checkChangeLib(ECS::IEventManager &eventManager);
-                void loadLib(LibType type);
                 void nextLib(LibType libType);
-                void changeLib(LibType libType);
         };
     }
 }
