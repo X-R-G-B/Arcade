@@ -12,13 +12,14 @@
 Arcade::ECS::IEntity &Arcade::ECS::EntityManager::createEntity(
 const std::string &id)
 {
-    std::shared_ptr<Arcade::ECS::Entity> entity;
+    std::shared_ptr<Arcade::ECS::Entity> entity = nullptr;
 
     if (id.empty())
         throw Arcade::ECS::ECSException("Entity id can't be empty");
     for (auto &entity : _entities) {
-        if (entity->getId() == id)
+        if (entity->getId() == id) {
             throw Arcade::ECS::ECSException("Entity id already exist");
+        }
     }
     entity = std::make_shared<Arcade::ECS::Entity>(id);
     _entities.push_back(entity);
