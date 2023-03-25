@@ -17,23 +17,59 @@ namespace Arcade {
          *
          * The IMusic class is the class where you can manipulate Sounds and
          * Musics.
-         * ATTENTION: This class is of CompType MUSIC (you need to set the type
-         * in order for the graphic to play it)
+         * ATTENTION: This class is of CompType MUSIC
+         * ATTENTION: You must have a parameter in your constructor
+         * in order to set his id.
          */
-        struct IMusic : public Arcade::ECS::IComponent {
+        class IMusic : public Arcade::ECS::IComponent {
             public:
+                virtual ~IMusic() = default;
                 /**
-                 * @brief Path of the Music
+                 * @brief Get the Id object
+                 *
+                 * @return The Id of the Music.
                  */
-                std::string path;
+                virtual const std::string &getId() const override = 0;
                 /**
-                 * @brief Loop music
+                 * @brief Get the path of the Music.
+                 *
+                 * @return The path of the Music.
                  */
-                bool loop;
+                virtual const std::string &getPath() const = 0;
                 /**
-                 * @brief Play music
+                 * @brief Set the path of the Music.
                  */
-                bool play;
+                virtual void setPath(const std::string &path) = 0;
+                /**
+                 * @brief Check if the music is looping.
+                 *
+                 * @return The Loop data.
+                 */
+                virtual bool getLoop() const = 0;
+                /**
+                 * @brief Set the loop data.
+                 */
+                virtual void setLoop(bool loop) = 0;
+                /**
+                 * @brief Check if the music is currently played.
+                 *
+                 * @return The IsPlaying data.
+                 */
+                virtual bool getIsPlaying() const = 0;
+                /**
+                 * @brief Set the IsPlaying data.
+                 */
+                virtual void setIsPlaying(bool isPlaying) = 0;
+                /**
+                 * @brief Get the Volume data.
+                 *
+                 * @return The Volume data.
+                 */
+                virtual float getVolume() const = 0;
+                /**
+                 * @brief Get the Volume data.
+                 */
+                virtual void setVolume(float volume) = 0;
         };
     } // namespace Graph
 } // namespace Arcade

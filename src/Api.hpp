@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "ISceneManager.hpp"
 #include "ISystemManager.hpp"
 
 #ifdef _WIN32
@@ -22,38 +23,39 @@
 
 extern "C"
 {
-    enum LibType { GRAPH, GAME };
+    enum class LibType { GRAPH, GAME };
 
     /**
-     * @brief The Games shared lib main entry point to get GameModule
+     * @brief The game shared lib main entry point to get scenes
      *
-     * @return A ptr on IGameModule
+     * @return A unique_ptr on ISceneManager instance
      *
      * All game shared lib must have this function
-     */
-    EXPORT Arcade::Game::IGameModule *getGameModule();
-    /**
-     * @brief Destroy the GameModule created by getGameModule
      *
-     * @param gameModule A ptr on IGameModule
+     * It takes a parameter because, if there was no parameter, we will have to
+     * implement all the Archi commune in all .so (to be hable to create
+     * (malloc/new) one of them Now, with this parameter, we don't have to code
+     * everything in .so
+     *
      */
-    EXPORT void destroyGameModule(Arcade::Game::IGameModule *gameModule);
+    EXPORT std::shared_ptr<Arcade::Game::ISceneManager> getScenes(
+    std::shared_ptr<Arcade::Game::ISceneManager> sceneManager);
 
     /**
-     * @brief The Graphs shared lib main entry point to get DisplayModule
+     * @brief The Graph shared lib main entry point to get systems
      *
-     * @return A ptr on IDisplayModule
+     * @return A unique_ptr on ISystemManager instance
      *
      * All graph shared lib must have this function
-     */
-    EXPORT Arcade::Graph::IDisplayModule *getDisplayModule();
-    /**
-     * @brief Destroy the DisplayModule created by getDisplayModule
      *
-     * @param displayModule A ptr on IDisplayModule
+     * It takes a parameter because, if there was no parameter, we will have to
+     * implement all the Archi commune in all .so (to be hable to create
+     * (malloc/new) one of them Now, with this parameter, we don't have to code
+     * everything in .so
+     *
      */
-    EXPORT void destroyDisplayModule(
-    Arcade::Graph::IDisplayModule *displayModule);
+    EXPORT std::shared_ptr<Arcade::ECS::ISystemManager> getSystems(
+    std::shared_ptr<Arcade::ECS::ISystemManager> systemManager);
 
     /**
      * @brief The Shared lib entry point to get lib name
@@ -61,8 +63,9 @@ extern "C"
      * @return Lib's name in std::string
      *
      * All shared lib must have this function
+     *
      */
-    EXPORT const char *getName();
+    EXPORT std::string getName();
 
     /**
      * @brief The Shared lib entry point to get lib type
@@ -70,6 +73,7 @@ extern "C"
      * @return LibType enum
      *
      * All shared lib must have this function
+     *
      */
     EXPORT LibType getType();
 }

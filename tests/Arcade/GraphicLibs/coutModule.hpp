@@ -7,21 +7,32 @@
 
 #pragma once
 
-#include "../../../src/Arcade/Core/IDisplayModule.hpp"
+#include <iostream>
+#include "IDisplayModule.hpp"
+#include "SystemManager.hpp"
 
 namespace Arcade {
     namespace Graph {
-        class CoutModule : public Core::IDisplayModule {
-            public :
+
+        class ouiSystem : public ECS::ISystem {
+            public:
+                ouiSystem();
+                ~ouiSystem();
+                void run(float deltaTime,
+                Arcade::ECS::IEventManager &eventManager,
+                Arcade::ECS::IEntityManager &entityManager);
+        };
+
+        class CoutModule : public Graph::IDisplayModule {
+            public:
                 CoutModule();
                 ~CoutModule();
 
                 void update(float delta,
                 ECS::IEventManager &eventManager,
                 ECS::IEntityManager &entityManager);
-            protected :
-            private :
-                ECS::SystemManager systemManager;
+            private:
+                ECS::SystemManager _systemManager;
         };
     }
 }

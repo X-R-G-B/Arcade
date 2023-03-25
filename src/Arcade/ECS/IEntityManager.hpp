@@ -22,7 +22,7 @@ namespace Arcade {
                 /**
                  * @brief Add an entity to the manager
                  *
-                 * @param id The id of the entity to create
+                 * @param id The id of the entity
                  *
                  * @return The entity created
                  */

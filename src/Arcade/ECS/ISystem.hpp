@@ -8,10 +8,14 @@
 #pragma once
 
 #include <cstddef>
-#include "IEntityManager.hpp"
 #include "IEventManager.hpp"
 
 namespace Arcade {
+    namespace Core {
+        class IDisplayModule;
+        class IGameModule;
+    } // namespace Core
+
     namespace ECS {
         /**
          * @brief The ISystem interface
@@ -24,9 +28,10 @@ namespace Arcade {
                 /**
                  * @brief Run the system implementation
                  */
-                virtual void run(float deltaTime,
-                Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentScene) = 0;
+                virtual void run(std::size_t deltaTime,
+                Arcade::ECS::IEventManager &,
+                Arcade::Core::IDisplayModule &displayModule,
+                Arcade::Core::IGameModule &gameModule) = 0;
         };
     } // namespace ECS
 } // namespace Arcade
