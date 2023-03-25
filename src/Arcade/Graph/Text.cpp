@@ -9,6 +9,6 @@
 
 Arcade::Graph::Text::Text(const std::string &id)
 {
-    this->id = textId;
+    this->id = id;
     this->type = Arcade::ECS::CompType::TEXT;
 }
