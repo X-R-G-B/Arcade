@@ -82,7 +82,7 @@ void Arcade::Core::Core::update()
     std::chrono::duration<double> delta(0);
     //std::unique_ptr<IScene> mainMenu = getMainMenu() TODO need main menu
 
-    while (eventManager.isEventTriggered("QUIT").first) {
+    while (eventManager.isEventTriggered("QUIT").first == false) {
         delta = start - std::chrono::steady_clock::now();
         if (_gameModule == nullptr) {
           //mainMenu->getSystemManager->update(delta.count(), eventManager, _displayModule, _gameModule)
