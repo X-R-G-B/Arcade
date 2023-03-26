@@ -6,12 +6,11 @@ project(
     LANGUAGES CXX
 )
 
-target_include_directories(arcade PRIVATE
+add_library(arcade_sfml SHARED)
+target_include_directories(arcade_sfml PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../Arcade/ECS/"
 )
-
-add_library(arcade_sfml SHARED)
 target_sources(arcade_sfml PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/SFML.cpp"
 )
