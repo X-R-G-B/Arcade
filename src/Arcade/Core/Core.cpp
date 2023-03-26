@@ -33,13 +33,14 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
 {
     std::string name;
     LibType type;
+    std::string path2 = path;
  
     name = LibHandler<Graph::IDisplayModule>::getLibName(path);
     type = LibHandler<Graph::IDisplayModule>::getLibType(path);
     if (type == LibType::GAME) {
-        _gamesNames.push_back(std::make_pair(name, path));
+        _gamesNames.push_back(std::make_pair(name, path2));
     } else {
-        _graphicLibsNames.push_back(std::make_pair(name, path));
+        _graphicLibsNames.push_back(std::make_pair(name, path2));
     }
 }
 
@@ -47,12 +48,8 @@ void Arcade::Core::Core::getSharedLibsNames()
 {
     std::size_t pos;
     std::string path;
-    bool empty = true;
 
     for (const auto &entry : std::filesystem::directory_iterator(_libFolderPath)) {
-        if (empty == true) {
-            empty = false;
-        }
         path = std::string(entry.path());
         pos = path.find(".so");
         if (pos == std::string::npos || pos + 3 != path.length()) {
@@ -61,7 +58,7 @@ void Arcade::Core::Core::getSharedLibsNames()
             addNameToList(path);
         }
     }
-    if (empty) {
+    if (_gamesNames.empty() && _graphicLibsNames.empty()) {
         throw std::invalid_argument("Empty lib folder");
     }
 }
@@ -117,18 +114,20 @@ void Arcade::Core::Core::nextLib(LibType libType)
     const std::string &currentLib = (libType == LibType::GAME) ? _gameLibHandler.getName() : _graphLibHandler.getName();
     std::string path;
 
-    auto it = std::find_if(it2.begin(), it2.end(), [currentLib](const std::pair<std::string, std::string> &pair) {
-        return pair.first == currentLib;
-    });
-    ++it;
+    auto it = it2.begin();
+    for (; it != it2.end(); ++it) {
+        if ((*it).first == currentLib) {
+            ++it;
+            break;
+        }
+    }
     if (it == it2.end()) {
         it = it2.begin();
     }
     if (it == it2.end()) {
         path = "";
     } else {
-        std::cout << "Current lib: " << it->second << std::endl;
-        path = it->second;
+        path = (*it).second;
     }
     if (libType == LibType::GAME) {
         if (path.empty()) {
