@@ -63,6 +63,17 @@ Arcade::ECS::EntityManager::getComponentsByComponentType(Arcade::ECS::CompType c
     return components;
 }
 
+
+std::shared_ptr<Arcade::ECS::IEntity>
+Arcade::ECS::EntityManager::getEntitiesById(const std::string &id) const
+{
+    for (auto &entity : this->_entities) {
+        if (entity->getId() == id)
+            return entity;
+    }
+    return nullptr;
+}
+
 void Arcade::ECS::EntityManager::removeEntity(const std::string &id)
 {
     for (auto it = _entities.begin(); it != _entities.end(); ++it) {

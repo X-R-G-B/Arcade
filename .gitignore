@@ -26,6 +26,9 @@
 *.a
 *.lib
 
+# zip files
+*.zip
+
 # Executables
 *.exe
 *.out
