@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include "../../../src/Api.hpp"
 #include "../../../src/Arcade/ECS/EntityManager.hpp"
@@ -105,7 +106,7 @@ bool test_scene::init()
     sprite_player.path = "/assets/leplayer.png";
     sprite_player.pos = {0, 10, 15};
     sprite_player.rect = {10, 10, 80, 80};
-    sprite_player.ttyData = {"@", {1, 2, 3, 4}};
+    sprite_player.ttyData = {"@", {1, 2, 3, 4}, {5, 6, 7, 8}};
     sprite_player.type = Arcade::ECS::CompType::SPRITE;
 
     this->getEntityManager().createEntity("enemy");
@@ -119,7 +120,7 @@ bool test_scene::init()
     sprite_enemy.path = "/assets/leennemy.png";
     sprite_enemy.pos = {0, 10, 15};
     sprite_enemy.rect = {10, 10, 80, 80};
-    sprite_enemy.ttyData = {"@", {1, 2, 3, 4}};
+    sprite_enemy.ttyData = {"@", {1, 2, 3, 4}, {0, 0, 0, 0}};
     sprite_enemy.type = Arcade::ECS::CompType::SPRITE;
 
     return true;
@@ -155,7 +156,7 @@ Arcade::ECS::IEntityManager &entityManager)
         entity->getComponents(Arcade::ECS::CompType::POSITION);
         if (entity->getId() == "player") {
             std::cout << "player" << std::endl;
-            for (int i = 0; i < components.size(); i++) {
+            for (std::size_t i = 0; i < components.size(); i++) {
                 auto *position = static_cast<Arcade::ECS::PositionComponent *>(
                 components[i].get());
                 xPos = position->getX();
@@ -166,7 +167,7 @@ Arcade::ECS::IEntityManager &entityManager)
             }
         } else {
             std::cout << "enemy" << std::endl;
-            for (int i = 0; i < components.size(); i++) {
+            for (std::size_t i = 0; i < components.size(); i++) {
                 auto *position = static_cast<Arcade::ECS::PositionComponent *>(
                 components[i].get());
                 xPos = position->getX();
