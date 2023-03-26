@@ -42,6 +42,14 @@ namespace Arcade {
                 const std::vector<std::shared_ptr<IComponent>> &getComponents(
                 CompType type) const final;
                 /**
+                 * @brief Get component by its id
+                 *
+                 * @param id The id of the component to get
+                 *
+                 * @return The component (if it doesn't exists: throw)
+                 */
+                IComponent &getComponents(const std::string &id) final;
+                /**
                  * @brief Add a component
                  *
                  * @param component The component to add
@@ -65,6 +73,7 @@ namespace Arcade {
                 std::string _id;
                 std::map<CompType, std::vector<std::shared_ptr<IComponent>>>
                 _components;
+                bool isAlreadyStored(const std::string &id);
         };
     } // namespace ECS
 } // namespace Arcade

@@ -56,6 +56,15 @@ namespace Arcade {
                 std::shared_ptr<IEntity> getEntitiesById(
                 const std::string &id) const;
                 /**
+                 * @brief Get all components created by this manager of type CompType
+                 *
+                 * @param comp The component type to check in each entity
+                 *
+                 * @return The vector
+                 */
+                std::unique_ptr<std::vector<std::shared_ptr<IComponent>>>
+                getComponentsByComponentType(CompType comp) const final;
+                /**
                  * @brief Remove an entity from the manager
                  *
                  * @param id The entity id to remove

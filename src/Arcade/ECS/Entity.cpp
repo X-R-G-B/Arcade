@@ -36,12 +36,20 @@ Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
     return it->second;
 }
 
-static bool isAlreadyStored(
-const std::map<Arcade::ECS::CompType,
-std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> &components,
-const std::string &id)
+Arcade::ECS::IComponent &Arcade::ECS::Entity::getComponents(const std::string &id)
+{ 
+    for (auto &component : _components) {
+        for (auto &comp : component.second) {
+            if (comp->id == id)
+                return *(comp.get());
+        }
+    }
+    throw std::invalid_argument("getComponents(id) : Unknown id : " + id);
+}
+
+bool Arcade::ECS::Entity::isAlreadyStored(const std::string &id)
 {
-    for (auto &component : components) {
+    for (auto &component : _components) {
         for (auto &comp : component.second) {
             if (comp->id == id)
                 return true;
@@ -56,10 +64,9 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     Arcade::ECS::CompType compType = component->type;
     auto it = _components.find(compType);
 
-    if (isAlreadyStored(_components, component->id)) {
+    if (isAlreadyStored(component->id)) {
         throw std::runtime_error("Component already stored");
-    }
-    if (it == _components.end()) {
+    } else if (it == _components.end()) {
         _components[compType] =
         std::vector<std::shared_ptr<Arcade::ECS::IComponent>>();
         _components[compType].push_back(std::move(component));
