@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <dlfcn.h>
 #include <functional>
@@ -85,9 +86,7 @@ class LibHandler {
             typedef T *(*retType_t)();
             retType_t func = nullptr;
 
-            if (_lib == nullptr) {
-                dlclose(_lib);
-            }
+            destroyLib();
             _lib = dlopen(path.c_str(), RTLD_LAZY);
             if (_lib == nullptr) {
                 throw std::runtime_error("Failed to load library");
@@ -103,29 +102,22 @@ class LibHandler {
                 throw std::runtime_error(e.what());
             }
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
+            if (func == nullptr) {
+                throw std::runtime_error("Failed to load function " + _funcCreator);
+            }
             _module = func();
         }
 
         T *getModule()
         {
-            if (_module == nullptr) {
-                throw std::runtime_error("Module not loaded");
-            }
             return _module;
         }
 
-        void destroyLib()
+        void reset()
         {
-            typedef void (*retType_t)(T *);
-            retType_t func = nullptr;
-
-            if (_lib == nullptr) {
-                return;
-            }
-            func = (retType_t) dlsym(_lib, _funcDestructor.c_str());
-            func(_module);
-            dlclose(_lib);
+            destroyLib();
         }
+
 
         LibType getType()
         {
@@ -137,6 +129,25 @@ class LibHandler {
         }
 
     private:
+        void destroyLib()
+        {
+            typedef void (*retType_t)(T *);
+            retType_t func = nullptr;
+
+            if (_lib == nullptr) {
+                return;
+            }
+            if (_module != nullptr) {
+                func = (retType_t) dlsym(_lib, _funcDestructor.c_str());
+                if (func != nullptr) {
+                    func(_module);
+                }
+                _module = nullptr;
+            }
+            dlclose(_lib);
+            _lib = nullptr;
+        }
+
         std::string _funcCreator;
         std::string _funcDestructor;
         void *_lib;
