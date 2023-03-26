@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <utility>
 #include <vector>
 #include "ICore.hpp"
 #include "IDisplayModule.hpp"
@@ -24,10 +25,8 @@ namespace Arcade {
                 void loadGraphicLibFromPath(const std::string &path);
             private:
                 const std::string _libFolderPath = "./lib";
-                std::vector<std::string> _gamesNames;
-                std::vector<std::string> _graphicLibsNames;
-                Arcade::Game::IGameModule *_gameModule;
-                Arcade::Graph::IDisplayModule *_displayModule;
+                std::vector<std::pair<std::string, std::string>> _gamesNames;
+                std::vector<std::pair<std::string, std::string>> _graphicLibsNames;
                 LibHandler<Graph::IDisplayModule> _graphLibHandler;
                 LibHandler<Game::IGameModule> _gameLibHandler;
 

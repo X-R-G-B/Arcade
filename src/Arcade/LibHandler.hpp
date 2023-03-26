@@ -110,12 +110,25 @@ class LibHandler {
 
         T *getModule()
         {
-            if (_module == nullptr) {
-                throw std::runtime_error("Module not loaded");
-            }
             return _module;
         }
 
+        void reset()
+        {
+            destroyLib();
+        }
+
+
+        LibType getType()
+        {
+            return _type;
+        }
+        const std::string &getName()
+        {
+            return _name;
+        }
+
+    private:
         void destroyLib()
         {
             typedef void (*retType_t)(T *);
@@ -135,16 +148,6 @@ class LibHandler {
             _lib = nullptr;
         }
 
-        LibType getType()
-        {
-            return _type;
-        }
-        const std::string &getName()
-        {
-            return _name;
-        }
-
-    private:
         std::string _funcCreator;
         std::string _funcDestructor;
         void *_lib;
