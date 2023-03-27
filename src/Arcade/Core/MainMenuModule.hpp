@@ -18,8 +18,8 @@ namespace Arcade {
                 MainMenuModule();
                 ~MainMenuModule();
 
-                void update(float deltaTime, Arcade::ECS::IEventManager &eventManager);
-                Arcade::ECS::IEntityManager &getCurrentEntityManager();
+                void update(float deltaTime, Arcade::ECS::IEventManager &eventManager) final;
+                Arcade::ECS::IEntityManager &getCurrentEntityManager() final;
             protected:
             private:
                 std::unique_ptr<Arcade::Core::MainMenuScene> _mainMenu;
