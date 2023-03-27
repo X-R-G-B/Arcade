@@ -1,16 +1,21 @@
-FILES=$(find -name "*-prefix" -o -name "CMakeFiles" -o -name "CMakeCache.txt" -o -name "cmake_install.cmake" -o -name "*.so" -o -name "arcade" -o -name "Makefile")
-echo "Files to clean: $FILES"
+[ -f Makefile ] && echo "Running make clean..." && make clean
+
+echo "Finding files..."
+FILES=$(find -name "*-prefix" -o -name "CMakeFiles" -o -name "CMakeCache.txt" -o -name "cmake_install.cmake" -o -name "Makefile")
+echo "Files to clean:"
+echo "$FILES"
+
 if [[ "$1" != "-y" ]]; then
     echo "Do you want to rm? (y/n)"
     read ANSWER
 else
     ANSWER="y"
 fi
+
 if [ "$ANSWER" == "y" ]; then
     echo "Removing files..."
     rm -rf $FILES
+    echo "Done!"
 else
-    echo "Exiting..."
-    exit
+    echo "Canceled!"
 fi
-echo "Done!"
