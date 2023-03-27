@@ -5,7 +5,9 @@
 ** Sfml
 */
 
+#include "Api.hpp"
 #include "Sfml.hpp"
+#include "Text.hpp"
 #include "Window.hpp"
 
 Arcade::Sfml::DisplayModule::DisplayModule()

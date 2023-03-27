@@ -14,8 +14,9 @@ namespace Arcade {
 
     namespace Sfml {
 
-        class DisplayModule : public IDisplayModule {
+        class DisplayModule : public Graph::IDisplayModule {
             public:
+                DisplayModule();
                 Sfml();
                 void update(float delta,
                 Arcade::ECS::IEventManager &eventManager,

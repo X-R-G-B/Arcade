@@ -7,19 +7,19 @@
 
 #pragma once
 
-#include <Sfml/Graphics/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "ISystem.hpp"
 
 namespace Arcade {
     namespace Sfml {
-        class Window : public ISystem {
+        class Window : public ECS::ISystem {
             public:
                 Window();
-                void update(float delta,
+                void run(float delta,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:
-                sf::Window win;
-        }
+                sf::Window _win;
+        };
     }
 }
