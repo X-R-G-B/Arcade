@@ -17,10 +17,9 @@ namespace Arcade {
             public:
                 MainMenuModule();
                 ~MainMenuModule();
-    
+
                 void update(float deltaTime, Arcade::ECS::IEventManager &eventManager);
                 Arcade::ECS::IEntityManager &getCurrentEntityManager();
-                Arcade::Core::MainMenuScene &getMainMenuScene();
             protected:
             private:
                 std::unique_ptr<Arcade::Core::MainMenuScene> _mainMenu;
