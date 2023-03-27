@@ -14,12 +14,18 @@ namespace Arcade {
     namespace Core {
         class MainMenuScene : public Arcade::Game::AScene {
             public:
-                MainMenuScene(std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager);
+                MainMenuScene(
+                    std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
+                    const std::vector<std::pair<std::string, std::string>> gameLibs,
+                    const std::vector<std::pair<std::string, std::string>> graphicLibs
+                );
 
                 bool init() final;
                 void close() final;
             protected:
             private:
+                const std::vector<std::pair<std::string, std::string>> _gameLibs;
+                const std::vector<std::pair<std::string, std::string>> _graphicLibs;
         };
     }
 }

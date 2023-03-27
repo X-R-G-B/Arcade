@@ -8,8 +8,12 @@
 #include "Text.hpp"
 #include "MainMenuScene.hpp"
 
-Arcade::Core::MainMenuScene::MainMenuScene(std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager)
-    : AScene(std::move(enitityManager))
+Arcade::Core::MainMenuScene::MainMenuScene(
+    std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
+    const std::vector<std::pair<std::string, std::string>> gameLibs,
+    const std::vector<std::pair<std::string, std::string>> graphicLibs
+    )
+    : AScene(std::move(enitityManager)), _gameLibs(gameLibs), _graphicLibs(graphicLibs)
 {
 }
 
@@ -23,33 +27,25 @@ bool Arcade::Core::MainMenuScene::init()
     Arcade::Vector3f compPos = {
         10, 20, 0
     };
-    const std::vector<std::string> games = {
-        "arcade_snake", "arcade_nibbler", "arcade_pacman",
-        "arcade_qix", "arcade_centipede", "arcade_solarfox"
-    };
-    const std::vector<std::string> graphics = {
-        "arcade_ndk++", "arcade_aalib", "arcade_libcaca",
-        "arcade_allegro5", "arcade_xlib", "arcade_gtk",
-        "arcade_sfml", "arcade_irrlicht", "arcade_opengl",
-        "arcade_vulkan", "arcade_qt5"
-    };
 
     std::cout << "Starting init" << std::endl;
-    for (std::size_t i = 0; i != games.size(); i++) {
-        std::cout << games[i] << std::endl;
-        text = std::make_shared<Arcade::Graph::Text>(games[i]);
+    std::cout << "Init games" << std::endl;
+    for (std::size_t i = 0; i != _gameLibs.size(); i++) {
+        std::cout << _gameLibs[i].first << std::endl;
+        text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = games[i];
+        text->text = _gameLibs[i].first;
         text->pos = compPos;
         compPos.x += 10;
         gamesEntity.addComponent(text);
     }
+    std::cout << "init graph" << std::endl;
     compPos.y += 20;
-    for (std::size_t i = 0; i != graphics.size(); i++) {
-        std::cout << graphics[i] << std::endl;
-        text = std::make_shared<Arcade::Graph::Text>(graphics[i]);
+    for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
+        std::cout << _graphicLibs[i].first << std::endl;
+        text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = graphics[i];
+        text->text = _graphicLibs[i].first;
         text->pos = compPos;
         compPos.x += 5;
         graphicsEntity.addComponent(text);

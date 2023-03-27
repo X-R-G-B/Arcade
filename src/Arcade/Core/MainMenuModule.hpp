@@ -15,7 +15,10 @@ namespace Arcade {
     namespace Core {
         class MainMenuModule : public Arcade::Game::IGameModule {
             public:
-                MainMenuModule();
+                MainMenuModule(
+                    const std::vector<std::pair<std::string, std::string>> gameLibs,
+                    const std::vector<std::pair<std::string, std::string>> graphicLibs
+                    );
                 ~MainMenuModule();
 
                 void update(float deltaTime, Arcade::ECS::IEventManager &eventManager) final;

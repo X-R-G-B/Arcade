@@ -21,7 +21,6 @@
 #include "EntityManager.hpp"
 
 Arcade::Core::Core::Core(const std::string &path)
-    : _mainMenu(std::make_unique<MainMenuModule>())
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -29,6 +28,7 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
+    _mainMenu = std::make_unique<MainMenuModule>(this->_gamesNames, this->_graphicLibsNames);
 }
 
 void Arcade::Core::Core::addNameToList(const std::string &path)
