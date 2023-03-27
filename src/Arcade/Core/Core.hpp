@@ -14,6 +14,7 @@
 #include "IGameModule.hpp"
 #include "Api.hpp"
 #include "LibHandler.hpp"
+#include "MainMenuModule.hpp"
 
 namespace Arcade {
     namespace Core {
@@ -29,6 +30,7 @@ namespace Arcade {
                 std::vector<std::pair<std::string, std::string>> _graphicLibsNames;
                 LibHandler<Graph::IDisplayModule> _graphLibHandler;
                 LibHandler<Game::IGameModule> _gameLibHandler;
+                std::unique_ptr<Arcade::Core::MainMenuModule> _mainMenu;
 
                 void getSharedLibsNames();
                 void addNameToList(const std::string &path);

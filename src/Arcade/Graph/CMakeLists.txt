@@ -7,4 +7,5 @@ target_include_directories(arcade PRIVATE
 target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
 )
