@@ -42,6 +42,7 @@ bool Arcade::Core::MainMenuScene::init()
         text->text = games[i];
         text->pos = compPos;
         compPos.x += 10;
+        gamesEntity.addComponent(text);
     }
     compPos.y += 20;
     for (std::size_t i = 0; i != graphics.size(); i++) {
@@ -51,8 +52,8 @@ bool Arcade::Core::MainMenuScene::init()
         text->text = graphics[i];
         text->pos = compPos;
         compPos.x += 5;
+        graphicsEntity.addComponent(text);
     }
-    // entity.addComponent(text);
     std::cout << "Menu is init correctly" << std::endl;
     return (true);
 }
