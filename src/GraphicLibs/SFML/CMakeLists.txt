@@ -12,5 +12,7 @@ target_include_directories(arcade_sfml PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../../Arcade/ECS/"
 )
 target_sources(arcade_sfml PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/SFML.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sfml.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Window.cpp"
 )
