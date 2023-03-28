@@ -13,15 +13,25 @@ Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    Graph::IText *TextComp = dynamic_cast<Graph::IText*>(&IComp);
+    ECS::IComponent comp;
+    Graph::IText *TextComp;
     Text *text = nullptr;
 
+    if (IComp.type != ECS::CompType::TEXT) {
+        return;
+    }
+    TextComp = static_cast<Graph::IText*>(&IComp);
     try {
         entity.getComponents(TextComp->id + "_Sfml");
         entity.addComponent(std::make_unique<Text>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
     } catch (std::exception &e) {
     }
-    text = dynamic_cast<Text*>(&entity.getComponents(TextComp->id + "_Sfml"));
+    comp = entity.getComponents(TextComp->id + "_Sfml");
+    if (comp.type != ECS::CompType::SFTEXT) {
+        return;
+    }
+    text = static_cast<Text*>(&comp);
+    text->text.setPosition(sf::Vector2f(TextComp->pos.x, TextComp->pos.y));
     _win.draw(text->text);
 }
 
