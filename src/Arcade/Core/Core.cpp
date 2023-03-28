@@ -18,6 +18,7 @@
 #include "IGameModule.hpp"
 #include "Api.hpp"
 #include "Core.hpp"
+#include "Exceptions.hpp"
 
 Arcade::Core::Core::Core(const std::string &path)
 {
@@ -38,7 +39,7 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     try {
         name = LibHandler<Graph::IDisplayModule>::getLibName(path);
         type = LibHandler<Graph::IDisplayModule>::getLibType(path);
-    } catch (std::runtime_error &e) {
+    } catch (std::exception &e) {
         std::cerr << "File is not a shared library: " << path << std::endl;
         return;
     }
@@ -64,7 +65,7 @@ void Arcade::Core::Core::getSharedLibsNames()
         }
     }
     if (_gamesNames.empty() && _graphicLibsNames.empty()) {
-        throw std::invalid_argument("Empty lib folder");
+        throw ArcadeExceptions("Invalid argument => Empty lib folder");
     }
 }
 
@@ -74,7 +75,7 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     std::size_t end = path.find(".so");
 
     if (start == std::string::npos || end == std::string::npos) {
-        throw std::invalid_argument("Invalid path");
+        throw ArcadeExceptions("Invalid argument => Invalid path");
     }
     _graphLibHandler.loadLib(path);
 }
