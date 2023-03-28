@@ -5,56 +5,54 @@
 ** Sfml
 */
 
-#include "Text.hpp"
+#include "Sprite.hpp"
 
-Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
+Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 {
 }
 
-void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    Graph::IText *TextComp = dynamic_cast<Graph::IText*>(&IComp);
-    Text *text = nullptr;
+    Graph::ISprite *SpriteComp = dynamic_cast<Graph::ISprite*>(&IComp);
+    Sprite *sprite = nullptr;
 
     try {
-        entity.getComponents(TextComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Text>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
+        entity.getComponents(SpriteComp->id + "_Sfml");
+        entity.addComponent(std::make_unique<Sprite>(SpriteComp->id + "_Sfml", SpriteComp->path, SpriteComp->pos, SpriteComp->rect));
     } catch (std::exception &e) {
     }
-    text = dynamic_cast<Text*>(&entity.getComponents(TextComp->id + "_Sfml"));
-    _win.draw(text->text);
+    sprite = dynamic_cast<Sprite*>(&entity.getComponents(SpriteComp->id + "_Sfml"));
+    _win.draw(sprite->sprite);
 }
 
-void Arcade::Sfml::TextSystem::run(float deltaTime,
+void Arcade::Sfml::SpriteSystem::run(float deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containTextEntities =
-        currentEntityManager.getEntitiesByComponentType(ECS::CompType::TEXT);
+    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containSpriteEntities =
+        currentEntityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
     std::vector<std::shared_ptr<ECS::IComponent>> _components;
 
-    for (auto const &entity : *(_containTextEntities.get())) {
-        _components = entity->getComponents(ECS::CompType::TEXT);
+    for (auto const &entity : *(_containSpriteEntities.get())) {
+        _components = entity->getComponents(ECS::CompType::SPRITE);
         for (auto const &component : _components) {
             handleComponent(*(component.get()), *(entity.get()));
         }
     }
 }
 
-Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
-    const std::string &text, const Graph::Color &textColor, const Arcade::Vector3f &pos)
+Arcade::Sfml::Sprite::Sprite(const std::string id, const std::string &path,
+    const Arcade::Vector3f &pos, Graph::Rect &rect)
 {
-    sf::Font font;
+    sf::Texture texture;
 
     this->id = id;
-    this->type = ECS::CompType::TEXT;
-    if (!font.loadFromFile(path)) {
+    this->type = ECS::CompType::SFSPRITE;
+    if (!texture.loadFromFile(path)) {
         //TODO put right error type 
-        throw std::invalid_argument("Wrong path for font : " + path);
+        throw std::invalid_argument("Wrong path for sprite : " + path);
     }
-    this->text.setFont(font);
-    this->text.setString(text);
-    this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
-    this->text.setPosition(sf::Vector2f(pos.x, pos.y));
+    this->sprite.setTexture(texture);
+    this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
+    this->sprite.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
 }
