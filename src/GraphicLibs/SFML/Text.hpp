@@ -8,7 +8,6 @@
 #pragma once
 
 #include <SFML/Graphics/Text.hpp>
-#include "Window.hpp"
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
@@ -34,7 +33,7 @@ namespace Arcade {
                     ECS::IEventManager &eventManager,
                     ECS::IEntityManager &entityManager) final;
             private:
-                void handleComponent(Graph::IText &comp, ECS::IEntity &entity, Window &win);
+                void handleComponent(Graph::IText &comp, ECS::IEntity &entity);
         };
 
         class Text : public ECS::IComponent {

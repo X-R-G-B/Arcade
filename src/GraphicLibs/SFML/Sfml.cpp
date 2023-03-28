@@ -8,18 +8,18 @@
 #include "Api.hpp"
 #include "Sfml.hpp"
 #include "Text.hpp"
-#include "Window.hpp"
 
 Arcade::Sfml::DisplayModule::DisplayModule()
 {
-    _systems.addSystem("TextSystem", std::make_unique<TextSystem>());
-    _systems.addSystem("window", std::make_unique<Window>());
+    _win.create(sf::VideoMode(800, 600), "window");
+    _win.setFramerateLimit(60);
 }
 
 void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
     _systems.update(delta, eventManager, entityManager);
+    _win.display();
 }
 
 LibType getType()
