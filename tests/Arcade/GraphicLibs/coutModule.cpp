@@ -45,5 +45,4 @@ void Arcade::Graph::ouiSystem::run(float deltaTime,
     for (auto &it : *(sprite.get())) {
         std::cout << (*it.get()).id << std::endl;
     }
-    std::cout << "Running system ouiSystem" << std::endl;
 }
