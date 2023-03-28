@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <SFML/Audio.hpp>
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
@@ -32,7 +33,7 @@ namespace Arcade {
         struct Music : public ECS::IComponent {
             public:
                 Music(const std::string id, const std::string &path,
-                    const Arcade::Vector3f &pos, Graph::Rect &rect);
+                    bool loop, bool play);
                 sf::Music music;
         };
     }

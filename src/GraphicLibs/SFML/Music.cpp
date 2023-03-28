@@ -13,16 +13,25 @@ Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    Graph::IMusic *MusicComp = dynamic_cast<Graph::IMusic*>(&IComp);
+    ECS::IComponent comp;
+    Graph::IMusic *MusicComp = static_cast<Graph::IMusic*>(&IComp);
     Music *music = nullptr;
 
     try {
         entity.getComponents(MusicComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Music>(MusicComp->id + "_Sfml", MusicComp->path, MusicComp->pos, MusicComp->rect));
+        entity.addComponent(std::make_unique<Music>(MusicComp->id + "_Sfml", MusicComp->path, MusicComp->loop, MusicComp->play));
     } catch (std::exception &e) {
     }
-    music = dynamic_cast<Music*>(&entity.getComponents(MusicComp->id + "_Sfml"));
-    _win.draw(music->music);
+    comp = entity.getComponents(MusicComp->id + "_Sfml");
+    if (comp.type != ECS::CompType::SFMUSIC) {
+        return;
+    }
+    music = static_cast<Music*>(&comp);
+    if (MusicComp->play && music->music.getStatus() != sf::SoundSource::Status::Playing) {
+        music->music.play();
+    } else if (MusicComp->play == false && music->music.getStatus() == sf::SoundSource::Status::Playing) {
+        music->music.stop();
+    }
 }
 
 void Arcade::Sfml::MusicSystem::run(float deltaTime,
@@ -42,17 +51,18 @@ void Arcade::Sfml::MusicSystem::run(float deltaTime,
 }
 
 Arcade::Sfml::Music::Music(const std::string id, const std::string &path,
-    const Arcade::Vector3f &pos, Graph::Rect &rect)
+    bool loop, bool play)
 {
     sf::Texture texture;
 
     this->id = id;
     this->type = ECS::CompType::SFMUSIC;
-    if (!texture.loadFromFile(path)) {
+    if (!this->music.openFromFile(path)) {
         //TODO put right error type 
         throw std::invalid_argument("Wrong path for music : " + path);
     }
-    this->music.setTexture(texture);
-    this->music.setPosition(sf::Vector2f(pos.x, pos.y));
-    this->music.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
+    if (play) {
+        this->music.play();
+    }
+    this->music.setLoop(loop);
 }
