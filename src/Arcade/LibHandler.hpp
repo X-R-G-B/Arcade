@@ -57,7 +57,7 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in getLibType");
             }
             func = (retType_t) dlsym(lib, "getType");
             if (func == nullptr) {
@@ -82,7 +82,7 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in getLibName");
             }
             func = (retType_t) dlsym(lib, "getName");
             if (func == nullptr) {
@@ -104,7 +104,7 @@ class LibHandler {
             destroyLib();
             _lib = dlopen(path.c_str(), RTLD_LAZY);
             if (_lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in loadLib");
             }
             try {
                 type = this->getLibType(path, _lib);
