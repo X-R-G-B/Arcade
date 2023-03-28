@@ -8,21 +8,25 @@
 #pragma once
 
 #include <SFML/Graphics/Text.hpp>
+#include "Window.hpp"
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
+#include "IText.hpp"
 
 namespace Arcade {
 
-    namespace Sfml {
-
+    namespace ECS {
         enum class CompType : int {
-            Text = 0,
+            TEXT = 0,
             SPRITE = 1,
             MUSIC = 2,
-            SfmlWindow = 3,
-            SfmlText = 4
+            WINDOW = 3,
+            SFTEXT = 4
         };
+    }
+
+    namespace Sfml {
 
         class TextSystem : public ECS::ISystem {
             public:
@@ -30,12 +34,12 @@ namespace Arcade {
                     ECS::IEventManager &eventManager,
                     ECS::IEntityManager &entityManager) final;
             private:
-                void handleComponent(ECS::IComponent &comp, ECS::IEntity &entity);
+                void handleComponent(Graph::IText &comp, ECS::IEntity &entity, Window &win);
         };
 
         class Text : public ECS::IComponent {
             public:
-                SfmlText(const std::string id, const std::string &path,
+                Text(const std::string id, const std::string &path,
                     const std::string &text, const Graph::Color &textColor,
                     const Arcade::Vector3f &pos);
             private:
