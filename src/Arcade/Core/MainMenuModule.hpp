@@ -10,6 +10,7 @@
 #include <iostream>
 #include "IGameModule.hpp"
 #include "MainMenuScene.hpp"
+#include "SystemManager.hpp"
 
 namespace Arcade {
     namespace Core {
@@ -26,6 +27,7 @@ namespace Arcade {
             protected:
             private:
                 std::unique_ptr<Arcade::Core::MainMenuScene> _mainMenu;
+                std::unique_ptr<Arcade::ECS::SystemManager> _systemManager;
         };
     }
 }

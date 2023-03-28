@@ -12,7 +12,8 @@ Arcade::Core::MainMenuModule::MainMenuModule(
     const std::vector<std::pair<std::string, std::string>> &gameLibs,
     const std::vector<std::pair<std::string, std::string>> &graphicLibs
 )
-    : _mainMenu(std::make_unique<MainMenuScene>(std::make_unique<Arcade::ECS::EntityManager>(), gameLibs, graphicLibs))
+    : _mainMenu(std::make_unique<MainMenuScene>(std::make_unique<Arcade::ECS::EntityManager>(), gameLibs, graphicLibs)),
+     _systemManager(std::make_unique<Arcade::ECS::SystemManager>())
 {
     _mainMenu->init();
 }
@@ -23,7 +24,7 @@ Arcade::Core::MainMenuModule::~MainMenuModule()
 
 void Arcade::Core::MainMenuModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
-    std::cout << "Update main menu" << std::endl;
+    _systemManager->update(deltaTime, eventManager, _mainMenu->getEntityManager());
 }
 
 Arcade::ECS::IEntityManager &Arcade::Core::MainMenuModule::getCurrentEntityManager()
