@@ -49,11 +49,11 @@ class LibHandler {
             typedef LibType (*retType_t)();
             retType_t func = nullptr;
             LibType type;
-            bool destroyAfter = true;
+            bool destroyAfter = false;
  
             if (lib == nullptr) {
                 lib = dlopen(path.c_str(), RTLD_LAZY);
-                destroyAfter = false;
+                destroyAfter = true;
             }
             if (lib == nullptr) {
                 throw std::runtime_error("Failed to load library");
@@ -74,11 +74,11 @@ class LibHandler {
             typedef const char *(*retType_t)();
             retType_t func = nullptr;
             std::string name;
-            bool destroyAfter = true;
+            bool destroyAfter = false;
  
             if (lib == nullptr) {
                 lib = dlopen(path.c_str(), RTLD_LAZY);
-                destroyAfter = false;
+                destroyAfter = true;
             }
             if (lib == nullptr) {
                 throw std::runtime_error("Failed to load library");
