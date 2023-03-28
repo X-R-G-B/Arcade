@@ -36,7 +36,7 @@ class LibHandler {
                 _funcCreator = "getGameModule";
                 _funcDestructor = "destroyGameModule";
             } else {
-                throw std::runtime_error("LibHandler: wrong type (type handler are IDisplayModule IGameModule)");
+                throw ArcadeExceptions("LibHandler: wrong type (type handler are IDisplayModule IGameModule)");
             }
         }
 
@@ -56,11 +56,11 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library");
             }
             func = (retType_t) dlsym(lib, "getType");
             if (func == nullptr) {
-                throw std::runtime_error("Failed to load function getType");
+                throw ArcadeExceptions("Failed to load function getType");
             }
             type = func();
             if (destroyAfter) {
@@ -81,11 +81,11 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library");
             }
             func = (retType_t) dlsym(lib, "getName");
             if (func == nullptr) {
-                throw std::runtime_error("Failed to load function getName");
+                throw ArcadeExceptions("Failed to load function getName");
             }
             name = func();
             if (destroyAfter) {
@@ -103,27 +103,27 @@ class LibHandler {
             destroyLib();
             _lib = dlopen(path.c_str(), RTLD_LAZY);
             if (_lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library");
             }
             try {
                 type = this->getLibType(path, _lib);
             } catch (const std::exception &e) {
                 destroyLib();
-                throw std::runtime_error(e.what());
+                throw ArcadeExceptions(e.what());
             }
             if (_type != type) {
                 destroyLib();
-                throw std::runtime_error("Bad library type");
+                throw ArcadeExceptions("Bad library type");
             }
             try {
                 _name = LibHandler::getLibName(path, _lib);
             } catch (const std::exception &e) {
                 destroyLib();
-                throw std::runtime_error(e.what());
+                throw ArcadeExceptions(e.what());
             }
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
             if (func == nullptr) {
-                throw std::runtime_error("Failed to load function " + _funcCreator);
+                throw ArcadeExceptions("Failed to load function " + _funcCreator);
             }
             _module = func();
         }
