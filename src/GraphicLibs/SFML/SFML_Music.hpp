@@ -16,7 +16,7 @@ class SFML_Music : public Arcade::ECS::ISystem {
 
         void run(std::size_t deltaTime, Arcade::ECS::IEventManager &,
         Arcade::Core::IDisplayModule &displayModule,
-        Arcade::Core::IGameModule &gameModule) override; // wtf, it is not an override, not the same parameters
+        Arcade::Core::IGameModule &gameModule) override;
 
     protected:
     private:
