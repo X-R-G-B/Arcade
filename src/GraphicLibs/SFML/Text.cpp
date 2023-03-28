@@ -47,7 +47,7 @@ Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
     sf::Font font;
 
     this->id = id;
-    this->type = ECS::CompType::TEXT;
+    this->type = ECS::CompType::SFTEXT;
     if (!font.loadFromFile(path)) {
         //TODO put right error type 
         throw std::invalid_argument("Wrong path for font : " + path);
