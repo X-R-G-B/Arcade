@@ -16,6 +16,7 @@
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "Api.hpp"
+#include "Exceptions.hpp"
 
 /**
  * @brief The LibHandler class
