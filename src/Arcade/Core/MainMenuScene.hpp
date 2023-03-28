@@ -25,8 +25,8 @@ namespace Arcade {
                 void close() final;
             protected:
             private:
-                const std::vector<std::pair<std::string, std::string>> _gameLibs;
-                const std::vector<std::pair<std::string, std::string>> _graphicLibs;
+                const std::vector<std::pair<std::string, std::string>> &_gameLibs;
+                const std::vector<std::pair<std::string, std::string>> &_graphicLibs;
         };
     }
 }
