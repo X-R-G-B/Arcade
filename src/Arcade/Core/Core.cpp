@@ -27,8 +27,16 @@ Arcade::Core::Core::Core()
 void Arcade::Core::Core::addNameToList(LibType type, LibHandler &LibHandler)
 {
     std::string name;
- 
-    name = LibHandler.loadFunction<std::string>("getName");
+    LibType type;
+    std::string path2 = path;
+
+    try {
+        name = LibHandler<Graph::IDisplayModule>::getLibName(path);
+        type = LibHandler<Graph::IDisplayModule>::getLibType(path);
+    } catch (std::exception &e) {
+        std::cerr << "File is not a shared library: " << path << std::endl;
+        return;
+    }
     if (type == LibType::GAME) {
         _gamesNames.push_back(name);
     } else {

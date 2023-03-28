@@ -70,7 +70,8 @@ namespace Arcade::ECS {
 namespace Arcade::ECS {
     class PlayerSprite : public Arcade::Graph::Sprite {
         public:
-            PlayerSprite(const std::string &id);
+            PlayerSprite(const std::string &id) :
+            Arcade::Graph::Sprite(id) {}
             ~PlayerSprite() = default;
     };
 } // namespace Arcade::ECS
@@ -86,8 +87,8 @@ class test_scene : public Arcade::Game::AScene {
         {
         }
         ~test_scene() = default;
-        bool init() override;
-        void close() override;
+        bool init() final;
+        void close() final;
 };
 
 bool test_scene::init()
@@ -96,12 +97,12 @@ bool test_scene::init()
 
     this->getEntityManager().createEntity("player");
     this->getEntityManager().getEntitiesById("player")->addComponent(
-    std::make_shared<Arcade::ECS::PositionComponent>(
-    Arcade::ECS::PositionComponent(0, 0)));
+    std::make_shared<Arcade::ECS::PositionComponent>(0, 0));
     this->getEntityManager().getEntitiesById("player")->addComponent(
-    std::make_shared<Arcade::ECS::PlayerSprite>(
-    Arcade::ECS::PlayerSprite("player sprite")));
-    Arcade::Graph::Sprite &sprite_player =  static_cast<Arcade::Graph::Sprite &>(this->getEntityManager().getEntitiesById("player")->getComponents("player sprite"));
+    std::make_shared<Arcade::ECS::PlayerSprite>("player sprite"));
+    Arcade::Graph::Sprite &sprite_player = static_cast<Arcade::Graph::Sprite &>(
+    this->getEntityManager().getEntitiesById("player")->getComponents(
+    "player sprite"));
     sprite_player.path = "/assets/leplayer.png";
     sprite_player.pos = {0, 10, 15};
     sprite_player.rect = {10, 10, 80, 80};
@@ -112,10 +113,11 @@ bool test_scene::init()
     this->getEntityManager().getEntitiesById("enemy")->addComponent(
     std::make_shared<Arcade::ECS::PositionComponent>(
     Arcade::ECS::PositionComponent(100, 100)));
-    this->getEntityManager().getEntitiesById("player")->addComponent(
-    std::make_shared<Arcade::ECS::PlayerSprite>(
-    Arcade::ECS::PlayerSprite("Enemy sprite")));
-    Arcade::Graph::Sprite &sprite_enemy =  static_cast<Arcade::Graph::Sprite &>(this->getEntityManager().getEntitiesById("enemy")->getComponents("Enemy sprite"));
+    this->getEntityManager().getEntitiesById("enemy")->addComponent(
+    std::make_shared<Arcade::ECS::PlayerSprite>("Enemy sprite"));
+    Arcade::Graph::Sprite &sprite_enemy = static_cast<Arcade::Graph::Sprite &>(
+    this->getEntityManager().getEntitiesById("enemy")->getComponents(
+    "Enemy sprite"));
     sprite_enemy.path = "/assets/leennemy.png";
     sprite_enemy.pos = {0, 10, 15};
     sprite_enemy.rect = {10, 10, 80, 80};
@@ -163,6 +165,8 @@ Arcade::ECS::IEntityManager &entityManager)
                 std::cout << "x: " << xPos << " y: " << yPos << std::endl;
                 xPos = (xPos < 100) ? xPos + 1 : 0;
                 yPos = (yPos < 100) ? yPos + 1 : 0;
+                position->setX(xPos);
+                position->setY(yPos);
             }
         } else {
             std::cout << "enemy" << std::endl;
@@ -174,6 +178,8 @@ Arcade::ECS::IEntityManager &entityManager)
                 std::cout << "x: " << xPos << " y: " << yPos << std::endl;
                 xPos = (xPos > 0) ? xPos - 1 : 100;
                 yPos = (yPos > 0) ? yPos - 1 : 100;
+                position->setX(xPos);
+                position->setY(yPos);
             }
         }
     }
@@ -186,7 +192,9 @@ test_game::test_game()
     std::cout << "test_game::test_game" << std::endl;
     _systemManager.addSystem("Player", std::make_unique<test_system>());
     _systemManager.addSystem("Enemy", std::make_unique<test_system>());
-    _scenes.push_back(std::make_unique<test_scene>());
+    auto scene = std::make_unique<test_scene>();
+    scene->init();
+    _scenes.push_back(std::move(scene));
 }
 
 void test_game::update(
