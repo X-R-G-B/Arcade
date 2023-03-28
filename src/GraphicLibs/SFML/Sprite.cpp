@@ -13,15 +13,26 @@ Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    Graph::ISprite *SpriteComp = dynamic_cast<Graph::ISprite*>(&IComp);
+    ECS::IComponent comp;
+    Graph::ISprite *SpriteComp;
     Sprite *sprite = nullptr;
 
+    if (IComp.type != ECS::CompType::SPRITE) {
+        return;
+    }
+    SpriteComp = dynamic_cast<Graph::ISprite*>(&IComp);
     try {
         entity.getComponents(SpriteComp->id + "_Sfml");
         entity.addComponent(std::make_unique<Sprite>(SpriteComp->id + "_Sfml", SpriteComp->path, SpriteComp->pos, SpriteComp->rect));
     } catch (std::exception &e) {
     }
-    sprite = dynamic_cast<Sprite*>(&entity.getComponents(SpriteComp->id + "_Sfml"));
+    comp = entity.getComponents(SpriteComp->id + "_Sfml");
+    if (comp.type != ECS::CompType::SFSPRITE) {
+        return;
+    }
+    sprite = static_cast<Sprite*>(&comp);
+    sprite->sprite.setPosition(sf::Vector2f(SpriteComp->pos.x, SpriteComp->pos.y));
+    sprite->sprite.setTextureRect(sf::Rect(SpriteComp->rect.top, SpriteComp->rect.left, SpriteComp->rect.height, SpriteComp->rect.width));
     _win.draw(sprite->sprite);
 }
 
