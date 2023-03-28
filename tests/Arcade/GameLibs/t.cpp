@@ -5,7 +5,7 @@ LibType getType()
     return LibType::GAME;
 }
 
-std::string getName()
+const char *getName()
 {
     return "fst";
 }

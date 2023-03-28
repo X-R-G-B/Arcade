@@ -46,6 +46,34 @@ Arcade::ECS::CompType comp) const
     return entities;
 }
 
+std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>>
+Arcade::ECS::EntityManager::getComponentsByComponentType(Arcade::ECS::CompType comp) const
+{
+    auto components =
+    std::make_unique<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>>();
+
+    for (auto &entity : this->_entities) {
+        auto component = entity->getComponents().find(comp);
+        if (component != entity->getComponents().end()) {
+            for (auto &comppo : component->second) {
+                components->push_back(comppo);
+            }
+        }
+    }
+    return components;
+}
+
+
+std::shared_ptr<Arcade::ECS::IEntity>
+Arcade::ECS::EntityManager::getEntitiesById(const std::string &id) const
+{
+    for (auto &entity : this->_entities) {
+        if (entity->getId() == id)
+            return entity;
+    }
+    return nullptr;
+}
+
 void Arcade::ECS::EntityManager::removeEntity(const std::string &id)
 {
     for (auto it = _entities.begin(); it != _entities.end(); ++it) {
