@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "IDisplayModule.hpp"
 #include "SystemManager.hpp"
 
@@ -23,7 +23,7 @@ namespace Arcade {
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:
                 ECS::SystemManager _systems;
-                sf::Window _win;
+                sf::RenderWindow _win;
         };
     }
 }

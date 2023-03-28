@@ -7,30 +7,36 @@
 
 #include "Text.hpp"
 
-void Arcade::Sfml::TextSystem::handleComponent(Graph::IText &comp, ECS::IEntity &entity, Window &win)
+Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 {
+}
+
+void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+{
+    Graph::IText *TextComp = dynamic_cast<Graph::IText*>(&IComp);
+    Text *text = nullptr;
+
     try {
-        entity.getComponents(comp.id + "_Sfml");
-        entity.addComponent(std::make_unique<Text>(comp.id + "_Sfml", comp.fontPath, comp.text, comp.textColor, comp.pos));
+        entity.getComponents(TextComp->id + "_Sfml");
+        entity.addComponent(std::make_unique<Text>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
     } catch (std::exception &e) {
     }
-    ECS::IComponent &comp = entity.getComponents(comp.id + "_Sfml");
-    win.draw(text.text);
+    text = dynamic_cast<Text*>(&entity.getComponents(TextComp->id + "_Sfml"));
+    _win.draw(text->text);
 }
 
 void Arcade::Sfml::TextSystem::run(float deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<IEntity>>> _containTextEntities =
-        currentEntityManager.getEntitiesByComponentTime(CompType::Text);
-    std::vector<std::shared_ptr<IComponent>> _components;
-    std::shared_ptr<Window> win = currentEntityManager.getEntitiesById("window");
+    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containTextEntities =
+        currentEntityManager.getEntitiesByComponentType(ECS::CompType::TEXT);
+    std::vector<std::shared_ptr<ECS::IComponent>> _components;
 
     for (auto const &entity : *(_containTextEntities.get())) {
-        _components = entity->getComponents(CompType::Text);
-        for (auto const &component : _git components) {
-            handleComponent(*(component.get()), *(entity.get()), *(win.get()));
+        _components = entity->getComponents(ECS::CompType::TEXT);
+        for (auto const &component : _components) {
+            handleComponent(*(component.get()), *(entity.get()));
         }
     }
 }
@@ -41,7 +47,7 @@ Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
     sf::Font font;
 
     this->id = id;
-    this->type = ECS::CompType::SFTEXT;
+    this->type = ECS::CompType::TEXT;
     if (!font.loadFromFile(path)) {
         //TODO put right error type 
         throw std::invalid_argument("Wrong path for font : " + path);
