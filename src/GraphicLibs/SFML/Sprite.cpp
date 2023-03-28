@@ -14,7 +14,7 @@ Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
     ECS::IComponent comp;
-    Graph::ISprite *SpriteComp = dynamic_cast<Graph::ISprite*>(&IComp);
+    Graph::ISprite *SpriteComp = static_cast<Graph::ISprite*>(&IComp);
     Sprite *sprite = nullptr;
 
     try {
