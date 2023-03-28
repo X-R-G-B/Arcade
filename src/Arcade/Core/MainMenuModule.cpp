@@ -9,8 +9,8 @@
 #include "MainMenuModule.hpp"
 
 Arcade::Core::MainMenuModule::MainMenuModule(
-    const std::vector<std::pair<std::string, std::string>> gameLibs,
-    const std::vector<std::pair<std::string, std::string>> graphicLibs
+    const std::vector<std::pair<std::string, std::string>> &gameLibs,
+    const std::vector<std::pair<std::string, std::string>> &graphicLibs
 )
     : _mainMenu(std::make_unique<MainMenuScene>(std::make_unique<Arcade::ECS::EntityManager>(), gameLibs, graphicLibs))
 {

@@ -16,8 +16,8 @@ namespace Arcade {
         class MainMenuModule : public Arcade::Game::IGameModule {
             public:
                 MainMenuModule(
-                    const std::vector<std::pair<std::string, std::string>> gameLibs,
-                    const std::vector<std::pair<std::string, std::string>> graphicLibs
+                    const std::vector<std::pair<std::string, std::string>> &gameLibs,
+                    const std::vector<std::pair<std::string, std::string>> &graphicLibs
                     );
                 ~MainMenuModule();
 

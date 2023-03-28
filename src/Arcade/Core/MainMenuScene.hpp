@@ -16,8 +16,8 @@ namespace Arcade {
             public:
                 MainMenuScene(
                     std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
-                    const std::vector<std::pair<std::string, std::string>> gameLibs,
-                    const std::vector<std::pair<std::string, std::string>> graphicLibs
+                    const std::vector<std::pair<std::string, std::string>> &gameLibs,
+                    const std::vector<std::pair<std::string, std::string>> &graphicLibs
                 );
 
                 bool init() final;

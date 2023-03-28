@@ -10,8 +10,8 @@
 
 Arcade::Core::MainMenuScene::MainMenuScene(
     std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
-    const std::vector<std::pair<std::string, std::string>> gameLibs,
-    const std::vector<std::pair<std::string, std::string>> graphicLibs
+    const std::vector<std::pair<std::string, std::string>> &gameLibs,
+    const std::vector<std::pair<std::string, std::string>> &graphicLibs
     )
     : AScene(std::move(enitityManager)), _gameLibs(gameLibs), _graphicLibs(graphicLibs)
 {
