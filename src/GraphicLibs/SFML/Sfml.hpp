@@ -20,7 +20,8 @@ namespace Arcade {
             MUSIC = 2,
             WINDOW = 3,
             SFTEXT = 4,
-            SFSPRITE = 5
+            SFSPRITE = 5,
+            SFMUSIC = 6
         };
     }
 
