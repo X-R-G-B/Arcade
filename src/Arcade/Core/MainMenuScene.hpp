@@ -19,6 +19,7 @@ namespace Arcade {
                     const std::vector<std::pair<std::string, std::string>> &gameLibs,
                     const std::vector<std::pair<std::string, std::string>> &graphicLibs
                 );
+                // ~MainMenuScene() = default;
 
                 bool init() final;
                 void close() final;

@@ -82,6 +82,7 @@ void Arcade::Core::Core::update()
     std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
     std::chrono::duration<double> delta(0);
 
+
     while (eventManager.isEventTriggered("QUIT").first == false) {
         delta = start - std::chrono::steady_clock::now();
         start = std::chrono::steady_clock::now();

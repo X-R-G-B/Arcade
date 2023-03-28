@@ -18,6 +18,8 @@ Arcade::Core::MainMenuScene::MainMenuScene(
 }
 
 
+//TODO when IDisplayModule is good, implement the good positions for texts
+
 bool Arcade::Core::MainMenuScene::init()
 {
     Arcade::ECS::IEntityManager &entityManager = getEntityManager();
@@ -28,33 +30,25 @@ bool Arcade::Core::MainMenuScene::init()
         10, 20, 0
     };
 
-    std::cout << "Starting init" << std::endl;
-    std::cout << "Init games" << std::endl;
     for (std::size_t i = 0; i != _gameLibs.size(); i++) {
-        std::cout << _gameLibs[i].first << std::endl;
         text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _gameLibs[i].first;
         text->pos = compPos;
-        compPos.x += 10;
         gamesEntity.addComponent(text);
     }
-    std::cout << "init graph" << std::endl;
     compPos.y += 20;
     for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
-        std::cout << _graphicLibs[i].first << std::endl;
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _graphicLibs[i].first;
         text->pos = compPos;
-        compPos.x += 5;
         graphicsEntity.addComponent(text);
     }
-    std::cout << "Menu is init correctly" << std::endl;
     return (true);
 }
 
 void Arcade::Core::MainMenuScene::close()
 {
-
+    Arcade::Game::AScene::~AScene();
 }
