@@ -4,6 +4,9 @@
 -Isrc/Arcade/ECS
 -Isrc/Arcade/Game
 -Isrc/Arcade/Graph
+-Isrc/GameLibs/Snake
+-Isrc/GameLibs/Snake/System
+-Isrc/GameLibs/Snake/Component
 -std=c++20
 -Wall
 -Wextra
