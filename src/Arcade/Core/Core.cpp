@@ -11,9 +11,7 @@
 #include <optional>
 #include <ostream>
 #include <stdexcept>
-#include <chrono>
 #include <utility>
-#include "EventManager.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "Api.hpp"
@@ -21,6 +19,7 @@
 #include "Exceptions.hpp"
 
 Arcade::Core::Core::Core(const std::string &path)
+    : _mainMenu(this->_gamesNames, this->_graphicLibsNames)
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -80,27 +79,36 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     _graphLibHandler.loadLib(path);
 }
 
+Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<double> delta,
+                    Arcade::ECS::EventManager &eventManager)
+{
+    if (_gameLibHandler.getModule() != nullptr) {
+        _gameLibHandler.getModule()->update(delta.count(), eventManager);
+        return (_gameLibHandler.getModule()->getCurrentEntityManager());
+    } else {
+        _mainMenu.update(delta.count(), eventManager);
+        return (_mainMenu.getCurrentEntityManager());
+    }
+}
+
 void Arcade::Core::Core::update()
 {
     Arcade::ECS::EventManager eventManager;
     std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
     std::chrono::duration<double> delta(0);
-    //std::unique_ptr<IScene> mainMenu = getMainMenu() TODO need main menu
-    eventManager.addEvent("CHANGE_GAME", std::nullopt);
 
     while (eventManager.isEventTriggered("QUIT").first == false) {
         delta = start - std::chrono::steady_clock::now();
         start = std::chrono::steady_clock::now();
-        if (_gameLibHandler.getModule() != nullptr) {
-            _gameLibHandler.getModule()->update(delta.count(), eventManager);
-        }
+        
         checkChangeLib(eventManager);
         eventManager.clearEvents();
-        if (_graphLibHandler.getModule() != nullptr && _gameLibHandler.getModule() != nullptr) {
+        auto &entityManager = this->updater(delta, eventManager);
+        if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
                 delta.count(),
                 eventManager,
-                _gameLibHandler.getModule()->getCurrentEntityManager());
+                entityManager);
         }
     }
 }
