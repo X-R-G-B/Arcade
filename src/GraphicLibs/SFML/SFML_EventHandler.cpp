@@ -68,8 +68,12 @@ void SFML_EventHandler::run(float deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentScene)
 {
+    sf::Event event;
     auto windowSize = this->_window.getSize();
 
+    if (_window.pollEvent(event) && event.type == sf::Event::Closed) {
+        eventManager.addEvent("QUIT");
+    }
     if (this->_windowSize != windowSize) {
         this->_windowSize = windowSize;
         eventManager.addEvent("WINDOW_RESIZE");
