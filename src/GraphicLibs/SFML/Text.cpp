@@ -19,7 +19,6 @@ void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEnt
     Graph::IText &TextComp = static_cast<Graph::IText&>(IComp);
 
     try {
-        entity.getComponents(TextComp.id + "_Sfml");
         entity.addComponent(std::make_unique<SfText>(TextComp.id + "_Sfml", TextComp.fontPath, TextComp.text, TextComp.textColor, TextComp.pos, _win));
     } catch (std::exception &e) {
     }
@@ -28,7 +27,7 @@ void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEnt
         return;
     }
     SfText &text = static_cast<SfText&>(comp);
-    text.text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
+    text.setPosition(TextComp.pos);
     _win.draw(text.text);
 }
 
@@ -65,7 +64,7 @@ Arcade::Sfml::SfText::SfText(const std::string id, const std::string &path,
 
 void Arcade::Sfml::SfText::setPosition(const Arcade::Vector3f &pos)
 {
-    sf::Vector2u size = _win.getSize();
-    this->text.setPosition(sf::Vector2f((pos.x / 100) * size.x));
-
+    //sf::Vector2u size = _win.getSize();
+    //this->text.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
+    this->text.setPosition(50, 50);
 }
