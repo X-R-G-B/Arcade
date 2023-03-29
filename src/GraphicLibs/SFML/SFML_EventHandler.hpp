@@ -9,7 +9,9 @@
 
 #include <map>
 #include <string>
+#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 #include "ISystem.hpp"
 
 static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
@@ -61,11 +63,15 @@ static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
     {sf::Keyboard::Key::F10, "KEY_F10_PRESSED"},
     {sf::Keyboard::Key::F11, "KEY_F11_PRESSED"},
     {sf::Keyboard::Key::F12, "KEY_F12_PRESSED"}
+    "WINDOW_CLOSE"
+         * "WINDOW_RESIZE"
+         * "WINDOW_MINIMIZE"
+    {sf::Keyboard::Key::}
 };
 
 class SFML_EventHandler : public Arcade::ECS::ISystem {
     public:
-        SFML_EventHandler();
+        SFML_EventHandler(sf::RenderWindow &window);
         ~SFML_EventHandler() = default;
 
         void run(float deltaTime,
@@ -75,4 +81,5 @@ class SFML_EventHandler : public Arcade::ECS::ISystem {
     protected:
     private:
         sf::Vector2u _windowSize;
+        sf::RenderWindow &_window;
 };
