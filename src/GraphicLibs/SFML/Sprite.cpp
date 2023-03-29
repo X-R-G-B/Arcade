@@ -27,9 +27,9 @@ void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IE
         return;
     }
     SfSprite &sprite = static_cast<SfSprite&>(comp);
-    sprite->sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
-    sprite->sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
-    _win.draw(sprite->sprite);
+    sprite.sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
+    sprite.sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
+    _win.draw(sprite.sprite);
 }
 
 void Arcade::Sfml::SpriteSystem::run(float deltaTime,

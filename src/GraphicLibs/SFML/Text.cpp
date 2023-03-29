@@ -28,8 +28,8 @@ void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEnt
         return;
     }
     SfText &text = static_cast<SfText&>(comp);
-    text->text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
-    _win.draw(text->text);
+    text.text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
+    _win.draw(text.text);
 }
 
 void Arcade::Sfml::TextSystem::run(float deltaTime,
