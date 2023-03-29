@@ -14,20 +14,18 @@ Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    ECS::IComponent comp;
     Graph::ISprite &SpriteComp = static_cast<Graph::ISprite&>(IComp);
 
     try {
-        entity.getComponents(SpriteComp.id + "_Sfml");
-        entity.addComponent(std::make_shared<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
+        entity.addComponent(std::make_shared<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect, _win));
     } catch (std::exception &e) {
     }
-    comp = entity.getComponents(SpriteComp.id + "_Sfml");
+    ECS::IComponent &comp = entity.getComponents(SpriteComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFSPRITE) {
         return;
     }
     SfSprite &sprite = static_cast<SfSprite&>(comp);
-    sprite.sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
+    sprite.setPosition(SpriteComp.pos);
     sprite.sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
     _win.draw(sprite.sprite);
 }
@@ -49,7 +47,7 @@ void Arcade::Sfml::SpriteSystem::run(float deltaTime,
 }
 
 Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
-    const Arcade::Vector3f &pos, Graph::Rect &rect)
+    const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win) : _win(win)
 {
     sf::Texture texture;
 
@@ -59,6 +57,12 @@ Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
     this->sprite.setTexture(texture);
-    this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
+    setPosition(pos);
     this->sprite.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
+}
+
+void Arcade::Sfml::SfSprite::setPosition(const Arcade::Vector3f &pos)
+{
+    sf::Vector2u size = _win.getSize();
+    this->sprite.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
 }

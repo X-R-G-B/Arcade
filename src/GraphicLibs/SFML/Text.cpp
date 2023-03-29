@@ -63,7 +63,6 @@ Arcade::Sfml::SfText::SfText(const std::string id, const std::string &path,
 
 void Arcade::Sfml::SfText::setPosition(const Arcade::Vector3f &pos)
 {
-    //sf::Vector2u size = _win.getSize();
-    //this->text.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
-    this->text.setPosition(50, 50);
+    sf::Vector2u size = _win.getSize();
+    this->text.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
 }
