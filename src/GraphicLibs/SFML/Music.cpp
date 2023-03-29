@@ -14,22 +14,22 @@ Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win) : _win(win)
 void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
     ECS::IComponent comp;
-    Graph::IMusic *MusicComp = static_cast<Graph::IMusic*>(&IComp);
-    Music *music = nullptr;
+    Graph::IMusic &MusicComp = static_cast<Graph::IMusic&>(IComp);
+    Music *music;
 
     try {
-        entity.getComponents(MusicComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Music>(MusicComp->id + "_Sfml", MusicComp->path, MusicComp->loop, MusicComp->play));
+        entity.getComponents(MusicComp.id + "_Sfml");
+        entity.addComponent(std::make_unique<Music>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
     } catch (std::exception &e) {
     }
-    comp = entity.getComponents(MusicComp->id + "_Sfml");
+    comp = entity.getComponents(MusicComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFMUSIC) {
         return;
     }
     music = static_cast<Music*>(&comp);
-    if (MusicComp->play && music->music.getStatus() != sf::SoundSource::Status::Playing) {
+    if (MusicComp.play && music->music.getStatus() != sf::SoundSource::Status::Playing) {
         music->music.play();
-    } else if (MusicComp->play == false && music->music.getStatus() == sf::SoundSource::Status::Playing) {
+    } else if (MusicComp.play == false && music->music.getStatus() == sf::SoundSource::Status::Playing) {
         music->music.stop();
     }
 }
