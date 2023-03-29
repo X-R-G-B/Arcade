@@ -10,6 +10,7 @@ project(
 # arcade binary
 add_executable(arcade)
 set_property(TARGET arcade PROPERTY CXX_STANDARD 20)
+set(CMAKE_BUILD_TYPE Debug)
 ##############################################################################
 # Game .so libs
 add_library(arcade_nibbler SHARED)
