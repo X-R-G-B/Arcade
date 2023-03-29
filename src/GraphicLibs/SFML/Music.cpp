@@ -19,7 +19,7 @@ void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
 
     try {
         entity.getComponents(MusicComp.id + "_Sfml");
-        entity.addComponent(std::make_unique<SfMusic>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
+        entity.addComponent(std::make_shared<SfMusic>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
     } catch (std::exception &e) {
     }
     comp = entity.getComponents(MusicComp.id + "_Sfml");

@@ -19,7 +19,7 @@ void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IE
 
     try {
         entity.getComponents(SpriteComp.id + "_Sfml");
-        entity.addComponent(std::make_unique<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
+        entity.addComponent(std::make_shared<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
     } catch (std::exception &e) {
     }
     comp = entity.getComponents(SpriteComp.id + "_Sfml");
