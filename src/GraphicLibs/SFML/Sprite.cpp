@@ -6,6 +6,7 @@
 */
 
 #include "Sprite.hpp"
+#include "Exceptions.hpp"
 
 Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 {
@@ -56,8 +57,7 @@ Arcade::Sfml::Sprite::Sprite(const std::string id, const std::string &path,
     this->id = id;
     this->type = ECS::CompType::SFSPRITE;
     if (!texture.loadFromFile(path)) {
-        //TODO put right error type 
-        throw std::invalid_argument("Wrong path for sprite : " + path);
+        throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
     this->sprite.setTexture(texture);
     this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
