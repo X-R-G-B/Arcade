@@ -35,14 +35,17 @@ bool Arcade::Core::MainMenuScene::init()
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _gameLibs[i].first;
         text->pos = compPos;
+        compPos.x += 10;
         gamesEntity.addComponent(text);
     }
     compPos.y += 20;
+    compPos.x = 0;
     for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _graphicLibs[i].first;
         text->pos = compPos;
+        compPos.x += 10;
         graphicsEntity.addComponent(text);
     }
     return (true);

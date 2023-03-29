@@ -11,16 +11,14 @@
 #include <optional>
 #include <ostream>
 #include <stdexcept>
-#include <chrono>
 #include <utility>
-#include "EventManager.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "Api.hpp"
 #include "Core.hpp"
-#include "EntityManager.hpp"
 
 Arcade::Core::Core::Core(const std::string &path)
+    : _mainMenu(this->_gamesNames, this->_graphicLibsNames)
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -28,7 +26,6 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
-    _mainMenu = std::make_unique<MainMenuModule>(this->_gamesNames, this->_graphicLibsNames);
 }
 
 void Arcade::Core::Core::addNameToList(const std::string &path)
@@ -83,8 +80,8 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
         _gameLibHandler.getModule()->update(delta.count(), eventManager);
         return (_gameLibHandler.getModule()->getCurrentEntityManager());
     } else {
-        _mainMenu->update(delta.count(), eventManager);
-        return (_mainMenu->getCurrentEntityManager());
+        _mainMenu.update(delta.count(), eventManager);
+        return (_mainMenu.getCurrentEntityManager());
     }
 }
 
@@ -100,7 +97,7 @@ void Arcade::Core::Core::update()
         
         checkChangeLib(eventManager);
         eventManager.clearEvents();
-        auto &entityManager = (_gameLibHandler.getModule()) ? _gameLibHandler.getModule()->getCurrentEntityManager() : _mainMenu->getCurrentEntityManager();
+        auto &entityManager = this->updater(delta, eventManager);
         if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
                 delta.count(),

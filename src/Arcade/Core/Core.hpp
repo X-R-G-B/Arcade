@@ -33,7 +33,7 @@ namespace Arcade {
                 std::vector<std::pair<std::string, std::string>> _graphicLibsNames;
                 LibHandler<Graph::IDisplayModule> _graphLibHandler;
                 LibHandler<Game::IGameModule> _gameLibHandler;
-                std::unique_ptr<Arcade::Core::MainMenuModule> _mainMenu;
+                Arcade::Core::MainMenuModule _mainMenu;
 
                 Arcade::ECS::IEntityManager &updater(std::chrono::duration<double> delta,
                     Arcade::ECS::EventManager &eventManager);
