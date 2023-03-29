@@ -66,7 +66,7 @@ class LibHandler {
             }
             type = func();
             if (destroyAfter) {
-                //dlclose(lib);
+                dlclose(lib);
             }
             return type;
         }
@@ -99,7 +99,7 @@ class LibHandler {
             if (destroyAfter) {
                 std::puts("getLibName:::a");
                 std::printf("lib: %p\n", lib);
-                //dlclose(lib);
+                dlclose(lib);
                 std::puts("getLibName:::b");
             }
             std::puts("getLibName:::4");
@@ -176,7 +176,7 @@ class LibHandler {
                 }
                 _module = nullptr;
             }
-            //dlclose(_lib);
+            dlclose(_lib);
             _lib = nullptr;
         }
 
