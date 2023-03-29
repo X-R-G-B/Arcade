@@ -14,15 +14,21 @@ Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    Graph::IText *TextComp = dynamic_cast<Graph::IText*>(&IComp);
-    Text *text = nullptr;
+    ECS::IComponent comp;
+    Graph::IText &TextComp = static_cast<Graph::IText&>(IComp);
+    Text *text;
 
     try {
-        entity.getComponents(TextComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Text>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
+        entity.getComponents(TextComp.id + "_Sfml");
+        entity.addComponent(std::make_unique<Text>(TextComp.id + "_Sfml", TextComp.fontPath, TextComp.text, TextComp.textColor, TextComp.pos));
     } catch (std::exception &e) {
     }
-    text = dynamic_cast<Text*>(&entity.getComponents(TextComp->id + "_Sfml"));
+    comp = entity.getComponents(TextComp.id + "_Sfml");
+    if (comp.type != ECS::CompType::SFTEXT) {
+        return;
+    }
+    text = static_cast<Text*>(&comp);
+    text->text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
     _win.draw(text->text);
 }
 
@@ -48,7 +54,7 @@ Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
     sf::Font font;
 
     this->id = id;
-    this->type = ECS::CompType::TEXT;
+    this->type = ECS::CompType::SFTEXT;
     if (!font.loadFromFile(path)) {
         throw ArcadeExceptions("Wrong path for font : " + path);
     }
