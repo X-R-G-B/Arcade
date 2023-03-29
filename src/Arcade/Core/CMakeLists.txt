@@ -9,4 +9,6 @@ target_include_directories(arcade_sfml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Core.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/MainMenuScene.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/MainMenuModule.cpp"
 )

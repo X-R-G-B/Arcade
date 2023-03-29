@@ -5,6 +5,7 @@
 ** Sfml
 */
 
+#include <iostream>
 #include "Text.hpp"
 #include "Exceptions.hpp"
 
@@ -48,19 +49,18 @@ void Arcade::Sfml::TextSystem::run(float deltaTime,
     }
 }
 
-Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
+Arcade::Sfml::TextSfml::TextSfml(const std::string id, const std::string &path,
     const std::string &text, const Graph::Color &textColor, const Arcade::Vector3f &pos)
 {
-    sf::Font font;
-
     this->id = id;
     this->type = ECS::CompType::SFTEXT;
     if (!font.loadFromFile(path)) {
         throw ArcadeExceptions("Wrong path for font : " + path);
     }
-    this->text.setFont(font);
+    std::cout << "id = " << id << std::endl;
+    this->text.setFont(this->font);
     this->text.setString(text);
     this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
+    this->text.setFillColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
     this->text.setPosition(sf::Vector2f(pos.x, pos.y));
 }

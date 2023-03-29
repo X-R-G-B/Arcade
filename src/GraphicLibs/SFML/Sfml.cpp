@@ -18,6 +18,11 @@ Arcade::Sfml::DisplayModule::DisplayModule()
     _systems.addSystem("musicSystem", std::make_unique<MusicSystem>(_win));
 }
 
+Arcade::Sfml::DisplayModule::~DisplayModule()
+{
+    _win.close();
+}
+
 void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
