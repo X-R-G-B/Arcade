@@ -14,21 +14,21 @@ Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
 void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
     ECS::IComponent comp;
-    Graph::ISprite *SpriteComp = static_cast<Graph::ISprite*>(&IComp);
-    Sprite *sprite = nullptr;
+    Graph::ISprite &SpriteComp = static_cast<Graph::ISprite&>(IComp);
+    Sprite *sprite;
 
     try {
-        entity.getComponents(SpriteComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Sprite>(SpriteComp->id + "_Sfml", SpriteComp->path, SpriteComp->pos, SpriteComp->rect));
+        entity.getComponents(SpriteComp.id + "_Sfml");
+        entity.addComponent(std::make_unique<Sprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
     } catch (std::exception &e) {
     }
-    comp = entity.getComponents(SpriteComp->id + "_Sfml");
+    comp = entity.getComponents(SpriteComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFSPRITE) {
         return;
     }
     sprite = static_cast<Sprite*>(&comp);
-    sprite->sprite.setPosition(sf::Vector2f(SpriteComp->pos.x, SpriteComp->pos.y));
-    sprite->sprite.setTextureRect(sf::Rect(SpriteComp->rect.top, SpriteComp->rect.left, SpriteComp->rect.height, SpriteComp->rect.width));
+    sprite->sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
+    sprite->sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
     _win.draw(sprite->sprite);
 }
 
