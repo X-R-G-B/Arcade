@@ -19,14 +19,14 @@ void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
 
     try {
         entity.getComponents(MusicComp.id + "_Sfml");
-        entity.addComponent(std::make_unique<Music>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
+        entity.addComponent(std::make_unique<SfMusic>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
     } catch (std::exception &e) {
     }
     comp = entity.getComponents(MusicComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFMUSIC) {
         return;
     }
-    Music &music = static_cast<Music&>(comp);
+    SfMusic &music = static_cast<SfMusic&>(comp);
     if (MusicComp.play && music.music.getStatus() != sf::SoundSource::Status::Playing) {
         music.music.play();
     } else if (MusicComp.play == false && music.music.getStatus() == sf::SoundSource::Status::Playing) {
@@ -50,11 +50,9 @@ void Arcade::Sfml::MusicSystem::run(float deltaTime,
     }
 }
 
-Arcade::Sfml::Music::Music(const std::string id, const std::string &path,
+Arcade::Sfml::SfMusic::SfMusic(const std::string id, const std::string &path,
     bool loop, bool play)
 {
-    sf::Texture texture;
-
     this->id = id;
     this->type = ECS::CompType::SFMUSIC;
     if (!this->music.openFromFile(path)) {

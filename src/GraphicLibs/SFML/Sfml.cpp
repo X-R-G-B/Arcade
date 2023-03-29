@@ -16,6 +16,8 @@ Arcade::Sfml::DisplayModule::DisplayModule()
     _win.create(sf::VideoMode(800, 600), "window");
     _win.setFramerateLimit(60);
     _systems.addSystem("musicSystem", std::make_unique<MusicSystem>(_win));
+    _systems.addSystem("spriteSystem", std::make_unique<SpriteSystem>(_win));
+    _systems.addSystem("textSystem", std::make_unique<TextSystem>(_win));
 }
 
 Arcade::Sfml::DisplayModule::~DisplayModule()

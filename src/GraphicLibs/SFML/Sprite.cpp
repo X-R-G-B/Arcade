@@ -16,18 +16,17 @@ void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IE
 {
     ECS::IComponent comp;
     Graph::ISprite &SpriteComp = static_cast<Graph::ISprite&>(IComp);
-    Sprite *sprite;
 
     try {
         entity.getComponents(SpriteComp.id + "_Sfml");
-        entity.addComponent(std::make_unique<Sprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
+        entity.addComponent(std::make_unique<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect));
     } catch (std::exception &e) {
     }
     comp = entity.getComponents(SpriteComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFSPRITE) {
         return;
     }
-    sprite = static_cast<Sprite*>(&comp);
+    SfSprite &sprite = static_cast<SfSprite&>(comp);
     sprite->sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
     sprite->sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
     _win.draw(sprite->sprite);
@@ -49,7 +48,7 @@ void Arcade::Sfml::SpriteSystem::run(float deltaTime,
     }
 }
 
-Arcade::Sfml::Sprite::Sprite(const std::string id, const std::string &path,
+Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
     const Arcade::Vector3f &pos, Graph::Rect &rect)
 {
     sf::Texture texture;
