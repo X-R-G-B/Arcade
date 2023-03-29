@@ -6,6 +6,7 @@
 */
 
 #include "Text.hpp"
+#include <cstdio>
 
 Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 {
@@ -55,6 +56,6 @@ Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
     this->text.setFont(font);
     this->text.setString(text);
     this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
+    this->text.setFillColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
     this->text.setPosition(sf::Vector2f(pos.x, pos.y));
 }

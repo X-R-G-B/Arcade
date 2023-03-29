@@ -23,22 +23,22 @@ void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager
     _win.display();
 }
 
-LibType getType()
+extern "C" LibType getType()
 {
     return LibType::GRAPH;
 }
 
-const char *getName()
+extern "C" const char *getName()
 {
     return "sfml";
 }
 
-Arcade::Graph::IDisplayModule *getDisplayModule()
+extern "C" Arcade::Graph::IDisplayModule *getDisplayModule()
 {
     return new Arcade::Sfml::DisplayModule();
 }
 
-void destroyDisplayModule(Arcade::Graph::IDisplayModule *mod)
+extern "C" void destroyDisplayModule(Arcade::Graph::IDisplayModule *mod)
 {
     delete mod;
 }
