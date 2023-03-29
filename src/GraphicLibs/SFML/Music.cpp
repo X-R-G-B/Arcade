@@ -6,6 +6,7 @@
 */
 
 #include "Music.hpp"
+#include "Exceptions.hpp"
 
 Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win) : _win(win)
 {
@@ -15,7 +16,6 @@ void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
 {
     ECS::IComponent comp;
     Graph::IMusic &MusicComp = static_cast<Graph::IMusic&>(IComp);
-    Music *music;
 
     try {
         entity.getComponents(MusicComp.id + "_Sfml");
@@ -26,11 +26,11 @@ void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
     if (comp.type != ECS::CompType::SFMUSIC) {
         return;
     }
-    music = static_cast<Music*>(&comp);
-    if (MusicComp.play && music->music.getStatus() != sf::SoundSource::Status::Playing) {
-        music->music.play();
-    } else if (MusicComp.play == false && music->music.getStatus() == sf::SoundSource::Status::Playing) {
-        music->music.stop();
+    Music &music = static_cast<Music&>(comp);
+    if (MusicComp.play && music.music.getStatus() != sf::SoundSource::Status::Playing) {
+        music.music.play();
+    } else if (MusicComp.play == false && music.music.getStatus() == sf::SoundSource::Status::Playing) {
+        music.music.stop();
     }
 }
 
@@ -58,8 +58,7 @@ Arcade::Sfml::Music::Music(const std::string id, const std::string &path,
     this->id = id;
     this->type = ECS::CompType::SFMUSIC;
     if (!this->music.openFromFile(path)) {
-        //TODO put right error type 
-        throw std::invalid_argument("Wrong path for music : " + path);
+        throw ArcadeExceptions("Wrong path for music : " + path);
     }
     if (play) {
         this->music.play();
