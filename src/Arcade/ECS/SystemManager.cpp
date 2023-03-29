@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <memory>
 #include "SystemManager.hpp"
+#include "Exceptions.hpp"
 
 namespace Arcade {
     namespace ECS {
@@ -15,7 +16,7 @@ namespace Arcade {
         {
             auto it = _systems.find(name);
             if (it != _systems.end()) {
-                throw std::invalid_argument("System already exists");
+                throw ArcadeExceptions("Invalid argument => System already exists");
             }
             _systems[name].swap(system);
         }
@@ -24,7 +25,7 @@ namespace Arcade {
         {
             auto it = _systems.find(name);
             if (it == _systems.end()) {
-                throw std::invalid_argument("System does not exist");
+                throw ArcadeExceptions("Invalid argument => System does not exist");
             }
             _systems.erase(it);
         }

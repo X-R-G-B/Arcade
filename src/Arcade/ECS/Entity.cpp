@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include "Entity.hpp"
+#include "Exceptions.hpp"
 
 Arcade::ECS::Entity::Entity(const std::string &id) : _id(id)
 {
@@ -31,7 +32,7 @@ Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
     auto it = this->_components.find(type);
 
     if (it == this->_components.end()) {
-        throw std::runtime_error("Component not found");
+        throw ArcadeExceptions("Component not found");
     }
     return it->second;
 }
@@ -44,7 +45,7 @@ Arcade::ECS::IComponent &Arcade::ECS::Entity::getComponents(const std::string &i
                 return *(comp.get());
         }
     }
-    throw std::invalid_argument("getComponents(id) : Unknown id : " + id);
+    throw ArcadeExceptions("Invalid argument => getComponents(id) : Unknown id : " + id);
 }
 
 bool Arcade::ECS::Entity::isAlreadyStored(const std::string &id)
@@ -65,7 +66,7 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     auto it = _components.find(compType);
 
     if (isAlreadyStored(component->id)) {
-        throw std::runtime_error("Component already stored");
+        throw ArcadeExceptions("Component already stored");
     } else if (it == _components.end()) {
         _components[compType] =
         std::vector<std::shared_ptr<Arcade::ECS::IComponent>>();
