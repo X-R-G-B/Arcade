@@ -39,11 +39,12 @@ namespace Arcade {
 
         };
 
-        struct Text : public ECS::IComponent {
+        struct TextSfml : public ECS::IComponent {
             public:
-                Text(const std::string id, const std::string &path,
+                TextSfml(const std::string id, const std::string &path,
                     const std::string &text, const Graph::Color &textColor,
                     const Arcade::Vector3f &pos);
+                sf::Font font;
                 sf::Text text;
         };
     }

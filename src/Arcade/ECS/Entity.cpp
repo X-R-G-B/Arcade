@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 #include "Entity.hpp"
 #include "Exceptions.hpp"
 
@@ -66,6 +67,7 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     auto it = _components.find(compType);
 
     if (isAlreadyStored(component->id)) {
+        std::cout << "id = " << component->id << std::endl;
         throw ArcadeExceptions("Component already stored");
     } else if (it == _components.end()) {
         _components[compType] =

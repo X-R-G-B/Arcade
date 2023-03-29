@@ -5,6 +5,7 @@
 ** Sfml
 */
 
+#include <iostream>
 #include "Text.hpp"
 #include <cstdio>
 
@@ -15,14 +16,13 @@ Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
     Graph::IText *TextComp = dynamic_cast<Graph::IText*>(&IComp);
-    Text *text = nullptr;
+    TextSfml *text = nullptr;
 
     try {
-        entity.getComponents(TextComp->id + "_Sfml");
-        entity.addComponent(std::make_unique<Text>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
+        entity.addComponent(std::make_unique<TextSfml>(TextComp->id + "_Sfml", TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos));
     } catch (std::exception &e) {
     }
-    text = dynamic_cast<Text*>(&entity.getComponents(TextComp->id + "_Sfml"));
+    text = dynamic_cast<TextSfml*>(&entity.getComponents(TextComp->id + "_Sfml"));
     _win.draw(text->text);
 }
 
@@ -42,18 +42,17 @@ void Arcade::Sfml::TextSystem::run(float deltaTime,
     }
 }
 
-Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
+Arcade::Sfml::TextSfml::TextSfml(const std::string id, const std::string &path,
     const std::string &text, const Graph::Color &textColor, const Arcade::Vector3f &pos)
 {
-    sf::Font font;
-
     this->id = id;
     this->type = ECS::CompType::SFTEXT;
-    if (!font.loadFromFile(path)) {
+    if (!this->font.loadFromFile(path)) {
         //TODO put right error type 
         throw std::invalid_argument("Wrong path for font : " + path);
     }
-    this->text.setFont(font);
+    std::cout << "id = " << id << std::endl;
+    this->text.setFont(this->font);
     this->text.setString(text);
     this->text.setCharacterSize(24);
     this->text.setFillColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));

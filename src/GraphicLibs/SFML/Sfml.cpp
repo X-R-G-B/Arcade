@@ -16,6 +16,11 @@ Arcade::Sfml::DisplayModule::DisplayModule()
     _systems.addSystem("textSystem", std::make_unique<TextSystem>(_win));
 }
 
+Arcade::Sfml::DisplayModule::~DisplayModule()
+{
+    _win.close();
+}
+
 void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
