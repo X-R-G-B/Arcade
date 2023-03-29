@@ -6,6 +6,7 @@
 */
 
 #include "Text.hpp"
+#include "Exceptions.hpp"
 
 Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
 {
@@ -55,8 +56,7 @@ Arcade::Sfml::Text::Text(const std::string id, const std::string &path,
     this->id = id;
     this->type = ECS::CompType::SFTEXT;
     if (!font.loadFromFile(path)) {
-        //TODO put right error type 
-        throw std::invalid_argument("Wrong path for font : " + path);
+        throw ArcadeExceptions("Wrong path for font : " + path);
     }
     this->text.setFont(font);
     this->text.setString(text);
