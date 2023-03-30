@@ -66,7 +66,7 @@ class LibHandler {
             }
             type = func();
             if (destroyAfter) {
-                //dlclose(lib);
+                dlclose(lib);
             }
             return type;
         }
@@ -91,7 +91,7 @@ class LibHandler {
             }
             name = func();
             if (destroyAfter) {
-                //dlclose(lib);
+                dlclose(lib);
             }
             return name;
         }
@@ -166,7 +166,7 @@ class LibHandler {
                 }
                 _module = nullptr;
             }
-            //dlclose(_lib);
+            dlclose(_lib);
             _lib = nullptr;
         }
 
