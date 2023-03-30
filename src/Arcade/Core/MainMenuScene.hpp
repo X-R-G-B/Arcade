@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <iostream>
 #include "AScene.hpp"
 
 namespace Arcade {
@@ -19,7 +18,7 @@ namespace Arcade {
                     const std::vector<std::pair<std::string, std::string>> &gameLibs,
                     const std::vector<std::pair<std::string, std::string>> &graphicLibs
                 );
-                // ~MainMenuScene() = default;
+                ~MainMenuScene() = default;
 
                 bool init() final;
                 void close() final;
