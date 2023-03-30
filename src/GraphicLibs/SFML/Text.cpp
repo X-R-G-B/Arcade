@@ -5,7 +5,6 @@
 ** Sfml
 */
 
-#include <iostream>
 #include "Text.hpp"
 #include "Exceptions.hpp"
 
