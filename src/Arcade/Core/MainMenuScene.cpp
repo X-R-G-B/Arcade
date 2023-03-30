@@ -34,18 +34,21 @@ bool Arcade::Core::MainMenuScene::init()
         text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _gameLibs[i].first;
+        text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
-        compPos.x += 10;
+        //compPos.x += 10;
         gamesEntity.addComponent(text);
     }
     compPos.y += 20;
-    compPos.x = 0;
+    //compPos.x = 0;
+    std::cout << "size = " << _graphicLibs.size() << std::endl;
     for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _graphicLibs[i].first;
+        text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
-        compPos.x += 10;
+        //compPos.x += 10;
         graphicsEntity.addComponent(text);
     }
     return (true);
