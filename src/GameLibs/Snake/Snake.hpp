@@ -12,16 +12,10 @@
 #include "IScene.hpp"
 #include "SystemManager.hpp"
 #include "AScene.hpp"
+#include <memory>
 #include <vector>
 
 namespace Snake {
-    class SnakeScene : public Arcade::Game::AScene {
-        public:
-            SnakeScene();
-            ~SnakeScene() = default;
-
-    };
-
     class SnakeGameModule : public Arcade::Game::IGameModule {
         public:
             SnakeGameModule();
@@ -34,6 +28,6 @@ namespace Snake {
         private:
             Direction _snakeDirection = Direction::RIGHT;
             Arcade::ECS::SystemManager _systemManager;
-            std::vector<Arcade::Game::IScene> _scenes;
+            std::vector<std::unique_ptr<Arcade::Game::IScene>> _scenes;
     };
 }

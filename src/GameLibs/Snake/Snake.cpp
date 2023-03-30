@@ -5,10 +5,12 @@
 ** EntryPoint
 */
 
+#include <memory>
 #include "Api.hpp"
 #include "Snake.hpp"
 #include "Move.hpp"
-#include <memory>
+#include "GameScene.hpp"
+#include "AppleSystem.hpp"
 
 extern "C" {
     LibType getType()
@@ -34,6 +36,8 @@ extern "C" {
 
 Snake::SnakeGameModule::SnakeGameModule()
 {
+    _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
+    _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
 }
 

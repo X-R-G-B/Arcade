@@ -32,6 +32,7 @@ void modifyApplePos(Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById("Apple");
 
+    // ÇA COMPILE PAS BRICE ?!
     if (apple->type == Arcade::ECS::Sprite) {
         Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(apple->getComponents("Apple"));
         appleComp.pos = _positions[1 + (std::rand() % 20)];

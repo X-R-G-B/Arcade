@@ -8,3 +8,6 @@
 #pragma once
 
 #define SNAKE_HEAD "SNAKE_HEAD"
+#define APPLE_ENTITY "Apple"
+#define APLLE_SPRITE_COMP "apple"
+#define APLLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
