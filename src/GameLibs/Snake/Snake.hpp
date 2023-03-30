@@ -17,6 +17,6 @@ namespace Snake {
             Arcade::ECS::IEntityManager &getCurrentEntityManager() final;
         private:
             Snake::Scene::GameScene _scene;
-            ECS::SystemManager _systemManager;
+            Arcade::ECS::SystemManager _systemManager;
     };
 }
