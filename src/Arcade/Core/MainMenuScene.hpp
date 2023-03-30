@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <iostream>
 #include "AScene.hpp"
 
 namespace Arcade {
