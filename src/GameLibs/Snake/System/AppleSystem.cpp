@@ -7,6 +7,7 @@
 
 #include "AppleSystem.hpp"
 #include "Sprite.hpp"
+#include "CompType.hpp"
 
 Snake::System::AppleSystem::AppleSystem()
 {
