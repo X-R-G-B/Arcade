@@ -42,6 +42,7 @@ void Snake::System::AppleSystem::run(float deltaTime,
 {
     if (eventManager.isEventTriggered("Eated apple").first) {
         modifyApplePos(currentEntityManager, _positions);
+        eventManager.clearEvents();
         // TODO increase of score when score is implemented
     }
 }
