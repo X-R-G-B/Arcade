@@ -10,24 +10,26 @@
 #include "Move.hpp"
 #include <memory>
 
-LibType getType()
-{
-    return LibType::GAME;
-}
+extern "C" {
+    LibType getType()
+    {
+        return LibType::GAME;
+    }
 
-const char *getName()
-{
-    return "Snake";
-}
+    const char *getName()
+    {
+        return "Snake";
+    }
 
-Arcade::Game::IGameModule *getGameModule()
-{
-    return new Snake::SnakeGameModule();
-}
+    Arcade::Game::IGameModule *getGameModule()
+    {
+        return new Snake::SnakeGameModule();
+    }
 
-void destroyGameModule(Arcade::Game::IGameModule *gameModule)
-{
-    delete gameModule;
+    void destroyGameModule(Arcade::Game::IGameModule *gameModule)
+    {
+        delete gameModule;
+    }
 }
 
 Snake::SnakeGameModule::SnakeGameModule()
