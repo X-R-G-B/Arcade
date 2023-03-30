@@ -25,14 +25,25 @@ Snake::System::AppleSystem::~AppleSystem()
 {
 }
 
+// TODO check the pos of snake for the apple because we don't want
+// the apple to spawn on the snake
+
+void modifyApplePos(Arcade::ECS::IEntityManager &currentEntityManager)
+{
+    std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById("Apple");
+
+    if (apple->type == Arcade::ECS::Sprite) {
+        Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(apple->getComponents("Apple"));
+        appleComp.pos = _positions[1 + (std::rand() % 20)];
+    }
+}
+
 void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
     if (eventManager.isEventTriggered("Eated apple").first) {
-        Arcade::Graph::Sprite &appleComp =
-            dynamic_cast<Arcade::Graph::Sprite &>(currentEntityManager.getEntitiesById("apple")->getComponents("Apple"));
-        appleComp.pos = _positions[1 + (std::rand() % 20)];
+        modifyApplePos(currentEntityManager);
         // TODO increase of score when score is implemented
     }
 }
