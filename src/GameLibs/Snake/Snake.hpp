@@ -2,21 +2,32 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** Snake header
+** EntryPoint
 */
 
+#pragma once
+
+#include "Direction.hpp"
 #include "IGameModule.hpp"
-#include "Scene/GameScene.hpp"
+#include "IScene.hpp"
 #include "SystemManager.hpp"
+#include "AScene.hpp"
+#include <memory>
+#include <vector>
 
 namespace Snake {
-    class Snake : public Arcade::Game::IGameModule {
+    class SnakeGameModule : public Arcade::Game::IGameModule {
         public:
-            Snake();
+            SnakeGameModule();
+            ~SnakeGameModule() = default;
+
             void update(float deltaTime, Arcade::ECS::IEventManager &eventManager) final;
+
             Arcade::ECS::IEntityManager &getCurrentEntityManager() final;
+
         private:
-            Snake::Scene::GameScene _scene;
+            Direction _snakeDirection = Direction::RIGHT;
             Arcade::ECS::SystemManager _systemManager;
-    };
+            std::vector<std::unique_ptr<Arcade::Game::IScene>> _scenes;
+    }
 }
