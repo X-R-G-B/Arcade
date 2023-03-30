@@ -9,4 +9,3 @@ target_sources(arcade_snake PRIVATE
 add_subdirectory(Component)
 add_subdirectory(System)
 add_subdirectory(Scene)
-add_subdirectory(System)
