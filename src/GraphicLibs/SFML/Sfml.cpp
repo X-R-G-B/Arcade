@@ -8,12 +8,18 @@
 #include "Api.hpp"
 #include "Sfml.hpp"
 #include "Text.hpp"
+#include "Sprite.hpp"
+#include "Music.hpp"
+#include "SFML_EventHandler.hpp"
 
 Arcade::Sfml::DisplayModule::DisplayModule()
 {
     _win.create(sf::VideoMode(800, 600), "window");
     _win.setFramerateLimit(60);
+    _systems.addSystem("musicSystem", std::make_unique<MusicSystem>(_win));
+    _systems.addSystem("spriteSystem", std::make_unique<SpriteSystem>(_win));
     _systems.addSystem("textSystem", std::make_unique<TextSystem>(_win));
+    _systems.addSystem("eventHander", std::make_unique<SFML_EventHandler>(_win));
 }
 
 Arcade::Sfml::DisplayModule::~DisplayModule()
