@@ -53,5 +53,5 @@ bool Arcade::Core::MainMenuScene::init()
 
 void Arcade::Core::MainMenuScene::close()
 {
-    Arcade::Game::AScene::~AScene();
+    _EntityManager->removeAllEntities();
 }
