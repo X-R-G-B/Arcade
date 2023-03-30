@@ -18,7 +18,6 @@ namespace Arcade {
 
                 ECS::IEntityManager &getEntityManager() final;
             protected:
-            private:
                 std::unique_ptr<ECS::IEntityManager> _EntityManager;
         };
     }

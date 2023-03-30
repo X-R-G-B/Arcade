@@ -7,7 +7,6 @@
 
 #include "AppleSystem.hpp"
 #include "Sprite.hpp"
-#include "CompType.hpp"
 
 Snake::System::AppleSystem::AppleSystem()
 {
@@ -33,6 +32,7 @@ void modifyApplePos(Arcade::ECS::IEntityManager &currentEntityManager, std::vect
     if (appleIComp.type == Arcade::ECS::CompType::SPRITE) {
         Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(appleIComp);
         appleComp.pos = positions[1 + (std::rand() % 20)];
+
     }
 }
 
