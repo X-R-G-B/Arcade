@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <cstdio>
 #include <iostream>
 #include <string>
 #include <dlfcn.h>
@@ -80,29 +79,19 @@ class LibHandler {
  
             if (lib == nullptr) {
                 lib = dlopen(path.c_str(), RTLD_LAZY);
-                std::printf("lib: %p\n", lib);
-                std::puts("getLibName:::000");
                 destroyAfter = true;
             }
             if (lib == nullptr) {
                 throw ArcadeExceptions("Failed to load library in getLibName");
             }
-            std::puts("getLibName:::");
             func = (retType_t) dlsym(lib, "getName");
-            std::puts("getLibName:::1");
             if (func == nullptr) {
                 throw ArcadeExceptions("Failed to load function getName");
             }
-            std::puts("getLibName:::2");
             name = func();
-            std::puts("getLibName:::3");
             if (destroyAfter) {
-                std::puts("getLibName:::a");
-                std::printf("lib: %p\n", lib);
                 dlclose(lib);
-                std::puts("getLibName:::b");
             }
-            std::puts("getLibName:::4");
             return name;
         }
 

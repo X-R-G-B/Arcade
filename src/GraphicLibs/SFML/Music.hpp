@@ -2,24 +2,25 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** Text
+** Music
 */
 
 #pragma once
 
+#include <SFML/Audio.hpp>
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
-#include "IText.hpp"
+#include "IMusic.hpp"
 #include "Sfml.hpp"
 
 namespace Arcade {
 
     namespace Sfml {
 
-        class TextSystem : public ECS::ISystem {
+        class MusicSystem : public ECS::ISystem {
             public:
-                TextSystem(sf::RenderWindow &win);
+                MusicSystem(sf::RenderWindow &win);
                 void run(float deltaTime,
                     ECS::IEventManager &eventManager,
                     ECS::IEntityManager &entityManager) final;
@@ -29,15 +30,11 @@ namespace Arcade {
 
         };
 
-        struct SfText : public ECS::IComponent {
+        struct SfMusic : public ECS::IComponent {
             public:
-                SfText(const std::string id, const std::string &path,
-                    const std::string &text, const Graph::Color &textColor,
-                    const Arcade::Vector3f &pos, sf::RenderWindow &win);
-                void setPosition(const Arcade::Vector3f &pos);
-                sf::RenderWindow &_win;
-                sf::Font font;
-                sf::Text text;
+                SfMusic(const std::string id, const std::string &path,
+                    bool loop, bool play);
+                sf::Music music;
         };
     }
 }

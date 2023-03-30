@@ -8,7 +8,6 @@ project(
 
 ##############################################################################
 # arcade binary
-set(CMAKE_BUILD_TYPE Debug)
 add_executable(arcade)
 set_target_properties(arcade PROPERTIES
     CXX_STANDARD 20
