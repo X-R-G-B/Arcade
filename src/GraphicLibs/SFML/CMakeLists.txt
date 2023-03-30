@@ -1,16 +1,12 @@
-cmake_minimum_required(VERSION 3.3)
-project(
-    SFML
-    VERSION 1.0
-    DESCRIPTION "SFML graphical lib"
-    LANGUAGES CXX
+cmake_minimum_required(VERSION 3.13)
+
+target_sources(arcade_sfml PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sfml.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/SFML_EventHandler.cpp"
 )
 
-add_library(arcade_sfml SHARED)
-target_include_directories(arcade_sfml PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../Arcade/ECS/"
-)
-target_sources(arcade_sfml PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/SFML.cpp"
-)
+find_library(LSFMLGRAPHICS sfml-graphics sfml-window sfml-system)
+target_link_libraries(arcade_sfml PRIVATE ${LSFMLGRAPHICS})

@@ -16,8 +16,14 @@
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "Api.hpp"
+#include "Exceptions.hpp"
 
-template<typename T>
+/**
+ * @brief The LibHandler class
+ *
+ * @tparam T type that this class will handle (could be IDisplayModule IGameModule)
+ */
+template<typename T = int>
 class LibHandler {
     public:
         LibHandler() : _lib(nullptr), _module(nullptr)
@@ -30,6 +36,8 @@ class LibHandler {
                 _type = LibType::GAME;
                 _funcCreator = "getGameModule";
                 _funcDestructor = "destroyGameModule";
+            } else {
+                throw ArcadeExceptions("LibHandler: wrong type (type handler are IDisplayModule IGameModule)");
             }
         }
 
@@ -42,16 +50,19 @@ class LibHandler {
             typedef LibType (*retType_t)();
             retType_t func = nullptr;
             LibType type;
-            bool destroyAfter = true;
+            bool destroyAfter = false;
  
             if (lib == nullptr) {
                 lib = dlopen(path.c_str(), RTLD_LAZY);
-                destroyAfter = false;
+                destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in getLibType");
             }
             func = (retType_t) dlsym(lib, "getType");
+            if (func == nullptr) {
+                throw ArcadeExceptions("Failed to load function getType");
+            }
             type = func();
             if (destroyAfter) {
                 dlclose(lib);
@@ -64,16 +75,19 @@ class LibHandler {
             typedef const char *(*retType_t)();
             retType_t func = nullptr;
             std::string name;
-            bool destroyAfter = true;
+            bool destroyAfter = false;
  
             if (lib == nullptr) {
                 lib = dlopen(path.c_str(), RTLD_LAZY);
-                destroyAfter = false;
+                destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in getLibName");
             }
             func = (retType_t) dlsym(lib, "getName");
+            if (func == nullptr) {
+                throw ArcadeExceptions("Failed to load function getName");
+            }
             name = func();
             if (destroyAfter) {
                 dlclose(lib);
@@ -85,25 +99,32 @@ class LibHandler {
         {
             typedef T *(*retType_t)();
             retType_t func = nullptr;
+            LibType type;
 
             destroyLib();
             _lib = dlopen(path.c_str(), RTLD_LAZY);
             if (_lib == nullptr) {
-                throw std::runtime_error("Failed to load library");
+                throw ArcadeExceptions("Failed to load library in loadLib");
             }
-            if (_type != LibHandler::getLibType(path, _lib)) {
-                throw std::runtime_error("Bad library type");
+            try {
+                type = this->getLibType(path, _lib);
+            } catch (const std::exception &e) {
+                destroyLib();
+                throw ArcadeExceptions(e.what());
+            }
+            if (_type != type) {
+                destroyLib();
+                throw ArcadeExceptions("Bad library type");
             }
             try {
                 _name = LibHandler::getLibName(path, _lib);
-            } catch (std::exception &e) {
-                dlclose(_lib);
-                _lib = nullptr;
-                throw std::runtime_error(e.what());
+            } catch (const std::exception &e) {
+                destroyLib();
+                throw ArcadeExceptions(e.what());
             }
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
             if (func == nullptr) {
-                throw std::runtime_error("Failed to load function " + _funcCreator);
+                throw ArcadeExceptions("Failed to load function " + _funcCreator);
             }
             _module = func();
         }
