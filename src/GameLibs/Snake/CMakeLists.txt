@@ -5,3 +5,4 @@ target_sources(arcade_snake PRIVATE
 )
 
 add_subdirectory(Scene)
+add_subdirectory(System)

@@ -13,7 +13,7 @@ namespace Snake {
     namespace System {
         class AppleSystem : public Arcade::ECS::ISystem {
             public:
-                AppleSystem() = default;
+                AppleSystem();
 
 
                 void run(float deltaTime,
