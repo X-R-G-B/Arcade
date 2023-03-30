@@ -14,7 +14,6 @@ namespace Snake {
         class AppleSystem : public Arcade::ECS::ISystem {
             public:
                 AppleSystem();
-                ~AppleSystem();
 
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
