@@ -26,7 +26,6 @@ void Snake::System::Collision::run(float deltaTime,
         && appleIComp.type == Arcade::ECS::CompType::SPRITE) {
         Arcade::Graph::Sprite &apple = static_cast<Arcade::Graph::Sprite &>(appleIComp);
         Arcade::Graph::Sprite &snakeHead = static_cast<Arcade::Graph::Sprite &>(snakeHeadIComp);
-
         if (apple.rect.left >= snakeHead.rect.left + snakeHead.rect.width
             || apple.rect.left + apple.rect.width <= snakeHead.rect.left
             || apple.rect.top >= snakeHead.rect.left + snakeHead.rect.height
