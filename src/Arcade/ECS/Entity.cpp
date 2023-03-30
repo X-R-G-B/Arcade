@@ -7,7 +7,6 @@
 
 #include <algorithm>
 #include <stdexcept>
-#include <iostream>
 #include "Entity.hpp"
 #include "Exceptions.hpp"
 

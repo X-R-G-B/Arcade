@@ -13,6 +13,18 @@
 
 namespace Arcade {
 
+    namespace ECS {
+        enum class CompType : int {
+            TEXT = 0,
+            SPRITE = 1,
+            MUSIC = 2,
+            WINDOW = 3,
+            SFTEXT = 4,
+            SFSPRITE = 5,
+            SFMUSIC = 6
+        };
+    }
+
     namespace Sfml {
 
         class DisplayModule : public Graph::IDisplayModule {

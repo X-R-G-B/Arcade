@@ -26,11 +26,9 @@ void Arcade::Core::MainMenuModule::update(float deltaTime, Arcade::ECS::IEventMa
 {
     _systemManager->update(deltaTime, eventManager, _mainMenu->getEntityManager());
     if (eventManager.isEventTriggered("KEY_UP_PRESSED").first) {
-        std::cout << "Change game lib" << std::endl;
         eventManager.addEvent("CHANGE_GAME");
     }
     if (eventManager.isEventTriggered("KEY_DOWN_PRESSED").first) {
-        std::cout << "Change graph lib" << std::endl;
         eventManager.addEvent("CHANGE_GRAPH");
     }
 }

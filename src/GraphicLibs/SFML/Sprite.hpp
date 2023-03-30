@@ -1,25 +1,17 @@
-/*
-** EPITECH PROJECT, 2023
-** Arcade
-** File description:
-** Text
-*/
-
-#pragma once
 
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
-#include "IText.hpp"
+#include "ISprite.hpp"
 #include "Sfml.hpp"
 
 namespace Arcade {
 
     namespace Sfml {
 
-        class TextSystem : public ECS::ISystem {
+        class SpriteSystem : public ECS::ISystem {
             public:
-                TextSystem(sf::RenderWindow &win);
+                SpriteSystem(sf::RenderWindow &win);
                 void run(float deltaTime,
                     ECS::IEventManager &eventManager,
                     ECS::IEntityManager &entityManager) final;
@@ -29,15 +21,13 @@ namespace Arcade {
 
         };
 
-        struct SfText : public ECS::IComponent {
+        struct SfSprite : public ECS::IComponent {
             public:
-                SfText(const std::string id, const std::string &path,
-                    const std::string &text, const Graph::Color &textColor,
-                    const Arcade::Vector3f &pos, sf::RenderWindow &win);
+                SfSprite(const std::string id, const std::string &path,
+                    const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
                 void setPosition(const Arcade::Vector3f &pos);
                 sf::RenderWindow &_win;
-                sf::Font font;
-                sf::Text text;
+                sf::Sprite sprite;
         };
     }
 }
