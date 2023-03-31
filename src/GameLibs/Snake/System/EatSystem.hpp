@@ -15,9 +15,9 @@ namespace Snake {
             public:
                 EatSystem();
 
-            void run(float deltaTime,
-            Arcade::ECS::IEventManager &eventManager,
-            Arcade::ECS::IEntityManager &currentEntityManager);
+                void run(float deltaTime,
+                Arcade::ECS::IEventManager &eventManager,
+                Arcade::ECS::IEntityManager &currentEntityManager);
             protected:
             private:
         };
