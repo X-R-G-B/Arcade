@@ -8,7 +8,8 @@
 #include <memory>
 #include "Api.hpp"
 #include "Snake.hpp"
-#include "Move.hpp"
+#include "MoveInput.hpp"
+#include "MoveForward.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
 
@@ -38,7 +39,8 @@ Snake::SnakeGameModule::SnakeGameModule()
 {
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
-    _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
 }
 
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)

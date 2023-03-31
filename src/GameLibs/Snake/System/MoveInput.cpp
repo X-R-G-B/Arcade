@@ -39,8 +39,7 @@ directionsChoice = {
     }
 };
 
-Snake::System::MoveInput::MoveInput(const Direction &snakeDirection):
-    _snakeDirection(snakeDirection)
+Snake::System::MoveInput::MoveInput()
 {
 }
 
@@ -79,7 +78,7 @@ void Snake::System::MoveInput::run(
         if (eventManager.isEventTriggered(event).first) {
             head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move),
-                _snakeDirection,
+                curDir.direction,
                 toNextCase(sprite.pos, curDir.direction)
             ));
             break;
