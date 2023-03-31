@@ -17,7 +17,7 @@ namespace Snake {
 
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentEntityManager);
+                Arcade::ECS::IEntityManager &currentEntityManager) final;
             protected:
             private:
         };
