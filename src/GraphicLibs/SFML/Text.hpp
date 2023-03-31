@@ -34,7 +34,6 @@ namespace Arcade {
                 SfText(const std::string id, const std::string &path,
                     const std::string &text, const Graph::Color &textColor,
                     const Arcade::Vector3f &pos, sf::RenderWindow &win);
-                void setPosition(const Arcade::Vector3f &pos);
                 sf::RenderWindow &_win;
                 sf::Font font;
                 sf::Text text;
