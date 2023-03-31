@@ -16,7 +16,7 @@ namespace Arcade {
             SPRITE = 1,
             MUSIC = 2,
             MOVEABLE = 101,
-            BODY_INCR
+            BODY_INCR = 102
         };
     }
 }
