@@ -6,8 +6,9 @@
 */
 
 #include "Collision.hpp"
+#include "SnakeCompType.hpp"
 #include "Sprite.hpp"
-#include "CompType.hpp"
+#include "MagicValue.hpp"
 
 Snake::System::Collision::Collision()
 {
@@ -17,10 +18,10 @@ void Snake::System::Collision::run(float deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::shared_ptr<Arcade::ECS::IEntity> snakeEntity = currentEntityManager.getEntitiesById("Snake");
-    std::shared_ptr<Arcade::ECS::IEntity> appleEntity = currentEntityManager.getEntitiesById("Apple");
-    Arcade::ECS::IComponent &snakeHeadIComp = snakeEntity->getComponents("Snake Head");
-    Arcade::ECS::IComponent &appleIComp = appleEntity->getComponents("apple");
+    std::shared_ptr<Arcade::ECS::IEntity> snakeEntity = currentEntityManager.getEntitiesById(SNAKE_ENTITY);
+    std::shared_ptr<Arcade::ECS::IEntity> appleEntity = currentEntityManager.getEntitiesById(APPLE_ENTITY);
+    Arcade::ECS::IComponent &snakeHeadIComp = snakeEntity->getComponents(SNAKE_HEAD);
+    Arcade::ECS::IComponent &appleIComp = appleEntity->getComponents(APLLE_SPRITE_COMP);
 
     if (snakeHeadIComp.type == Arcade::ECS::CompType::SPRITE
         && appleIComp.type == Arcade::ECS::CompType::SPRITE) {
