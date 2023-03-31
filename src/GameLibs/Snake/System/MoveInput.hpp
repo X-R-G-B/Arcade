@@ -12,10 +12,10 @@
 
 namespace Snake {
     namespace System {
-        class Move : public Arcade::ECS::ISystem {
+        class MoveInput : public Arcade::ECS::ISystem {
             public:
-                Move(const Direction &snakeDirection);
-                ~Move() = default;
+                MoveInput(const Direction &snakeDirection);
+                ~MoveInput() = default;
 
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
