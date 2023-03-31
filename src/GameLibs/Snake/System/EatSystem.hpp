@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** Collision
+** EatSystem
 */
 
 #pragma once
@@ -11,9 +11,9 @@
 
 namespace Snake {
     namespace System {
-        class Collision : Arcade::ECS::ISystem {
+        class EatSystem : Arcade::ECS::ISystem {
             public:
-                Collision();
+                EatSystem();
 
             void run(float deltaTime,
             Arcade::ECS::IEventManager &eventManager,
