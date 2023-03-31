@@ -16,10 +16,10 @@
 #include "IGameModule.hpp"
 #include "Api.hpp"
 #include "Core.hpp"
+#include "EntityManager.hpp"
 #include "Exceptions.hpp"
 
 Arcade::Core::Core::Core(const std::string &path)
-    : _mainMenu(this->_gamesNames, this->_graphicLibsNames)
 {
     getSharedLibsNames();
     if (path.empty()) {
@@ -27,6 +27,7 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
+    _mainMenu = std::make_unique<Arcade::Core::MainMenuModule>(this->_gamesNames, this->_graphicLibsNames);
 }
 
 void Arcade::Core::Core::addNameToList(const std::string &path)
@@ -40,6 +41,7 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
         type = LibHandler<Graph::IDisplayModule>::getLibType(path);
     } catch (std::exception &e) {
         std::cerr << "File is not a shared library: " << path << std::endl;
+        std::cerr << e.what() << std::endl;
         return;
     }
     if (type == LibType::GAME) {
@@ -51,13 +53,13 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
 
 void Arcade::Core::Core::getSharedLibsNames()
 {
-    std::size_t pos;
+    bool is_lib = false;
     std::string path;
 
     for (const auto &entry : std::filesystem::directory_iterator(_libFolderPath)) {
         path = std::string(entry.path());
-        pos = path.find(".so");
-        if (pos == std::string::npos || pos + 3 != path.length()) {
+        is_lib = path.ends_with(".so");
+        if (is_lib == false) {
             std::cerr << "File is not a shared library: " << path << std::endl;
         } else {
             addNameToList(path);
@@ -86,8 +88,8 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
         _gameLibHandler.getModule()->update(delta.count(), eventManager);
         return (_gameLibHandler.getModule()->getCurrentEntityManager());
     } else {
-        _mainMenu.update(delta.count(), eventManager);
-        return (_mainMenu.getCurrentEntityManager());
+        _mainMenu->update(delta.count(), eventManager);
+        return (_mainMenu->getCurrentEntityManager());
     }
 }
 
@@ -100,7 +102,7 @@ void Arcade::Core::Core::update()
     while (eventManager.isEventTriggered("QUIT").first == false) {
         delta = start - std::chrono::steady_clock::now();
         start = std::chrono::steady_clock::now();
-        
+
         checkChangeLib(eventManager);
         eventManager.clearEvents();
         auto &entityManager = this->updater(delta, eventManager);
