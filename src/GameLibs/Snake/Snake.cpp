@@ -14,6 +14,7 @@
 #include "Moveable.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
+#include "Restart.hpp"
 
 extern "C" {
     LibType getType()
