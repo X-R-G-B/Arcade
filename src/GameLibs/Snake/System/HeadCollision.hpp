@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ISystem.hpp"
+#include "Sprite.hpp"
 
 namespace Snake {
     namespace System {
@@ -16,7 +17,7 @@ namespace Snake {
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentScene) final;
             private:
-                bool checkCollision(Arcade::ECS::IComponent &fst, Arcade::ECS::IComponent &scd);
+                bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head);
         };
     }
 }
