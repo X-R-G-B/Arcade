@@ -10,7 +10,7 @@
 #include "SnakeCompType.hpp"
 #include "Sprite.hpp"
 
-bool checkCollision(Arcade::ECS::IComponent &fst, Arcade::Graph::Sprite &head)
+bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
 {
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
 
@@ -30,7 +30,7 @@ void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManag
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById("head");
     std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
     Arcade::ECS::IComponent &apple = currentScene.getEntitiesById("apple")->getComponents("sprite");
-    Arcade::Graph::Sprite &headS = static_cast<Arcade::Graph::Sprite&>(*(head->getComponents(Arcade::ECS::CompType::SPRITE).front().get()));
+    std::shared_ptr<Arcade::Graph::Sprite> headS = static_cast<std::shared_ptr<Arcade::Graph::Sprite>>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
 
     for (auto const &body : *(bodies.get())) {
         if (body->getId() == "head") {
@@ -47,7 +47,7 @@ void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManag
         eventManager.addEvent("EATED");
         return;
     }
-    if (headS.pos.x <= 0 || headS.pos.x + headS.rect.width >= 1920 || headS.pos.y <= 0 || headS.pos.y + headS.rect.height >= 1080) {
+    if (head->pos.x <= 0 || head->pos.x + head->rect.width >= 1920 || head->pos.y <= 0 || head->pos.y + head->rect.height >= 1080) {
         eventManager.addEvent("RESTART");
     }
 }
