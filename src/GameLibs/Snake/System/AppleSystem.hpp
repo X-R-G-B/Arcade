@@ -15,7 +15,6 @@ namespace Snake {
             public:
                 AppleSystem();
 
-
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;

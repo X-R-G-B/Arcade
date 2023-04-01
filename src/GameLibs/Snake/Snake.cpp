@@ -2,22 +2,46 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** Snake
+** EntryPoint
 */
 
+#include <memory>
+#include "Api.hpp"
 #include "Snake.hpp"
+#include "Move.hpp"
+#include "GameScene.hpp"
+#include "AppleSystem.hpp"
 
-Snake::Snake::Snake() : _scene(std::make_unique<Arcade::ECS::IEntityManager>())
-{
-    _scene.init();
+extern "C" {
+    LibType getType()
+    {
+        return LibType::GAME;
+    }
+
+    const char *getName()
+    {
+        return "Snake";
+    }
+
+    Arcade::Game::IGameModule *getGameModule()
+    {
+        return new Snake::SnakeGameModule();
+    }
+
+    void destroyGameModule(Arcade::Game::IGameModule *gameModule)
+    {
+        delete gameModule;
+    }
 }
 
-void Snake::Snake::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
+Snake::SnakeGameModule::SnakeGameModule()
+{
+    _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
+    _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
+    _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+}
+
+void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager.update(deltaTime, eventManager, getCurrentEntityManager());
-}
-
-Arcade::ECS::IEntityManager &Snake::Snake::getCurrentEntityManager()
-{
-    return _scene.getEntityManager();
 }
