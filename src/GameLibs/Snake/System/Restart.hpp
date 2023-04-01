@@ -12,12 +12,12 @@ namespace Snake {
     namespace System {
         class Restart : public Arcade::ECS::ISystem {
             public:
-                Restart(Arcade::Game::IScene &scene)
+                Restart(std::unique_ptr<Arcade::Game::IScene> &scene);
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
             private:
-                Arcade::Game::IScene &_scene;
-        }
+                std::unique_ptr<Arcade::Game::IScene> &_scene;
+        };
     }
 }

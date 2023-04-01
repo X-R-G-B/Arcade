@@ -72,6 +72,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _scenes.front()->init();
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     createSnake();
 }
 

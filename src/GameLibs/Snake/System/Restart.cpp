@@ -7,7 +7,7 @@
 
 #include "Restart.hpp"
 
-Snake::System::Restart::Restart(Arcade::Game::IScene &scene) : _scene(scene)
+Snake::System::Restart::Restart(std::unique_ptr<Arcade::Game::IScene> &scene) : _scene(scene)
 {
 }
 
@@ -16,5 +16,6 @@ void Snake::System::Restart::run(float deltaTime,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
     eventManager.isEventTriggered("RESTART");
-
+    _scene->close();
+    _scene->init();
 }
