@@ -11,6 +11,7 @@
 #include "Move.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
+#include "HeadCollision.hpp"
 
 extern "C" {
     LibType getType()
@@ -39,6 +40,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
 }
 
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
