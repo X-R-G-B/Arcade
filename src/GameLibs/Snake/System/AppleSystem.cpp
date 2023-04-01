@@ -40,7 +40,7 @@ void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    if (eventManager.isEventTriggered("").first) {
+    if (eventManager.isEventTriggered("EATED").first) {
         modifyApplePos(currentEntityManager, _positions);
     }
 }
