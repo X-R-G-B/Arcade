@@ -7,6 +7,7 @@
 
 #include "HeadCollision.hpp"
 #include "Snake.hpp"
+#include "SnakeCompType.hpp"
 #include "Sprite.hpp"
 
 bool checkCollision(Arcade::ECS::IComponent &fst, Arcade::Graph::Sprite &head)
@@ -27,7 +28,7 @@ void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManag
     Arcade::ECS::IEntityManager &currentScene)
 {
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById("head");
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::DIRECTION);
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
     Arcade::ECS::IComponent &apple = currentScene.getEntitiesById("apple")->getComponents("sprite");
     Arcade::Graph::Sprite &headS = static_cast<Arcade::Graph::Sprite&>(*(head->getComponents(Arcade::ECS::CompType::SPRITE).front().get()));
 

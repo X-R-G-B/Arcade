@@ -15,17 +15,6 @@
 #include <memory>
 #include <vector>
 
-namespace Arcade {
-    namespace ECS {
-        enum class CompType {
-            TEXT = 0,
-            SPRITE = 1,
-            MUSIC = 2,
-            DIRECTION = 201
-        };
-    }
-}
-
 namespace Snake {
     class SnakeGameModule : public Arcade::Game::IGameModule {
         public:
