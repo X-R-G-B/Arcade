@@ -18,8 +18,8 @@ void Snake::System::EatSystem::run(float deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::shared_ptr<Arcade::ECS::IEntity> snakeEntity = currentEntityManager.getEntitiesById(SNAKE_ENTITY);
-    Arcade::ECS::IComponent &snakeIncrComp = snakeEntity->getComponents(SNAKE_INCR_COMP);
+    auto snakeEntity = currentEntityManager.getEntitiesById(SNAKE_ENTITY);
+    auto &snakeIncrComp = snakeEntity->getComponents(SNAKE_INCR_COMP);
 
     if (snakeIncrComp.type == Arcade::ECS::CompType::SPRITE) {
         //if (eventManager.isEventTriggered(EATED).first) { The if condition will work when EATED will be defined
