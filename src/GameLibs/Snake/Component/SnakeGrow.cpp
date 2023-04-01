@@ -8,7 +8,7 @@
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 
-Snake::Components::SnakeGrow::SnakeGrow(const std::string &id)
+Snake::Component::SnakeGrow::SnakeGrow(const std::string &id)
 {
     this->id = id;
     this->type = Arcade::ECS::CompType::SNAKEGROW;
