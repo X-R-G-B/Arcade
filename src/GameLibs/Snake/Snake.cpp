@@ -34,11 +34,20 @@ extern "C" {
     }
 }
 
+void Snake::SnakeGameModule::createSnake()
+{
+    Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
+
+    EntityManager.createEntity("snake");
+}
+
 Snake::SnakeGameModule::SnakeGameModule()
 {
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
+    _scenes.front()->init();
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    createSnake();
 }
 
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
