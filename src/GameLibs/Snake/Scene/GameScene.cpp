@@ -37,5 +37,5 @@ bool Snake::Scene::GameScene::init()
 
 void Snake::Scene::GameScene::close()
 {
-    this->_EntityManager.removeAllEntities();
+    this->getEntityManager().removeAllEntities();
 }
