@@ -31,7 +31,7 @@ void Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Comp
             continue;
         }
         auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(MOVEABLE_KEY));
-        auto nextCase = Snake::System::toNextCase(bodySprite->pos, bodyDir.direction);
+        auto nextCase = Snake::System::MoveInput::toNextCase(bodySprite->pos, bodyDir.direction);
         bodySprite->pos.x = nextCase.x;
         bodySprite->pos.y = nextCase.y;
         bodyDir.direction = changeDir->direction;
