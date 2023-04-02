@@ -5,9 +5,6 @@ target_include_directories(arcade_snake PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_sources(arcade_snake PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Move.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/AppleSystem.cpp"
-<<<<<<< HEAD
     "${CMAKE_CURRENT_SOURCE_DIR}/Restart.cpp"
-=======
     "${CMAKE_CURRENT_SOURCE_DIR}/HeadCollision.cpp"
->>>>>>> ARCADE-6-snake
 )
