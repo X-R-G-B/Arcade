@@ -1,5 +1,10 @@
-//
-// Created by me0w on 4/2/23.
-//
+/*
+** EPITECH PROJECT, 2023
+** Arcade Promo 2026 Toulouse
+** File description:
+** SnakeMapEntity
+*/
 
 #include "SnakeMapEntity.hpp"
+
+

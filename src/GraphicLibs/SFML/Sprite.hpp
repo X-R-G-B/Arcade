@@ -24,7 +24,9 @@ namespace Arcade {
         struct SfSprite : public ECS::IComponent {
             public:
                 SfSprite(const std::string id, const std::string &path,
-                    const Arcade::Vector3f &pos, Graph::Rect &rect);
+                    const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
+                void setPosition(const Arcade::Vector3f &pos);
+                sf::RenderWindow &_win;
                 sf::Sprite sprite;
         };
     }

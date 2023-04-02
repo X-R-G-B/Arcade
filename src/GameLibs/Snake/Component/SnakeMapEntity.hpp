@@ -1,10 +1,23 @@
-//
-// Created by me0w on 4/2/23.
-//
+/*
+** EPITECH PROJECT, 2023
+** Arcade Promo 2026 Toulouse
+** File description:
+** SnakeMapEntity
+*/
 
-#ifndef ARCADE_SRC_GAMELIBS_SNAKE_COMPONENT_SNAKEMAPENTITY_HPP
-#define ARCADE_SRC_GAMELIBS_SNAKE_COMPONENT_SNAKEMAPENTITY_HPP
+#pragma once
 
-class SnakeMapEntity {};
 
-#endif // ARCADE_SRC_GAMELIBS_SNAKE_COMPONENT_SNAKEMAPENTITY_HPP
+#include "Entity.hpp"
+
+namespace Snake {
+    namespace Component {
+        class SnakeMapEntity : public Arcade::ECS::Entity {
+            public:
+                SnakeMapEntity(const std::string &id) : Entity(id) {
+                    this->type = Arcade::ECS::CompType::SNAKE_MAP;
+                }
+                ~SnakeMapEntity() = default;
+        };
+    }
+}
