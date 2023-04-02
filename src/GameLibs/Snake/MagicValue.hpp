@@ -35,3 +35,4 @@
 #define SNAKEBODYPATH "assets/snake_body.png"
 #define SCREENSIZEX 1920
 #define SCREENSIZEY 1080
+#define POS_OF_APPLE 20
