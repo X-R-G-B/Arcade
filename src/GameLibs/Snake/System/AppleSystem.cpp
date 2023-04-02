@@ -28,13 +28,13 @@ Snake::System::AppleSystem::AppleSystem()
 // TODO check the pos of snake for the apple because we don't want
 // the apple to spawn on the snake
 
-void modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager, std::vector<Arcade::Vector3f> positions)
+void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager, std::vector<Arcade::Vector3f> positions)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById("Apple");
     Arcade::ECS::IComponent &appleIComp = apple->getComponents("apple");
     auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
     std::vector<Arcade::Vector3f> tempPositions = positions;
-    std::size_t nbrOfPos = 20;
+    std::size_t nbrOfPos = POS_OF_APPLE;
     std::size_t randNumber = 1 + (std::rand() % nbrOfPos);
     Arcade::Vector3f randPosition = positions[randNumber];
 
@@ -64,6 +64,6 @@ void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
     if (eventManager.isEventTriggered(EATED_EVENT).first) {
-        modifyApplePos(eventManager, currentEntityManager, _positions);
+        this->modifyApplePos(eventManager, currentEntityManager, _positions);
     }
 }
