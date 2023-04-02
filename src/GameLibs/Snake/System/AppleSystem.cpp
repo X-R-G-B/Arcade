@@ -14,29 +14,18 @@
 
 Snake::System::AppleSystem::AppleSystem()
 {
-    Arcade::Vector3f pos = {
-        0, 0, 0
-    };
-
-    for (std::size_t it = 0; it != 20; it++) {
-        pos.x += 5;
-        pos.y += 5;
-        _positions.insert(_positions.begin(), pos);
-    }
 }
 
 // TODO check the pos of snake for the apple because we don't want
 // the apple to spawn on the snake
 
-void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager, std::vector<Arcade::Vector3f> positions)
+void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById("Apple");
-    Arcade::ECS::IComponent &appleIComp = apple->getComponents("apple");
+    std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
+    Arcade::ECS::IComponent &appleIComp = apple->getComponents(APPLE_SPRITE_COMP);
     auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
-    std::vector<Arcade::Vector3f> tempPositions = positions;
-    std::size_t nbrOfPos = POS_OF_APPLE;
-    std::size_t randNumber = 1 + (std::rand() % nbrOfPos);
-    Arcade::Vector3f randPosition = positions[randNumber];
+    std::size_t randNumber = 1 + (std::rand() % _positions.size());
+    Arcade::Vector3f randPosition = _positions[randNumber];
 
     for (auto it = snakeEntities->begin(); it != snakeEntities->end(); it++) {
         auto entity = *it;
@@ -44,26 +33,37 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
         auto moveableSprite = static_pointer_cast<Arcade::Graph::Sprite>(components);
 
         if (moveableSprite->pos.x == randPosition.x && moveableSprite->pos.y == randPosition.y) {
-            nbrOfPos -= 1;
-            randPosition = positions[1 + (std::rand() % nbrOfPos)];
+            randPosition = _positions[1 + (std::rand() % _positions.size())];
             it = snakeEntities->begin();
-            positions.erase(std::next(positions.begin(), randNumber));
+            _positions.erase(std::next(_positions.begin(), randNumber));
         }
-        if (nbrOfPos < 0) {
-            eventManager.addEvent("");
+        if (_positions.size() <= 0) {
+            eventManager.addEvent(RESTART_EVENT);
+            return;
         }
     }
     if (appleIComp.type == Arcade::ECS::CompType::SPRITE) {
         Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(appleIComp);
         appleComp.pos = randPosition;
     }
+    _positions.clear();
 }
 
 void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
+    auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
+    auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
+
+    for (auto it = mapComponents.begin(); it != mapComponents.end() &&
+        eventManager.isEventTriggered(EATED_EVENT).first; it++) {
+        auto comp = *it;
+        auto spriteComp = std::static_pointer_cast<Arcade::Graph::Sprite>(comp);
+
+        _positions.push_back(spriteComp->pos);
+    }
     if (eventManager.isEventTriggered(EATED_EVENT).first) {
-        this->modifyApplePos(eventManager, currentEntityManager, _positions);
+        this->modifyApplePos(eventManager, currentEntityManager);
     }
 }
