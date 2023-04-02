@@ -83,10 +83,10 @@ void Snake::SnakeGrowSystem::run(float deltaTime, Arcade::ECS::IEventManager &ev
     if (comps->size() == 0) {
         throw ArcadeExceptions("can't find grow component");
     }
-    auto &bodyToIncr = static_cast< Snake::Component::SnakeGrow &>(* comps->at(0).get());
+    auto bodyToIncr = std::static_pointer_cast<Snake::Component::SnakeGrow>(comps->at(0));
     auto snake_bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
-
-    for (; bodyToIncr.grow > 0 ; bodyToIncr.grow--, bodyToIncr.size++) {
-        addNewBodyPartToSnake(currentScene, bodyToIncr.size);
+    
+    for (; bodyToIncr->grow > 0 ; bodyToIncr->grow--, bodyToIncr->size++) {
+        addNewBodyPartToSnake(currentScene, bodyToIncr->size);
     }
 }
