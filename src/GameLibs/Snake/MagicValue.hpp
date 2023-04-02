@@ -8,6 +8,8 @@
 #pragma once
 
 #define MOVEABLE_KEY "direction"
+#define EATED_EVENT "EATED"
+#define RESTART_EVENT "RESTART"
 #define SNAKE_HEAD "SNAKE_HEAD"
 #define SNAKE "snake"
 #define SNAKE_GROW_COMPONENT "snakeGrow"

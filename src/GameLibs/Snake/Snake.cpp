@@ -15,6 +15,7 @@
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
+#include "Restart.hpp"
 #include "HeadCollision.hpp"
 
 extern "C" {
@@ -73,6 +74,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _scenes.front()->init();
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     createSnake();
     _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
 }
