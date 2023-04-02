@@ -25,7 +25,7 @@
 
 #define SNAKE_MOVE_PER_DTIME 0.5
 
-#define MOVEABLE_KEY "direction"
+#define FORWARD_KEY "direction"
 #define EATED_EVENT "EATED"
 #define RESTART_EVENT "RESTART"
 #define SNAKE "snake"

@@ -40,7 +40,7 @@ void Snake::System::MoveForward::run(
     auto snakes = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
 
     for (auto &it : *snakes) {
-        auto curDir = static_cast<Component::Forward &>(it->getComponents(MOVEABLE_KEY));
+        auto curDir = static_cast<Component::Forward &>(it->getComponents(FORWARD_KEY));
         auto sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_HEAD_SPRITE_COMP));
         moveForward(curDir, sprite, deltaTime);
     }

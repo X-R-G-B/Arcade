@@ -57,7 +57,7 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->currentRectIndex = 0;
     //TODO set tty data after snake sprite
     head.addComponent(headS);
-    head.addComponent(std::make_shared<Component::Forward>(MOVEABLE_KEY, Direction::RIGHT));
+    head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
 }
 
 void Snake::SnakeGameModule::createSnake()

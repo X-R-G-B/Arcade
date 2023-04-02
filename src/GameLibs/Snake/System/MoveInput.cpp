@@ -73,7 +73,7 @@ void Snake::System::MoveInput::run(
 {
     static int nb_move = 0;
     auto head = currentEntityManager.getEntitiesById(SNAKE_HEAD);
-    auto &curDir = static_cast<Component::Forward &>(head->getComponents(MOVEABLE_KEY));
+    auto &curDir = static_cast<Component::Forward &>(head->getComponents(FORWARD_KEY));
     auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(SNAKE_HEAD_SPRITE_COMP));
 
     for (auto &[event, action] : directionsChoice.at(curDir.direction)) {
