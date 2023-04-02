@@ -30,7 +30,7 @@ static void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> chang
                 bodySprite->pos.y < changeDir->pos.y - (CASE_SIZE_HEIGHT / 2)) {
             continue;
         }
-        auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(SNAKE_HEAD_DIR_COMP));
+        auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(MOVEABLE_KEY));
         auto nextCase = Snake::System::toNextCase(bodySprite->pos, bodyDir.direction);
         bodySprite->pos.x = nextCase.x;
         bodySprite->pos.y = nextCase.y;
@@ -48,6 +48,7 @@ void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManag
         auto directionComponents = directionEnt->getComponents(Arcade::ECS::CompType::MOVEABLE);
         for (auto &directionComp : directionComponents) {
             auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(directionComp);
+            checkHitChangeDir(direction, snake);
             for (auto bodiesEnt : *bodies) {
                 checkHitChangeDir(direction, bodiesEnt);
             }

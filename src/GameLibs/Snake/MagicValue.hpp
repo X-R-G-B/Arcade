@@ -11,7 +11,6 @@
 #define TO_INT(x) static_cast<int>(x)
 
 #define SNAKE_HEAD "SNAKE_HEAD"
-#define SNAKE_HEAD_DIR_COMP "SNAKE_HEAD_DIR_COMP"
 #define SNAKE_HEAD_SPRITE_COMP "SNAKE_HEAD_SPRITE_COMP"
 #define APLLE_SPRITE_COMP "apple"
 #define APLLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
