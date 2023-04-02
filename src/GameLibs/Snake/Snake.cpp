@@ -11,14 +11,11 @@
 #include "Move.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
-<<<<<<< HEAD
 #include "Moveable.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
-=======
 #include "HeadCollision.hpp"
->>>>>>> ARCADE-6-snake
 
 extern "C" {
     LibType getType()
