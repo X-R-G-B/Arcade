@@ -18,7 +18,7 @@ void Snake::System::EatSystem::run(float deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    auto snakeEntity = currentEntityManager.getEntitiesById(SNAKE_ENTITY);
+    auto snakeEntity = currentEntityManager.getEntitiesById(SNAKE);
     auto &snakeIncrComp = snakeEntity->getComponents("snakegrow");
 
     if (snakeIncrComp.type == Arcade::ECS::CompType::SNAKEGROW) {
