@@ -15,11 +15,7 @@
 #include "ChangeDir.hpp"
 #include "SnakeCompType.hpp"
 
-Snake::System::MoveForward::MoveForward()
-{
-}
-
-static void moveForward(
+void Snake::System::MoveForward::moveForward(
     Snake::Component::Forward &curDir,
     Arcade::Graph::ISprite &sprite,
     float deltaTime)
