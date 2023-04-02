@@ -9,20 +9,18 @@
 #include "SnakeCompType.hpp"
 #include "Sprite.hpp"
 #include "MagicValue.hpp"
-
-Snake::System::EatSystem::EatSystem()
-{
-}
+#include "SnakeGrow.hpp"
 
 void Snake::System::EatSystem::run(float deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {
     auto snakeEntity = currentEntityManager.getEntitiesById(SNAKE);
-    auto &snakeIncrComp = snakeEntity->getComponents(SNAKE_GROW_COMPONENT);
+    auto &snakeIncrIComp = snakeEntity->getComponents(SNAKE_GROW_COMPONENT);
 
-    if (snakeIncrComp.type == Arcade::ECS::CompType::SNAKEGROW) {
-        if (eventManager.isEventTriggered(EATED).first) {
+    if (snakeIncrIComp.type == Arcade::ECS::CompType::SNAKEGROW) {
+        auto &snakeIncrComp = static_cast<Snake::Component::SnakeGrow &>(snakeIncrIComp);
+        if (eventManager.isEventTriggered(EATED_EVENT).first) {
             snakeIncrComp.grow += 1;
             //TODO increment the score when implemented
         }

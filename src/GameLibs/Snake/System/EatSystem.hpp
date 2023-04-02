@@ -13,7 +13,7 @@ namespace Snake {
     namespace System {
         class EatSystem : Arcade::ECS::ISystem {
             public:
-                EatSystem();
+                EatSystem() = default;
 
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
