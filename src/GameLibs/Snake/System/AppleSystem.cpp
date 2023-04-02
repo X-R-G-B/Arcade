@@ -9,6 +9,7 @@
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
 #include "SnakeCompType.hpp"
+#include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
 Snake::System::AppleSystem::AppleSystem()
@@ -62,7 +63,7 @@ void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    if (eventManager.isEventTriggered("EATED").first) {
+    if (eventManager.isEventTriggered(EATED_EVENT).first) {
         modifyApplePos(eventManager, currentEntityManager, _positions);
     }
 }
