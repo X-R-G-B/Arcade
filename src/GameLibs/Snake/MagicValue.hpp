@@ -15,3 +15,4 @@
 #define APLLE_SPRITE_COMP "apple"
 #define APLLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
 #define SNAKE_HEAD_PATH "./assets/Snake/head/"
+#define SNAKEBODYPATH "assets/snake_body.png"
