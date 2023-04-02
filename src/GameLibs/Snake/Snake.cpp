@@ -12,7 +12,7 @@
 #include "MoveForward.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
-#include "Moveable.hpp"
+#include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
@@ -56,7 +56,7 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->rect.height = 20;
     headS->currentRectIndex = 0;
     //TODO set tty data after snake sprite
-    head.addComponent(std::make_shared<Component::Moveable>(MOVEABLE_KEY, Direction::RIGHT));
+    head.addComponent(std::make_shared<Component::Forward>(MOVEABLE_KEY, Direction::RIGHT));
 }
 
 void Snake::SnakeGameModule::createSnake()
@@ -76,7 +76,6 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
     _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
-    _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     createSnake();
     _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
