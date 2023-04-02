@@ -14,7 +14,6 @@ Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win) : _win(win)
 
 void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
 {
-    ECS::IComponent comp;
     Graph::IMusic &MusicComp = static_cast<Graph::IMusic&>(IComp);
 
     try {
@@ -22,7 +21,7 @@ void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
         entity.addComponent(std::make_shared<SfMusic>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
     } catch (std::exception &e) {
     }
-    comp = entity.getComponents(MusicComp.id + "_Sfml");
+    ECS::IComponent &comp = entity.getComponents(MusicComp.id + "_Sfml");
     if (comp.type != ECS::CompType::SFMUSIC) {
         return;
     }
