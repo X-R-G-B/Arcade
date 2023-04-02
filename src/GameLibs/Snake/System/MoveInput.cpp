@@ -36,6 +36,12 @@ directionsChoice = {
             std::make_pair("KEY_UP_PRESSED", Snake::Direction::UP),
             std::make_pair("KEY_DOWN_PRESSED", Snake::Direction::DOWN),
         }
+    },
+    {
+        Snake::Direction::LEFT, {
+            std::make_pair("KEY_UP_PRESSED", Snake::Direction::UP),
+            std::make_pair("KEY_DOWN_PRESSED", Snake::Direction::DOWN),
+        }
     }
 };
 
@@ -78,7 +84,7 @@ void Snake::System::MoveInput::run(
         if (eventManager.isEventTriggered(event).first) {
             head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move),
-                curDir.direction,
+                action,
                 toNextCase(sprite.pos, curDir.direction)
             ));
             break;

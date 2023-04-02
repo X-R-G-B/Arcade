@@ -13,5 +13,5 @@ Snake::Component::ChangeDir::ChangeDir(const std::string &id, const Direction &d
     direction(direction), pos(pos)
 {
     this->id = id;
-    this->type = Arcade::ECS::CompType::MOVEABLE;
+    this->type = Arcade::ECS::CompType::CHANGEDIR;
 }

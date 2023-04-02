@@ -22,12 +22,12 @@ static void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> chang
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
-        if (bodySprite->pos.x > changeDir->pos.x + (CASE_SIZE_WIDTH / 2) ||
-                bodySprite->pos.x < changeDir->pos.x - (CASE_SIZE_WIDTH / 2)) {
+        if (bodySprite->pos.x > changeDir->pos.x + (CASE_SIZE_WIDTH / 3) ||
+                bodySprite->pos.x < changeDir->pos.x - (CASE_SIZE_WIDTH / 3)) {
             continue;
         }
-        if (bodySprite->pos.y > changeDir->pos.y + (CASE_SIZE_HEIGHT / 2) ||
-                bodySprite->pos.y < changeDir->pos.y - (CASE_SIZE_HEIGHT / 2)) {
+        if (bodySprite->pos.y > changeDir->pos.y + (CASE_SIZE_HEIGHT / 3) ||
+                bodySprite->pos.y < changeDir->pos.y - (CASE_SIZE_HEIGHT / 3)) {
             continue;
         }
         auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(MOVEABLE_KEY));
@@ -41,13 +41,13 @@ static void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> chang
 void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto snake = entityManager.getEntitiesById(SNAKE_HEAD);
-    auto directions = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
+    auto directionsEntities = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::CHANGEDIR);
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::BODYCOMP);
 
-    for (auto &directionEnt : *directions) {
-        auto directionComponents = directionEnt->getComponents(Arcade::ECS::CompType::MOVEABLE);
-        for (auto &directionComp : directionComponents) {
-            auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(directionComp);
+    for (auto &directionEntity : *directionsEntities) {
+        auto directionComponents = directionEntity->getComponents(Arcade::ECS::CompType::CHANGEDIR);
+        for (auto &directionComponent : directionComponents) {
+            auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(directionComponent);
             checkHitChangeDir(direction, snake);
             for (auto bodiesEnt : *bodies) {
                 checkHitChangeDir(direction, bodiesEnt);
