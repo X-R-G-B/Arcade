@@ -32,7 +32,7 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById("Apple");
     Arcade::ECS::IComponent &appleIComp = apple->getComponents("apple");
-    auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
+    auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     std::vector<Arcade::Vector3f> tempPositions = positions;
     std::size_t nbrOfPos = POS_OF_APPLE;
     std::size_t randNumber = 1 + (std::rand() % nbrOfPos);
