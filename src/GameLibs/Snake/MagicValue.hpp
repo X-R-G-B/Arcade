@@ -7,6 +7,7 @@
 
 #pragma once
 
+#define RESTART_EVENT "RESTART"
 #define SNAKE_HEAD "SNAKE_HEAD"
 #define APPLE_ENTITY "Apple"
 #define APLLE_SPRITE_COMP "apple"
