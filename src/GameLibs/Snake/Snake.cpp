@@ -15,6 +15,7 @@
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
+#include "HeadCollision.hpp"
 
 extern "C" {
     LibType getType()
@@ -73,6 +74,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
     createSnake();
+    _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
 }
 
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
