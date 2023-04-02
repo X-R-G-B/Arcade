@@ -43,7 +43,7 @@ extern "C" {
 
 void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 {
-    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>("sprite");
+    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_HEAD_SPRITE_COMP);
 
     headS->path = SNAKE_HEAD_PATH;
     //supposed values for instance
@@ -56,6 +56,7 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->rect.height = 20;
     headS->currentRectIndex = 0;
     //TODO set tty data after snake sprite
+    head.addComponent(headS);
     head.addComponent(std::make_shared<Component::Forward>(MOVEABLE_KEY, Direction::RIGHT));
 }
 
