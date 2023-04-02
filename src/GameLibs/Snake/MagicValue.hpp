@@ -15,7 +15,6 @@
 #define APLLE_SPRITE_COMP "apple"
 #define APLLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
 #define MOVE_INPUT_COMPS "MOVE_INPUT_COMPS"
-#define SNAKE_BODY_COMP "SNAKE_BODY_COMP"
 
 #define NUMBER_COLUMNS 50
 #define NUMBER_LINES 10
