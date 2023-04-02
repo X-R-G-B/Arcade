@@ -9,4 +9,5 @@ target_sources(arcade_snake PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/MoveForward.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/MoveInput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Restart.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/SnakeGrowSystem.cpp"
 )
