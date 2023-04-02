@@ -16,10 +16,13 @@ namespace Snake {
                 AppleSystem();
 
                 void run(float deltaTime,
-                Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &entityManager) final;
+                    Arcade::ECS::IEventManager &eventManager,
+                    Arcade::ECS::IEntityManager &entityManager) final;
             protected:
             private:
+                void modifyApplePos(Arcade::ECS::IEventManager &eventManager,
+                    Arcade::ECS::IEntityManager &currentEntityManager,
+                    std::vector<Arcade::Vector3f> positions);
                 std::vector<Arcade::Vector3f> _positions;
         };
     }
