@@ -15,9 +15,10 @@ namespace Arcade {
             TEXT = 0,
             SPRITE = 1,
             MUSIC = 2,
-            MOVEABLE = 101,
-            FORWARD = 102,
-            BODYCOMP = 103,
+            MOVEABLE = 201,
+            FORWARD = 202,
+            BODYCOMP = 203,
+            SNAKEGROW = 204
         };
     }
 }

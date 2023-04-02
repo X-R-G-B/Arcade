@@ -13,7 +13,6 @@
 #define SNAKE_HEAD "SNAKE_HEAD"
 #define SNAKE_HEAD_DIR_COMP "SNAKE_HEAD_DIR_COMP"
 #define SNAKE_HEAD_SPRITE_COMP "SNAKE_HEAD_SPRITE_COMP"
-#define APPLE_ENTITY "Apple"
 #define APLLE_SPRITE_COMP "apple"
 #define APLLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
 #define MOVE_INPUT_COMPS "MOVE_INPUT_COMPS"
@@ -27,3 +26,11 @@
 #define CASE_SIZE_HEIGHT (TO_FLOAT(SCREEN_HEIGHT) / NUMBER_LINES)
 
 #define SNAKE_MOVE_PER_DTIME 0.5
+
+#define MOVEABLE_KEY "direction"
+#define EATED_EVENT "EATED"
+#define RESTART_EVENT "RESTART"
+#define SNAKE "snake"
+#define SNAKE_GROW_COMPONENT "snakeGrow"
+#define APPLE_ENTITY "Apple"
+#define SNAKE_HEAD_PATH "./assets/Snake/head/"
