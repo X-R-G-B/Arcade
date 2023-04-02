@@ -40,15 +40,13 @@ static void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> chang
 
 void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto snake = entityManager.getEntitiesById(SNAKE_HEAD);
     auto directionsEntities = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::CHANGEDIR);
-    auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::BODYCOMP);
+    auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
 
     for (auto &directionEntity : *directionsEntities) {
         auto directionComponents = directionEntity->getComponents(Arcade::ECS::CompType::CHANGEDIR);
         for (auto &directionComponent : directionComponents) {
             auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(directionComponent);
-            checkHitChangeDir(direction, snake);
             for (auto bodiesEnt : *bodies) {
                 checkHitChangeDir(direction, bodiesEnt);
             }

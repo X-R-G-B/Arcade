@@ -41,15 +41,11 @@ void Snake::System::MoveForward::run(
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    auto head = currentEntityManager.getEntitiesById(SNAKE_HEAD);
-    auto &curDir = static_cast<Component::Forward &>(head->getComponents(MOVEABLE_KEY));
-    auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(SNAKE_HEAD_SPRITE_COMP));
-    moveForward(curDir, sprite, deltaTime);
-    auto tail = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::BODYCOMP);
+    auto snakes = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
 
-    for (auto &it : *tail) {
-        curDir = static_cast<Component::Forward &>(it->getComponents(MOVEABLE_KEY));
-        sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_HEAD_SPRITE_COMP));
+    for (auto &it : *snakes) {
+        auto curDir = static_cast<Component::Forward &>(it->getComponents(MOVEABLE_KEY));
+        auto sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_HEAD_SPRITE_COMP));
         moveForward(curDir, sprite, deltaTime);
     }
 }

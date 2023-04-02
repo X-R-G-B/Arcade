@@ -17,7 +17,6 @@ namespace Arcade {
             MUSIC = 2,
             CHANGEDIR = 201,
             FORWARD = 202,
-            BODYCOMP = 203,
             SNAKEGROW = 204
         };
     }
