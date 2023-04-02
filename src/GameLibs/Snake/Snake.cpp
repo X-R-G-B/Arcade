@@ -11,10 +11,14 @@
 #include "Move.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
+<<<<<<< HEAD
 #include "Moveable.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
+=======
+#include "HeadCollision.hpp"
+>>>>>>> ARCADE-6-snake
 
 extern "C" {
     LibType getType()
@@ -74,6 +78,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     createSnake();
+    _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
 }
 
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
