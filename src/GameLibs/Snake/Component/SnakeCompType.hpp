@@ -16,7 +16,7 @@ namespace Arcade {
             SPRITE = 1,
             MUSIC = 2,
             MOVEABLE = 201,
-            SNAKEGROW = 202
+            SNAKEGROW = 202,
         };
     }
 }
