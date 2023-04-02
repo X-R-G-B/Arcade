@@ -15,7 +15,8 @@ void Snake::System::Restart::run(float deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    eventManager.isEventTriggered("RESTART");
-    _scene->close();
-    _scene->init();
+    if (eventManager.isEventTriggered("RESTART").first) {
+        _scene->close();
+        _scene->init();
+    }
 }
