@@ -15,6 +15,7 @@
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
+#include "MagicValue.hpp"
 #include "HeadCollision.hpp"
 
 extern "C" {
@@ -43,7 +44,7 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 {
     std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>("sprite");
 
-    headS->path = "./assets/Snake/head/";
+    headS->path = SNAKE_HEAD_PATH;
     //supposed values for instance
     headS->pos.x = 200;
     headS->pos.y = 200;
@@ -54,16 +55,16 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->rect.height = 20;
     headS->currentRectIndex = 0;
     //TODO set tty data after snake sprite
-    head.addComponent(std::make_shared<Component::Moveable>("dir", Direction::RIGHT));
+    head.addComponent(std::make_shared<Component::Moveable>(MOVEABLE_KEY, Direction::RIGHT));
 }
 
 void Snake::SnakeGameModule::createSnake()
 {
     Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
-    Arcade::ECS::IEntity &snake = EntityManager.createEntity("snake");
-    Arcade::ECS::IEntity &head = EntityManager.createEntity("head");
+    Arcade::ECS::IEntity &snake = EntityManager.createEntity(SNAKE);
+    Arcade::ECS::IEntity &head = EntityManager.createEntity(SNAKE_HEAD);
 
-    snake.addComponent(std::make_shared<Component::SnakeGrow>("snakegrow"));
+    snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
     addSnakeHeadSprite(head);
 }
 
