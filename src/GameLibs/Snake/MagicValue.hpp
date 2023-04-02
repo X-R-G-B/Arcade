@@ -8,6 +8,8 @@
 #pragma once
 
 #define MOVEABLE_KEY "direction"
+#define EATED_EVENT "EATED"
+#define RESTART_EVENT "RESTART"
 #define SNAKE_HEAD "SNAKE_HEAD"
 #define SNAKE "snake"
 #define SNAKE_GROW_COMPONENT "snakeGrow"
@@ -21,3 +23,4 @@
 #define SNAKE_MAP_ID "snake_map"
 #define SNAKE_MAP_PATH "assets/snake/map.png"
 #define SNAKE_MAP_SIZE 32
+#define POS_OF_APPLE 20

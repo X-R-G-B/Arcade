@@ -8,6 +8,7 @@
 #include "HeadCollision.hpp"
 #include "Snake.hpp"
 #include "SnakeCompType.hpp"
+#include "MagicValue.hpp"
 
 bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
 {
@@ -26,27 +27,27 @@ bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph:
 void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentScene)
 {
-    std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById("head");
+    std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById(SNAKE_HEAD);
     std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
-    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById("apple")->getComponents("sprite");
+    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APLLE_SPRITE_COMP);
     std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
 
     for (auto const &body : *(bodies.get())) {
-        if (body->getId() == "head") {
+        if (body->getId() == SNAKE_HEAD) {
             continue;
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
             if (checkCollision(*(bodySprite.get()), headS)) {
-                eventManager.addEvent("RESTART");
+                eventManager.addEvent(RESTART_EVENT);
                 return;
             }
         }
     }
     if (checkCollision(apple, headS)) {
-        eventManager.addEvent("EATED");
+        eventManager.addEvent(EATED_EVENT);
         return;
     }
     if (headS->pos.x <= 0 || headS->pos.x + headS->rect.width >= 1920 || headS->pos.y <= 0 || headS->pos.y + headS->rect.height >= 1080) {
-        eventManager.addEvent("RESTART");
+        eventManager.addEvent(RESTART_EVENT);
     }
 }
