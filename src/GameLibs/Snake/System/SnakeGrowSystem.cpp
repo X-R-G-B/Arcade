@@ -54,6 +54,34 @@ Arcade::Vector3f Snake::SnakeGrowSystem::getPositionForNewBody(Arcade::ECS::IEnt
         case Direction::LEFT:
             pos.x += lastEntitySprite.rect.width;
     }
+    if (pos.y < 0) {
+        pos.y += lastEntitySprite.rect.height;
+        pos.x -= lastEntitySprite.rect.width;
+        if (pos.x < 0) {
+            pos.x += lastEntitySprite.rect.width * 2;
+        }
+    }
+    if (pos.x < 0) {
+        pos.x += lastEntitySprite.rect.width;
+        pos.y -= lastEntitySprite.rect.height;
+        if (pos.y < 0) {
+            pos.y += lastEntitySprite.rect.height * 2;
+        }
+    }
+    if (pos.y > SCREENSIZEY) {
+        pos.y -= lastEntitySprite.rect.height;
+        pos.x += lastEntitySprite.rect.width;
+        if (pos.x > SCREENSIZEX) {
+            pos.x -= lastEntitySprite.rect.width * 2;
+        }
+    }
+    if (pos.y > SCREENSIZEX) {
+        pos.x -= lastEntitySprite.rect.width;
+        pos.y += lastEntitySprite.rect.height;
+        if (pos.y > SCREENSIZEY) {
+            pos.y -= lastEntitySprite.rect.height * 2;
+        }
+    }
     return pos;
 }
 
@@ -85,7 +113,7 @@ void Snake::SnakeGrowSystem::run(float deltaTime, Arcade::ECS::IEventManager &ev
     }
     auto bodyToIncr = std::static_pointer_cast<Snake::Component::SnakeGrow>(comps->at(0));
     auto snake_bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
-    
+
     for (; bodyToIncr->grow > 0 ; bodyToIncr->grow--, bodyToIncr->size++) {
         addNewBodyPartToSnake(currentScene, bodyToIncr->size);
     }
