@@ -16,7 +16,7 @@
 #include "Sprite.hpp"
 #include "MoveInput.hpp"
 
-static void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
+void Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
 {
     auto bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
 

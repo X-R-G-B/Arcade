@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ISystem.hpp"
+#include "ChangeDir.hpp"
 
 namespace Snake {
     namespace System {
@@ -19,6 +20,8 @@ namespace Snake {
                 void run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
+            private:
+            void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity);
         };
     }
 }
