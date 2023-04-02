@@ -47,7 +47,6 @@ Arcade::Vector3f Snake::SnakeGrowSystem::getPositionForNewBody(Arcade::ECS::IEnt
     auto &lastEntityMovable = getMovableFromBodyEntity(lastEntity);
     Arcade::Vector3f pos = {lastEntitySprite.pos.x, lastEntitySprite.pos.y, lastEntitySprite.pos.z};
 
-
     switch (lastEntityMovable.direction) {
         case Direction::UP:
             pos.y -= lastEntitySprite.rect.height;
