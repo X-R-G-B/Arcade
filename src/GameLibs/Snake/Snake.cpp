@@ -14,8 +14,8 @@
 #include "Moveable.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
-#include "MagicValue.hpp"
 #include "Restart.hpp"
+#include "MagicValue.hpp"
 #include "HeadCollision.hpp"
 
 extern "C" {
