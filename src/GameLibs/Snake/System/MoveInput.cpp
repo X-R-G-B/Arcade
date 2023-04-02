@@ -43,7 +43,7 @@ Snake::System::MoveInput::MoveInput()
 {
 }
 
-static Arcade::Vector2f toNextCase(const Arcade::Vector3f &pos, const Snake::Direction &direction)
+Arcade::Vector2f Snake::System::toNextCase(const Arcade::Vector3f &pos, const Snake::Direction &direction)
 {
     int caseCurX = TO_INT(pos.x) % TO_INT(CASE_SIZE_WIDTH);
     int caseCurY = TO_INT(pos.y) % TO_INT(CASE_SIZE_HEIGHT);

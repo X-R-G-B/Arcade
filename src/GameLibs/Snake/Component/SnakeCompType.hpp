@@ -16,7 +16,8 @@ namespace Arcade {
             SPRITE = 1,
             MUSIC = 2,
             MOVEABLE = 101,
-            FORWARD = 102
+            FORWARD = 102,
+            BODYCOMP = 103,
         };
     }
 }
