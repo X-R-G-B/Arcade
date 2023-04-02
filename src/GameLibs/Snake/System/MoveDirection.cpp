@@ -16,18 +16,36 @@
 #include "Sprite.hpp"
 #include "MoveInput.hpp"
 
+/*
+  pos         x             x+CASE_SIZE_WIDTH
+   ----------------------------------------------------
+   |          |             |            |            |
+   |          |             |            |            |
+ y |----------bbbbbbbbbbbbbbb------------|------------| y
+   |          baaaaaaaaaaaaab            |            | y+(CASE_SIZE_HEIGHT/4)
+   |          baaaaaaaaaaaaab            |            | y+CASE_SIZE_HEIGHT-(CASE_SIZE_HEIGHT/4)
+   |----------bbbbbbbbbbbbbbb------------|------------| y+CASE_SIZE_HEIGHT
+   |          |             |            |            |
+   |          |             |            |            |
+   |----------|-------------|------------|------------|
+   |          |             |            |            |
+   |          |             |            |            |
+   ----------------------------------------------------
+               x+(CASE_SIZE_WIDTH/4)
+                           x+CASE_SIZE_WIDTH-(CASE_SIZE_WIDTH/4)
+*/
+
 void Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
 {
     auto bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
-        if (bodySprite->pos.x > changeDir->pos.x + (CASE_SIZE_WIDTH / 3) ||
-                bodySprite->pos.x < changeDir->pos.x - (CASE_SIZE_WIDTH / 3)) {
-            continue;
-        }
-        if (bodySprite->pos.y > changeDir->pos.y + (CASE_SIZE_HEIGHT / 3) ||
-                bodySprite->pos.y < changeDir->pos.y - (CASE_SIZE_HEIGHT / 3)) {
+        if (bodySprite->pos.x + (CASE_SIZE_WIDTH / 4) < changeDir->pos.x ||
+            bodySprite->pos.x + CASE_SIZE_WIDTH - (CASE_SIZE_WIDTH / 4) > changeDir->pos.x + CASE_SIZE_WIDTH ||
+            bodySprite->pos.y + (CASE_SIZE_HEIGHT / 4) < changeDir->pos.y ||
+            bodySprite->pos.y + CASE_SIZE_HEIGHT - (CASE_SIZE_HEIGHT / 4) > changeDir->pos.y + CASE_SIZE_HEIGHT
+        ) {
             continue;
         }
         auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(FORWARD_KEY));
