@@ -10,7 +10,6 @@
 #include "Exceptions.hpp"
 #include "SnakeGrow.hpp"
 #include "Forward.hpp"
-#include "Direction.hpp"
 #include "MagicValue.hpp"
 #include "SnakeGrowSystem.hpp"
 

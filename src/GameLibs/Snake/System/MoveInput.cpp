@@ -7,7 +7,6 @@
 
 #include <map>
 #include <string>
-#include <utility>
 #include <vector>
 #include "ArcadeStruct.hpp"
 #include "ISprite.hpp"

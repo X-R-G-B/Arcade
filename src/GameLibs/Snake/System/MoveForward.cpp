@@ -12,7 +12,6 @@
 #include "Forward.hpp"
 #include "MoveForward.hpp"
 #include "MagicValue.hpp"
-#include "ChangeDir.hpp"
 #include "SnakeCompType.hpp"
 
 void Snake::System::MoveForward::moveForward(

@@ -7,7 +7,6 @@
 
 #include "EatSystem.hpp"
 #include "SnakeCompType.hpp"
-#include "Sprite.hpp"
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
