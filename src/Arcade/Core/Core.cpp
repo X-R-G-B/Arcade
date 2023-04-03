@@ -36,11 +36,12 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     LibType type;
     std::string path2 = path;
 
+    std::cerr << "Trying to load: '" << path2 << "' ..." << std::endl;
     try {
-        name = LibHandler<Graph::IDisplayModule>::getLibName(path);
-        type = LibHandler<Graph::IDisplayModule>::getLibType(path);
+        name = LibHandler<Graph::IDisplayModule>::getLibName(path2);
+        type = LibHandler<Graph::IDisplayModule>::getLibType(path2);
     } catch (std::exception &e) {
-        std::cerr << "File is not a shared library: " << path << std::endl;
+        std::cerr << "File is not a shared library: " << path2 << std::endl;
         std::cerr << e.what() << std::endl;
         return;
     }
