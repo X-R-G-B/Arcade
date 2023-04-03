@@ -30,6 +30,7 @@ Arcade::Sfml::DisplayModule::~DisplayModule()
 void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
+    _win.clear();
     _systems.update(delta, eventManager, entityManager);
     _win.display();
 }
