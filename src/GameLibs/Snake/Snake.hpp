@@ -30,5 +30,6 @@ namespace Snake {
             Direction _snakeDirection = Direction::RIGHT;
             Arcade::ECS::SystemManager _systemManager;
             std::vector<std::unique_ptr<Arcade::Game::IScene>> _scenes;
+            void addSnakeMap();
     };
 }

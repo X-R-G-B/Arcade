@@ -24,3 +24,4 @@
 #define SNAKE_MAP_PATH "assets/snake/map.png"
 #define SNAKE_MAP_SIZE 32
 #define POS_OF_APPLE 20
+#define NBR_OF_PARCELS_IN_LINE 6
