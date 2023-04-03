@@ -8,10 +8,11 @@
 #include <memory>
 #include "Api.hpp"
 #include "Snake.hpp"
-#include "Move.hpp"
+#include "MoveInput.hpp"
+#include "MoveForward.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
-#include "Moveable.hpp"
+#include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
@@ -43,7 +44,7 @@ extern "C" {
 
 void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 {
-    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>("sprite");
+    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_HEAD_SPRITE_COMP);
 
     headS->path = SNAKE_HEAD_PATH;
     //supposed values for instance
@@ -56,7 +57,8 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->rect.height = 20;
     headS->currentRectIndex = 0;
     //TODO set tty data after snake sprite
-    head.addComponent(std::make_shared<Component::Moveable>(MOVEABLE_KEY, Direction::RIGHT));
+    head.addComponent(headS);
+    head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
 }
 
 void Snake::SnakeGameModule::addSnakeMap()
@@ -91,7 +93,8 @@ Snake::SnakeGameModule::SnakeGameModule()
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _scenes.front()->init();
     _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
-    _systemManager.addSystem("MoveSnake", std::make_unique<Snake::System::Move>(_snakeDirection));
+    _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     createSnake();
     _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());

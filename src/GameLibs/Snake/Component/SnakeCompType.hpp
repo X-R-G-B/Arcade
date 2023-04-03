@@ -15,9 +15,10 @@ namespace Arcade {
             TEXT = 0,
             SPRITE = 1,
             MUSIC = 2,
-            MOVEABLE = 201,
-            SNAKEGROW = 202,
-            SNAKE_MAP = 203
+            CHANGEDIR = 201,
+            FORWARD = 202,
+            SNAKE_MAP = 203,
+            SNAKEGROW = 204
         };
     }
 }
