@@ -13,7 +13,7 @@ namespace Snake {
     namespace System {
         class AppleSystem : public Arcade::ECS::ISystem {
             public:
-                AppleSystem();
+                AppleSystem() = default;
 
                 void run(float deltaTime,
                     Arcade::ECS::IEventManager &eventManager,
@@ -21,8 +21,7 @@ namespace Snake {
             protected:
             private:
                 void modifyApplePos(Arcade::ECS::IEventManager &eventManager,
-                    Arcade::ECS::IEntityManager &currentEntityManager,
-                    std::vector<Arcade::Vector3f> positions);
+                    Arcade::ECS::IEntityManager &currentEntityManager);
                 std::vector<Arcade::Vector3f> _positions;
         };
     }
