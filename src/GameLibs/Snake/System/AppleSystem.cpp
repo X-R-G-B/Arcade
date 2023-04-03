@@ -12,6 +12,19 @@
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
+Snake::System::AppleSystem::AppleSystem(Arcade::ECS::IEntityManager &entityManager)
+{
+    auto mapEntity = entityManager.getEntitiesById(SNAKE_MAP_ID);
+    auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
+
+    for (auto it = mapComponents.begin(); it != mapComponents.end(); it++) {
+        auto comp = *it;
+        auto spriteComp = std::static_pointer_cast<Arcade::Graph::Sprite>(comp);
+
+        _positions.push_back(spriteComp->pos);
+    }
+}
+
 void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
@@ -39,24 +52,13 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
         Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(appleIComp);
         appleComp.pos = randPosition;
     }
-    _positions.clear();
 }
 
 void Snake::System::AppleSystem::run(float deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
-    auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
-
-    if (!eventManager.isEventTriggered(EATED_EVENT).first) {
-        return;
+    if (eventManager.isEventTriggered(EATED_EVENT).first) {
+        modifyApplePos(eventManager, currentEntityManager);
     }
-    for (auto it = mapComponents.begin(); it != mapComponents.end(); it++) {
-        auto comp = *it;
-        auto spriteComp = std::static_pointer_cast<Arcade::Graph::Sprite>(comp);
-
-        _positions.push_back(spriteComp->pos);
-    }
-    this->modifyApplePos(eventManager, currentEntityManager);
 }

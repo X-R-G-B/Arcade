@@ -30,7 +30,6 @@
 #define SNAKE_GROW_COMPONENT "snakeGrow"
 #define APPLE_ENTITY "Apple"
 #define APPLE_SPRITE_COMP "apple"
-#define APPLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
 #define SNAKE_HEAD_PATH "./assets/Snake/head/"
 #define SNAKEBODYPATH "assets/snake_body.png"
 #define SCREENSIZEX 1920
