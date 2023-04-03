@@ -65,3 +65,6 @@ lib/*
 .cmake/
 .idea/
 build.ninja
+
+libloader_test
+vgcore.*
