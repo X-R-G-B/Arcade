@@ -25,7 +25,7 @@ void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IE
         return;
     }
     SfSprite &sprite = static_cast<SfSprite&>(comp);
-    sprite.setPosition(SpriteComp.pos);
+    sprite.sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
     sprite.sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
     _win.draw(sprite.sprite);
 }
@@ -57,12 +57,6 @@ Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
     this->sprite.setTexture(texture);
-    setPosition(pos);
+    this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
     this->sprite.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
-}
-
-void Arcade::Sfml::SfSprite::setPosition(const Arcade::Vector3f &pos)
-{
-    sf::Vector2u size = _win.getSize();
-    this->sprite.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
 }
