@@ -21,7 +21,9 @@ namespace Snake {
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:
-            void checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity);
+                bool checkHitChangeDir(
+                std::shared_ptr<Snake::Component::ChangeDir> changeDir,
+                std::shared_ptr<Arcade::ECS::IEntity> entity);
         };
     }
 }

@@ -35,9 +35,10 @@
                            x+CASE_SIZE_WIDTH-(CASE_SIZE_WIDTH/4)
 */
 
-void Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
+bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
 {
     auto bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
+    bool hit = false;
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
@@ -53,21 +54,29 @@ void Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Comp
         bodySprite->pos.x = nextCase.x;
         bodySprite->pos.y = nextCase.y;
         bodyDir.direction = changeDir->direction;
+        hit = true;
+        break;
     }
+    return hit;
 }
 
 void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto directionsEntities = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::CHANGEDIR);
+    auto snake = entityManager.getEntitiesById(SNAKE);
+    auto directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
+    
 
-    for (auto &directionEntity : *directionsEntities) {
-        auto directionComponents = directionEntity->getComponents(Arcade::ECS::CompType::CHANGEDIR);
-        for (auto &directionComponent : directionComponents) {
-            auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(directionComponent);
-            for (auto bodiesEnt : *bodies) {
-                checkHitChangeDir(direction, bodiesEnt);
-            }
+    for (auto it = directionsComponents.begin(); it != directionsComponents.end();) {
+        auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(*it);
+        bool hit = false;
+        for (auto bodiesEnt : *bodies) {
+            hit = hit | checkHitChangeDir(direction, bodiesEnt);
+        }
+        if (hit) {
+            it++;
+        } else {
+            it = directionsComponents.erase(it);
         }
     }
 }
