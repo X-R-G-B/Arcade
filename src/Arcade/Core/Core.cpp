@@ -95,6 +95,7 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
         _mainMenu->update(delta.count(), eventManager);
         return (_mainMenu->getCurrentEntityManager());
     }
+
 }
 
 void Arcade::Core::Core::update()
@@ -121,9 +122,9 @@ void Arcade::Core::Core::update()
 
 void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
 {
-    if (eventManager.isEventTriggered("CHANGE_GAME").first == true) {
+    if (eventManager.isEventTriggered("KEY_1_PRESSED").first) {
         nextLib(LibType::GAME);
-    } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first == true) {
+    } else if (eventManager.isEventTriggered("KEY_2_PRESSED").first) {
         nextLib(LibType::GRAPH);
     }
 }

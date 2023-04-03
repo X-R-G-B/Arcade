@@ -25,12 +25,6 @@ Arcade::Core::MainMenuModule::~MainMenuModule()
 void Arcade::Core::MainMenuModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager->update(deltaTime, eventManager, _mainMenu->getEntityManager());
-    if (eventManager.isEventTriggered("KEY_UP_PRESSED").first) {
-        eventManager.addEvent("CHANGE_GAME");
-    }
-    if (eventManager.isEventTriggered("KEY_DOWN_PRESSED").first) {
-        eventManager.addEvent("CHANGE_GRAPH");
-    }
 }
 
 Arcade::ECS::IEntityManager &Arcade::Core::MainMenuModule::getCurrentEntityManager()
