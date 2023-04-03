@@ -99,6 +99,11 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
 }
 
+Arcade::ECS::IEntityManager &Snake::SnakeGameModule::getCurrentEntityManager()
+{
+    return _scenes.front()->getEntityManager();
+}
+
 void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager.update(deltaTime, eventManager, getCurrentEntityManager());
