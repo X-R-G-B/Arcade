@@ -57,11 +57,13 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library in getLibType");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load library in getLibType:: " + error);
             }
             func = (retType_t) dlsym(lib, "getType");
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function getType");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function getType::" + error);
             }
             type = func();
             if (destroyAfter) {
@@ -82,11 +84,13 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library in getLibName");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load library in getLibName::" + error);
             }
             func = (retType_t) dlsym(lib, "getName");
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function getName");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function getName::" + error);
             }
             name = func();
             if (destroyAfter) {
@@ -124,7 +128,8 @@ class LibHandler {
             }
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function " + _funcCreator);
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function " + _funcCreator + ":: " + error);
             }
             _module = func();
         }

@@ -1,3 +1,9 @@
+/*
+** EPITECH PROJECT, 2023
+** Arcade
+** File description:
+** Sfml
+*/
 
 #include "IComponent.hpp"
 #include "ISystem.hpp"
@@ -25,7 +31,6 @@ namespace Arcade {
             public:
                 SfSprite(const std::string id, const std::string &path,
                     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
-                void setPosition(const Arcade::Vector3f &pos);
                 sf::RenderWindow &_win;
                 sf::Sprite sprite;
         };

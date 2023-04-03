@@ -56,7 +56,11 @@ static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
     {sf::Keyboard::Key::F9, "KEY_F9_PRESSED"},
     {sf::Keyboard::Key::F10, "KEY_F10_PRESSED"},
     {sf::Keyboard::Key::F11, "KEY_F11_PRESSED"},
-    {sf::Keyboard::Key::F12, "KEY_F12_PRESSED"}
+    {sf::Keyboard::Key::F12, "KEY_F12_PRESSED"},
+    {sf::Keyboard::Key::Up, "KEY_UP_PRESSED"},
+    {sf::Keyboard::Key::Right, "KEY_RIGHT_PRESSED"},
+    {sf::Keyboard::Key::Down, "KEY_DOWN_PRESSED"},
+    {sf::Keyboard::Key::Left, "KEY_LEFT_PRESSED"}
 };
 
 SFML_EventHandler::SFML_EventHandler(sf::RenderWindow &window) : _window(window)
@@ -82,5 +86,11 @@ Arcade::ECS::IEntityManager &currentScene)
         if (sf::Keyboard::isKeyPressed(key.first)) {
             eventManager.addEvent(key.second);
         }
+    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        eventManager.addEvent("MOUSE_KEY1_PRESSED");
+    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+        eventManager.addEvent("MOUSE_KEY2_PRESSED");
     }
 }
