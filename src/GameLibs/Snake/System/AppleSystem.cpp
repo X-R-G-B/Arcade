@@ -12,13 +12,6 @@
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
-Snake::System::AppleSystem::AppleSystem()
-{
-}
-
-// TODO check the pos of snake for the apple because we don't want
-// the apple to spawn on the snake
-
 void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
@@ -29,7 +22,7 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
 
     for (auto it = snakeEntities->begin(); it != snakeEntities->end(); it++) {
         auto entity = *it;
-        auto components = *(entity->getComponents(Arcade::ECS::CompType::SPRITE).begin());
+        auto components = entity->getComponents(Arcade::ECS::CompType::SPRITE).front();
         auto moveableSprite = static_pointer_cast<Arcade::Graph::Sprite>(components);
 
         if (moveableSprite->pos.x == randPosition.x && moveableSprite->pos.y == randPosition.y) {
@@ -56,14 +49,14 @@ void Snake::System::AppleSystem::run(float deltaTime,
     auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
     auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
 
-    for (auto it = mapComponents.begin(); it != mapComponents.end() &&
-        eventManager.isEventTriggered(EATED_EVENT).first; it++) {
+    if (!eventManager.isEventTriggered(EATED_EVENT).first) {
+        return;
+    }
+    for (auto it = mapComponents.begin(); it != mapComponents.end(); it++) {
         auto comp = *it;
         auto spriteComp = std::static_pointer_cast<Arcade::Graph::Sprite>(comp);
 
         _positions.push_back(spriteComp->pos);
     }
-    if (eventManager.isEventTriggered(EATED_EVENT).first) {
-        this->modifyApplePos(eventManager, currentEntityManager);
-    }
+    this->modifyApplePos(eventManager, currentEntityManager);
 }
