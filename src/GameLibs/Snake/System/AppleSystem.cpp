@@ -16,14 +16,14 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
     Arcade::ECS::IComponent &appleIComp = apple->getComponents(APPLE_SPRITE_COMP);
-    auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
+    auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     std::size_t randNumber = 1 + (std::rand() % _positions.size());
     Arcade::Vector3f randPosition = _positions[randNumber];
 
     for (auto it = snakeEntities->begin(); it != snakeEntities->end(); it++) {
         auto entity = *it;
         auto components = entity->getComponents(Arcade::ECS::CompType::SPRITE).front();
-        auto moveableSprite = static_pointer_cast<Arcade::Graph::Sprite>(components);
+        auto moveableSprite = std::static_pointer_cast<Arcade::Graph::Sprite>(components);
 
         if (moveableSprite->pos.x == randPosition.x && moveableSprite->pos.y == randPosition.y) {
             randPosition = _positions[1 + (std::rand() % _positions.size())];
