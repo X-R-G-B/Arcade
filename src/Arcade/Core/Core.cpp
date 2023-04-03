@@ -44,7 +44,7 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
         std::cerr << "Type: '" << type << "'" << std::endl;
     } catch (std::exception &e) {
         std::cerr << "File is not a shared library: " << path2 << std::endl;
-        std::cerr << e.what() << std::endl;
+        std::cerr << e.what() << std::endl << std::endl;
         return;
     }
     std::cerr << "File is a shared library: " << path2 << std::endl << std::endl;
