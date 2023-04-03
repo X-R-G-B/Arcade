@@ -35,5 +35,7 @@
 #define SNAKEBODYPATH "assets/snake_body.png"
 #define SCREENSIZEX 1920
 #define SCREENSIZEY 1080
-#define POS_OF_APPLE 20
 #define SNAKE_MAP_ID "snake_map"
+#define SNAKE_MAP_PATH "assets/snake/map.png"
+#define SNAKE_MAP_SIZE 32
+#define POS_OF_APPLE 20

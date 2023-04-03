@@ -14,6 +14,10 @@
 #include "AScene.hpp"
 #include "Sprite.hpp"
 
+#define NBR_OF_PARCELS_IN_LINE 6
+#define SNAKE_PADDING_WINDOW_X 576
+#define SNAKE_PADDING_WINDOW_Y 156
+
 namespace Snake {
     class SnakeGameModule : public Arcade::Game::IGameModule {
         public:
@@ -30,5 +34,6 @@ namespace Snake {
             Direction _snakeDirection = Direction::RIGHT;
             Arcade::ECS::SystemManager _systemManager;
             std::vector<std::unique_ptr<Arcade::Game::IScene>> _scenes;
+            void addSnakeMap();
     };
 }
