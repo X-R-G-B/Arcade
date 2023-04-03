@@ -12,7 +12,6 @@
 #include "MoveDirection.hpp"
 #include "MagicValue.hpp"
 #include "SnakeCompType.hpp"
-#include "ChangeDir.hpp"
 #include "Sprite.hpp"
 #include "MoveInput.hpp"
 

@@ -6,7 +6,6 @@
 */
 
 #include "HeadCollision.hpp"
-#include "Snake.hpp"
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
 

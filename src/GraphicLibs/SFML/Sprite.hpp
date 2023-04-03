@@ -1,3 +1,9 @@
+/*
+** EPITECH PROJECT, 2023
+** Arcade
+** File description:
+** Sfml
+*/
 
 #include "IComponent.hpp"
 #include "ISystem.hpp"

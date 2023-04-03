@@ -12,7 +12,6 @@
 #include "MoveForward.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
-#include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
