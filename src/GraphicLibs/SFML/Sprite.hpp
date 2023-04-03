@@ -10,6 +10,7 @@
 #include "GraphStruct.hpp"
 #include "ISprite.hpp"
 #include "Sfml.hpp"
+#include <SFML/Graphics/Texture.hpp>
 
 namespace Arcade {
 
@@ -33,6 +34,7 @@ namespace Arcade {
                     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
                 sf::RenderWindow &_win;
                 sf::Sprite sprite;
+                sf::Texture texture;
         };
     }
 }
