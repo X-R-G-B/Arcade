@@ -18,6 +18,7 @@
 #include "Restart.hpp"
 #include "MagicValue.hpp"
 #include "HeadCollision.hpp"
+#include "SnakeMapComponent.hpp"
 
 extern "C" {
     LibType getType()
@@ -60,11 +61,28 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
 }
 
+void Snake::SnakeGameModule::addSnakeMap()
+{
+    int snakeMapParcelNbr = 0;
+
+    Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
+    Arcade::ECS::IEntity &snakeMap = EntityManager.createEntity(SNAKE_MAP_ID);
+    for (int y = 0; y < NBR_OF_PARCELS_IN_LINE; y++, snakeMapParcelNbr++) {
+        for (int x = 0; x < NBR_OF_PARCELS_IN_LINE; x++, snakeMapParcelNbr++) {
+            snakeMap.addComponent(
+            std::make_shared<Snake::Component::SnakeMapComponent>(
+            std::string(SNAKE_MAP_ID) + "_" + std::to_string(snakeMapParcelNbr),
+            Arcade::Vector3f(SNAKE_PADDING_WINDOW_X + x * SNAKE_MAP_SIZE, SNAKE_PADDING_WINDOW_Y + y * SNAKE_MAP_SIZE, 0)));
+        }
+    }
+}
+
 void Snake::SnakeGameModule::createSnake()
 {
     Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
     Arcade::ECS::IEntity &snake = EntityManager.createEntity(SNAKE);
     Arcade::ECS::IEntity &head = EntityManager.createEntity(SNAKE_HEAD);
+    Arcade::ECS::IEntity &map = EntityManager.createEntity(SNAKE_MAP_ID);
 
     snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
     addSnakeHeadSprite(head);

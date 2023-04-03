@@ -26,9 +26,9 @@ bool Snake::Scene::GameScene::init()
         30, 30, 0
     };
 
-    apple = std::make_shared<Arcade::Graph::Sprite>(APLLE_SPRITE_COMP);
+    apple = std::make_shared<Arcade::Graph::Sprite>(APPLE_SPRITE_COMP);
     apple->ttyData = {"*", {255, 0, 0, 255}, {255, 0, 0, 255}};
-    apple->path = APLLE_SPRITE_COMP_PATH;
+    apple->path = APPLE_SPRITE_COMP_PATH;
     apple->pos = applePosition;
     apple->rect = {0, 0, 200, 200};
     apple->currentRectIndex = 0;

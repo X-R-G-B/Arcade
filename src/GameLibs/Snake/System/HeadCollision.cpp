@@ -29,7 +29,7 @@ void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManag
 {
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById(SNAKE_HEAD);
     std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
-    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APLLE_SPRITE_COMP);
+    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
     std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
 
     for (auto const &body : *bodies) {

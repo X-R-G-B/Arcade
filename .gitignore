@@ -62,6 +62,6 @@ _deps
 lib/*
 !lib/.gitkeep
 .clang-format
-.idea/
 .cmake/
+.idea/
 build.ninja
