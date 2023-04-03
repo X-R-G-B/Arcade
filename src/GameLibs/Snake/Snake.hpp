@@ -14,6 +14,10 @@
 #include "AScene.hpp"
 #include "Sprite.hpp"
 
+#define NBR_OF_PARCELS_IN_LINE 6
+#define SNAKE_PADDING_WINDOW_X 576
+#define SNAKE_PADDING_WINDOW_Y 156
+
 namespace Snake {
     class SnakeGameModule : public Arcade::Game::IGameModule {
         public:

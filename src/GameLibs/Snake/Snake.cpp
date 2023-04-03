@@ -61,8 +61,6 @@ void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 
 void Snake::SnakeGameModule::addSnakeMap()
 {
-    static const int paddingX = 576;
-    static const int paddingY = 156;
     int snakeMapParcelNbr = 0;
 
     Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
@@ -72,8 +70,7 @@ void Snake::SnakeGameModule::addSnakeMap()
             snakeMap.addComponent(
             std::make_shared<Snake::Component::SnakeMapComponent>(
             std::string(SNAKE_MAP_ID) + "_" + std::to_string(snakeMapParcelNbr),
-            Arcade::Vector3f(
-            paddingX + x * SNAKE_MAP_SIZE, paddingY + y * SNAKE_MAP_SIZE, 0)));
+            Arcade::Vector3f(SNAKE_PADDING_WINDOW_X + x * SNAKE_MAP_SIZE, SNAKE_PADDING_WINDOW_Y + y * SNAKE_MAP_SIZE, 0)));
         }
     }
 }
