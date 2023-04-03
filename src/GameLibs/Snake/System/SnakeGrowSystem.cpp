@@ -9,7 +9,7 @@
 #include "SnakeCompType.hpp"
 #include "Exceptions.hpp"
 #include "SnakeGrow.hpp"
-#include "Moveable.hpp"
+#include "Forward.hpp"
 #include "Direction.hpp"
 #include "MagicValue.hpp"
 #include "SnakeGrowSystem.hpp"
@@ -25,20 +25,20 @@ Arcade::Graph::Sprite &Snake::SnakeGrowSystem::getSpriteFromBodyEntity(std::shar
     return body;
 }
 
-Snake::Component::Moveable &Snake::SnakeGrowSystem::getMovableFromBodyEntity(std::shared_ptr<Arcade::ECS::IEntity> entity)
+Snake::Component::Forward &Snake::SnakeGrowSystem::getMovableFromBodyEntity(std::shared_ptr<Arcade::ECS::IEntity> entity)
 {
-    auto &comp = entity->getComponents(Arcade::ECS::CompType::MOVEABLE);
+    auto &comp = entity->getComponents(Arcade::ECS::CompType::FORWARD);
 
     if (comp.size() == 0) {
         throw ArcadeExceptions("Can't get Sprite from body");
     }
-    auto &body = static_cast<Snake::Component::Moveable &>(* (comp.at(0).get()));
+    auto &body = static_cast<Snake::Component::Forward &>(* (comp.at(0).get()));
     return body;
 }
 
 Arcade::Vector3f Snake::SnakeGrowSystem::getPositionForNewBody(Arcade::ECS::IEntityManager &currentScene)
 {
-    auto bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
+    auto bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     auto lastEntity = currentScene.getEntitiesById("snake_body_part_" + std::to_string(bodies->size() - 1));
     auto &lastEntitySprite = getSpriteFromBodyEntity(lastEntity);
     auto &lastEntityMovable = getMovableFromBodyEntity(lastEntity);
@@ -112,7 +112,7 @@ void Snake::SnakeGrowSystem::run(float deltaTime, Arcade::ECS::IEventManager &ev
         throw ArcadeExceptions("can't find grow component");
     }
     auto bodyToIncr = std::static_pointer_cast<Snake::Component::SnakeGrow>(comps->at(0));
-    auto snake_bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::MOVEABLE);
+    auto snake_bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
 
     for (; bodyToIncr->grow > 0 ; bodyToIncr->grow--, bodyToIncr->size++) {
         addNewBodyPartToSnake(currentScene, bodyToIncr->size);

@@ -25,7 +25,7 @@ void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEnt
         return;
     }
     SfText &text = static_cast<SfText&>(comp);
-    text.setPosition(TextComp.pos);
+    text.text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
     _win.draw(text.text);
 }
 
@@ -57,11 +57,5 @@ Arcade::Sfml::SfText::SfText(const std::string id, const std::string &path,
     this->text.setString(text);
     this->text.setCharacterSize(24);
     this->text.setFillColor(sf::Color(textColor.r, textColor.g, textColor.b, textColor.a));
-    setPosition(pos);
-}
-
-void Arcade::Sfml::SfText::setPosition(const Arcade::Vector3f &pos)
-{
-    sf::Vector2u size = _win.getSize();
-    this->text.setPosition(sf::Vector2f((pos.x / 100) * size.x, (pos.y / 100) * size.y));
+    this->text.setPosition(sf::Vector2f(pos.x, pos.y));
 }
