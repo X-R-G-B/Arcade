@@ -5,7 +5,6 @@
 ** EventHandler
 */
 
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
@@ -78,7 +77,7 @@ static const std::map<SDL_KeyCode, const std::string> KeyboardKeys = {
     {SDLK_F10, "KEY_F10_PRESSED"},
     {SDLK_F11, "KEY_F11_PRESSED"},
     {SDLK_F12, "KEY_F12_PRESSED"}
-}
+};
 
 void Arcade::SDL::EventHandler::run(float deltaTime,
 Arcade::ECS::IEventManager &eventManager,
@@ -93,7 +92,7 @@ Arcade::ECS::IEntityManager &currentScene)
         case SDL_QUIT:
             eventManager.addEvent("QUIT");
             break;
-        case: SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONDOWN:
             if (events.button.button == SDL_BUTTON_LEFT) {
                 eventManager.addEvent("MOUSE_KEY1_PRESSED");
             } else if (events.button.button == SDL_BUTTON_RIGHT) {
