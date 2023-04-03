@@ -5,7 +5,7 @@
 ** SFML_EventHandler
 */
 
-g#include "SFML_EventHandler.hpp"
+#include "SFML_EventHandler.hpp"
 
 // ---------------------- KEYBOARD KEYS ---------------------- //
 static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
