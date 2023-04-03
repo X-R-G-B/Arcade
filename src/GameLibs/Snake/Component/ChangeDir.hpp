@@ -8,17 +8,19 @@
 #pragma once
 
 #include <string>
+#include "ArcadeStruct.hpp"
 #include "Direction.hpp"
 #include "IComponent.hpp"
 
 namespace Snake {
     namespace Component {
-        class Moveable : public Arcade::ECS::IComponent {
+        class ChangeDir : public Arcade::ECS::IComponent {
             public:
-                Moveable(const std::string &id, const Direction &direction);
-                ~Moveable() = default;
+                ChangeDir(const std::string &id, const Direction &direction, const Arcade::Vector2f &pos);
+                ~ChangeDir() = default;
  
                 Direction direction;
+                Arcade::Vector2f pos;
         };
     }
 }
