@@ -34,6 +34,7 @@ void Arcade::SDL::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEn
     dest.w = SpriteComp.rect.width;
     SDL_QueryTexture(sprite._sprite, NULL, NULL, &dest.w, &dest.h);
     SDL_RenderCopy(sprite._win, sprite._sprite, NULL, &dest);
+    SDL_RenderPresent(this->_win);
 }
 
 void Arcade::SDL::SpriteSystem::run(float deltaTime,
@@ -58,23 +59,22 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
                                   SDL_Renderer *renderer)
                                   : _win(renderer)
 {
-    SDL_Surface *sprite;
     SDL_Rect dest;
 
     dest.x = pos.x;
     dest.y = pos.y;
     dest.w = rect.width;
     dest.h = rect.height;
-    sprite = IMG_Load(path.data());
-    if (sprite == nullptr) {
+    if (renderer == nullptr) {
+        throw ArcadeExceptions("Unexpected error was caugth");
+    }
+    this->_sprite = IMG_LoadTexture(renderer, path.data());
+    if (_sprite == nullptr) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
     this->id = id;
     this->type = ECS::CompType::SDLSPRITE;
-    this->_sprite = SDL_CreateTextureFromSurface(renderer, sprite);
     SDL_QueryTexture(_sprite, NULL, NULL, &dest.w, &dest.h);
-    SDL_RenderCopy(renderer, _sprite, NULL, &dest);
-    SDL_FreeSurface(sprite);
 }
 
 Arcade::SDL::SDLSprite::~SDLSprite()
