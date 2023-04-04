@@ -18,7 +18,16 @@ Arcade::SDL::SpriteSystem::run(float deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {
+    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> spriteEntities =
+            entityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
+    std::vector<std::shared_ptr<ECS::IComponent>> components;
 
+    for (auto const &entity : *(spriteEntities.get())) {
+        components = entity->getComponents(ECS::CompType::SPRITE);
+        for (auto const &component : components) {
+            //TODO implement handleComponent
+        }
+    }
 }
 
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
