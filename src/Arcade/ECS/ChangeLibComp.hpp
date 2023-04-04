@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Archi Arcade Promo 2026 Toulouse
 ** File description:
-** Components to change lib game/graphic
+** Component to change lib game/graphic
 */
 
 #ifndef ARCHI_ARCADE_CHANGELIBCOMP_HPP

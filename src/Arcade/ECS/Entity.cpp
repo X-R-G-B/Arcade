@@ -32,7 +32,7 @@ Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
     auto it = this->_components.find(type);
 
     if (it == this->_components.end()) {
-        throw ArcadeExceptions("Components of type : " + std::to_string(static_cast<int>(type)) + " not founds");
+        throw ArcadeExceptions("Component of type : " + std::to_string(static_cast<int>(type)) + " not founds");
     }
     return it->second;
 }
