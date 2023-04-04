@@ -9,7 +9,7 @@
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
 
-bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
+bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
 {
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
 
@@ -18,8 +18,28 @@ bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph:
         || (head->pos.y >= fstS.pos.y + fstS.rect.height)
         || (head->pos.y + head->rect.height <= fstS.pos.y)) {
         return false;
-    } else {
-        return true;
+    }
+    return true;
+}
+
+void Snake::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntityManager &currentScene, std::shared_ptr<Arcade::Graph::Sprite> headS, Arcade::ECS::IEventManager &eventManager)
+{
+    std::vector<std::shared_ptr<Arcade::ECS::IEntity>> bodies =
+        *(currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD).get());
+
+    if (bodies.size() < 2) {
+        return;
+    }
+    for (auto const &body : bodies) {
+        if (body->getId() == SNAKE_HEAD) {
+            continue;
+        }
+        for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
+            if (checkCollision(*(bodySprite.get()), headS)) {
+                eventManager.addEvent(RESTART_EVENT);
+                return;
+            }
+        }
     }
 }
 
@@ -27,21 +47,10 @@ void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManag
     Arcade::ECS::IEntityManager &currentScene)
 {
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById(SNAKE_HEAD);
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> bodies = currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
     std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
 
-    for (auto const &body : *bodies) {
-        if (body->getId() == SNAKE_HEAD) {
-            continue;
-        }
-        for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
-            if (checkCollision(*bodySprite, headS)) {
-                eventManager.addEvent(RESTART_EVENT);
-                return;
-            }
-        }
-    }
+    checkHeadBodyCollision(currentScene, headS, eventManager);
     if (checkCollision(apple, headS)) {
         eventManager.addEvent(EATED_EVENT);
         return;

@@ -14,8 +14,10 @@ Arcade::ECS::Entity::Entity(const std::string &id) : _id(id)
 {
 }
 
+#include <iostream>
 std::string Arcade::ECS::Entity::getId() const
 {
+    std::cout << "in getId : " << this->_id << std::endl;
     return this->_id;
 }
 
