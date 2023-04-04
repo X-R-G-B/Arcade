@@ -4,3 +4,6 @@ target_sources(arcade_ncurses PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Ncurses.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/TEXT.cpp"
 )
+
+find_library(LNCURSES_GRAPHICS ncurses)
+target_link_libraries(arcade_ncurses PRIVATE ${LNCURSES_GRAPHICS})
