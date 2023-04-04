@@ -8,10 +8,15 @@
 #include "Sprite.hpp"
 #include "Exceptions.hpp"
 
+Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer &renderer)
+{
+
+}
+
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
-                                  const Arcade::Vector3f &pos, Graph::Rect &rect, SDL_Window &window,
+                                  const Arcade::Vector3f &pos, Graph::Rect &rect,
                                   SDL_Renderer *renderer)
-                                  : _win(window)
+                                  : _win(*renderer)
 {
     SDL_Surface *sprite;
     SDL_Rect dest;
@@ -20,9 +25,6 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     dest.y = pos.y;
     dest.w = rect.width;
     dest.h = rect.height;
-    if (renderer == nullptr) {
-        ArcadeExceptions("Unexpected error caught.");
-    }
     sprite = SDL_LoadBMP(path.data());
     if (sprite == nullptr) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
