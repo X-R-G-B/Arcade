@@ -6,13 +6,13 @@
 */
 
 #include <curses.h>
+#include <iostream>
 #include <memory>
 #include <ncurses.h>
 #include "NcursesCompType.hpp"
 #include "Text.hpp"
 #include "TEXT.hpp"
 #include "Ncurses.hpp"
-#include <iostream>
 
 static const short foregroundColor = 9;
 static const short backgroundColor = 10;
@@ -21,14 +21,13 @@ static const short colorPair = 11;
 bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph::Text> text)
 {
     int x = DisplayModule::getXFromX1920(text->pos.x);
-    std::cerr << "x: " << x << std::endl;
     int y = DisplayModule::getYFromY1080(text->pos.y);
-    std::cerr << "y: " << y << std::endl;
 
     init_color(foregroundColor, text->textColor.r, text->textColor.g, text->textColor.b);
     init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
     init_pair(colorPair, foregroundColor, backgroundColor);
     attron(colorPair);
+    std::cout << text->text << std::endl << std::endl;
     for (auto &c : text->text) {
         if (c == '\n') {
             y++;
@@ -48,11 +47,9 @@ void Ncurses::System::TextSystem::run(float deltaTime, Arcade::ECS::IEventManage
 {
     auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::TEXT);
 
-    std::cerr << "Text system called" << std::endl;
     for (const auto &entity : *texts) {
         auto textComponents = entity->getComponents(Arcade::ECS::CompType::TEXT);
         for (const auto &textComponent : textComponents) {
-            std::cerr << "print something" << std::endl;
             const auto text = std::static_pointer_cast<Arcade::Graph::Text>(textComponent);
             this->printText(text);
         }
