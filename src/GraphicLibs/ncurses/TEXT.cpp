@@ -6,9 +6,7 @@
 */
 
 #include <curses.h>
-#include <iostream>
 #include <memory>
-#include <ncurses.h>
 #include "NcursesCompType.hpp"
 #include "Text.hpp"
 #include "TEXT.hpp"
@@ -28,7 +26,6 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
         init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
         init_pair(colorPair, foregroundColor, backgroundColor);
         attron(colorPair);
-        std::cout << text->text << std::endl << std::endl;
     }
     for (auto &c : text->text) {
         if (c == '\n') {

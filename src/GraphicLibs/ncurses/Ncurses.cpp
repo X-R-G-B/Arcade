@@ -6,7 +6,6 @@
 */
 
 #include <curses.h>
-#include <iostream>
 #include <memory>
 #include "Ncurses.hpp"
 #include "TEXT.hpp"
