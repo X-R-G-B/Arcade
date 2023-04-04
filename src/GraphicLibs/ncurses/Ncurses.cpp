@@ -56,6 +56,7 @@ void Ncurses::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eve
     //     return;
     // }
     // _frames -= 16.66666;
+    clear();
     _systems.update(delta, eventManager, entityManager);
     refresh();
 }
