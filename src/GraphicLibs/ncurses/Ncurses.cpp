@@ -53,6 +53,7 @@ void Ncurses::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eve
 {
     _frames += delta;
     if (delta < 16.66666) {
+        std::cerr << "Frames: is not " << _frames << std::endl;
         return;
     }
     _frames -= 16.66666;
