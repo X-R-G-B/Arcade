@@ -1,4 +1,5 @@
-/*
+/*#include "GraphStruct.hpp"
+
 ** EPITECH PROJECT, 2023
 ** Arcade Promo 2026 Toulouse
 ** File description:

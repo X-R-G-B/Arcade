@@ -7,22 +7,21 @@
 
 #pragma once
 
-#include <SDL2/SDL.h>
-#include "CompType.hpp"
+#include "SDL.hpp"
 #include "ISprite.hpp"
-#include "GraphStruct.hpp"
 
 namespace Arcade {
     namespace SDL {
-        class SDLSprite {
+    class SDLSprite : public ECS::IComponent {
         public:
             SDLSprite(const std::string id, const std::string &path,
-                      const Arcade::Vector3f &pos, Graph::Rect &rect, SDL_Window &window);
+                      const Arcade::Vector3f &pos, Graph::Rect &rect, SDL_Window &window,
+                      SDL_Renderer *renderer);
 
-            ~SDLSprite() = default;
-
-        protected:
-        private:
+            ~SDLSprite();
+            SDL_Window &_win;
+            SDL_Texture *_sprite;
+            SDL_Rect rect;
         };
     }
 }
