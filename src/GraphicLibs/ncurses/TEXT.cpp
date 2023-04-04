@@ -23,11 +23,13 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
     int x = DisplayModule::getXFromX1920(text->pos.x);
     int y = DisplayModule::getYFromY1080(text->pos.y);
 
-    init_color(foregroundColor, text->textColor.r, text->textColor.g, text->textColor.b);
-    init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
-    init_pair(colorPair, foregroundColor, backgroundColor);
-    attron(colorPair);
-    std::cout << text->text << std::endl << std::endl;
+    if (has_colors()) {
+        init_color(foregroundColor, text->textColor.r, text->textColor.g, text->textColor.b);
+        init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
+        init_pair(colorPair, foregroundColor, backgroundColor);
+        attron(colorPair);
+        std::cout << text->text << std::endl << std::endl;
+    }
     for (auto &c : text->text) {
         if (c == '\n') {
             y++;
@@ -39,7 +41,9 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
             x++;
         }
     }
-    attroff(colorPair);
+    if (has_colors()) {
+        attroff(colorPair);
+    }
     return true;
 }
 

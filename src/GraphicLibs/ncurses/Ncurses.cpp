@@ -37,6 +37,9 @@ extern "C" {
 Ncurses::DisplayModule::DisplayModule(): _frames(0)
 {
     initscr();
+    if (has_colors()) {
+        start_color();
+    }
     noecho();
     cbreak();
     nodelay(stdscr, TRUE);
