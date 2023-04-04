@@ -22,7 +22,7 @@ extern "C" {
         return LibType::GRAPH;
     }
 
-    Arcade::Graph::IDisplayModule *createDisplayModule(void)
+    Arcade::Graph::IDisplayModule *getDisplayModule(void)
     {
         return new Ncurses::DisplayModule();
     }
