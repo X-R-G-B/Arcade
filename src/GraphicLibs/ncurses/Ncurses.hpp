@@ -19,6 +19,9 @@ namespace Ncurses {
             void update(float delta,
             Arcade::ECS::IEventManager &eventManager,
             Arcade::ECS::IEntityManager &entityManager) final;
+
+            static int getXFromX1920(int x);
+            static int getYFromY1080(int y);
         private:
             double _frames;
             Arcade::ECS::SystemManager _systems;

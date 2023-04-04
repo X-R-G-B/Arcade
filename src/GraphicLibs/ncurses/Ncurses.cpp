@@ -58,3 +58,21 @@ void Ncurses::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eve
     _systems.update(delta, eventManager, entityManager);
     refresh();
 }
+
+/*
+   1920 | 240
+   x    | ?
+*/
+int Ncurses::DisplayModule::getXFromX1920(int x)
+{
+    return x * 240 / 1920;
+}
+
+/*
+   1080 | 67
+   x    | ?
+*/
+int Ncurses::DisplayModule::getYFromY1080(int y)
+{
+    return y * 67 / 1080;
+}
