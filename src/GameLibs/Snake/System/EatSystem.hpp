@@ -11,7 +11,7 @@
 
 namespace Snake {
     namespace System {
-        class EatSystem : Arcade::ECS::ISystem {
+        class EatSystem : public Arcade::ECS::ISystem {
             public:
                 EatSystem() = default;
 

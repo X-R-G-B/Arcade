@@ -16,7 +16,7 @@ namespace Arcade {
             public:
                 EventHandler() = default;
 
-                void run(float deltaTime,
+                void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentScene) final;
             protected:
