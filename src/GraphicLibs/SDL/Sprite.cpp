@@ -65,7 +65,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     dest.y = pos.y;
     dest.w = rect.width;
     dest.h = rect.height;
-   // sprite = IMG_Load(path.data());
+    sprite = IMG_Load(path.data());
     if (sprite == nullptr) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
