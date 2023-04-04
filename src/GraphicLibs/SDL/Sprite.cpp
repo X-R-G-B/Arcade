@@ -13,6 +13,14 @@ Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer &renderer)
 
 }
 
+void
+Arcade::SDL::SpriteSystem::run(float deltaTime,
+                               ECS::IEventManager &eventManager,
+                               ECS::IEntityManager &entityManager)
+{
+
+}
+
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
                                   const Arcade::Vector3f &pos, Graph::Rect &rect,
                                   SDL_Renderer *renderer)

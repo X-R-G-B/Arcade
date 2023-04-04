@@ -41,7 +41,7 @@ set_target_properties(arcade_ncurses PROPERTIES
 add_library(arcade_sdl2 SHARED)
 set_target_properties(arcade_sdl2 PROPERTIES
     CXX_STANDARD 20
-    COMPILE_FLAGS "-fno-gnu-unique -lSDL2 -lSDL2_image"
+    COMPILE_FLAGS "-fno-gnu-unique"
     PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )

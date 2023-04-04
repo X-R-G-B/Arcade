@@ -15,6 +15,9 @@ namespace Arcade {
         class SpriteSystem : public ECS::ISystem {
             public:
                 SpriteSystem(SDL_Renderer &renderer);
+                void run(float deltaTime,
+                         ECS::IEventManager &eventManager,
+                         ECS::IEntityManager &entityManager) final;
         };
 
         class SDLSprite : public ECS::IComponent {
