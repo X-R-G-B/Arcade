@@ -41,7 +41,9 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     }
     noecho();
     cbreak();
+    raw();
     nodelay(stdscr, TRUE);
+    notimeout(stdscr, TRUE);
     keypad(stdscr, TRUE);
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>());
 }
