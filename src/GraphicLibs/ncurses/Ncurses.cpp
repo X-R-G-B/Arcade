@@ -6,6 +6,7 @@
 */
 
 #include <curses.h>
+#include <iostream>
 #include <memory>
 #include "Ncurses.hpp"
 #include "TEXT.hpp"
@@ -55,6 +56,7 @@ void Ncurses::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eve
         return;
     }
     _frames -= 16.66666;
+    std::cerr << "Frames: " << _frames << std::endl;
     _systems.update(delta, eventManager, entityManager);
     refresh();
 }

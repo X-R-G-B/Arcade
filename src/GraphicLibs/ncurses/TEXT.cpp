@@ -48,9 +48,11 @@ void Ncurses::System::TextSystem::run(float deltaTime, Arcade::ECS::IEventManage
 {
     auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::TEXT);
 
+    std::cerr << "Text system called" << std::endl;
     for (const auto &entity : *texts) {
         auto textComponents = entity->getComponents(Arcade::ECS::CompType::TEXT);
         for (const auto &textComponent : textComponents) {
+            std::cerr << "print something" << std::endl;
             const auto text = std::static_pointer_cast<Arcade::Graph::Text>(textComponent);
             this->printText(text);
         }
