@@ -14,10 +14,13 @@ namespace Arcade {
     namespace SDL {
         class SpriteSystem : public ECS::ISystem {
             public:
-                SpriteSystem(SDL_Renderer &renderer);
+                SpriteSystem(SDL_Renderer *renderer);
                 void run(float deltaTime,
                          ECS::IEventManager &eventManager,
                          ECS::IEntityManager &entityManager) final;
+            private:
+                SDL_Renderer *_win;
+                void handleComponent(ECS::IComponent &comp, ECS::IEntity &entity);
         };
 
         class SDLSprite : public ECS::IComponent {
@@ -27,7 +30,7 @@ namespace Arcade {
                           SDL_Renderer *renderer);
 
                 ~SDLSprite();
-                SDL_Renderer &_win;
+                SDL_Renderer *_win;
                 SDL_Texture *_sprite;
                 SDL_Rect rect;
             };
