@@ -12,6 +12,7 @@
 #include "Text.hpp"
 #include "TEXT.hpp"
 #include "Ncurses.hpp"
+#include <iostream>
 
 static const short foregroundColor = 9;
 static const short backgroundColor = 10;
@@ -20,7 +21,9 @@ static const short colorPair = 11;
 bool Ncurses::System::TextSystem::printText(std::shared_ptr<Arcade::Graph::Text> text)
 {
     int x = DisplayModule::getXFromX1920(text->pos.x);
+    std::cerr << "x: " << x << std::endl;
     int y = DisplayModule::getYFromY1080(text->pos.y);
+    std::cerr << "y: " << y << std::endl;
 
     init_color(foregroundColor, text->textColor.r, text->textColor.g, text->textColor.b);
     init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
