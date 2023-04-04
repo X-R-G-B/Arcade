@@ -37,6 +37,7 @@ namespace Arcade {
             private:
                 ECS::SystemManager _systems;
                 sf::RenderWindow _win;
+                std::vector<std::shared_ptr<ECS::IComponent>> _components;
         };
     }
 }
