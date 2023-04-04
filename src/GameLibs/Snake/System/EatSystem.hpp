@@ -15,7 +15,7 @@ namespace Snake {
             public:
                 EatSystem() = default;
 
-                void run(float deltaTime,
+                void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
             protected:

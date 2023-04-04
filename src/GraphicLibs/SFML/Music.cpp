@@ -36,7 +36,7 @@ void Arcade::Sfml::MusicSystem::handleComponent(std::shared_ptr<Graph::IMusic> M
     }
 }
 
-void Arcade::Sfml::MusicSystem::run(float deltaTime,
+void Arcade::Sfml::MusicSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
