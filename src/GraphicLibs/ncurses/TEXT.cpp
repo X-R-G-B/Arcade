@@ -25,7 +25,7 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
         init_color(foregroundColor, text->textColor.r, text->textColor.g, text->textColor.b);
         init_color(backgroundColor, text->backgroundColor.r, text->backgroundColor.g, text->backgroundColor.b);
         init_pair(colorPair, foregroundColor, backgroundColor);
-        attron(colorPair);
+        attron(COLOR_PAIR(colorPair));
     }
     for (auto &c : text->text) {
         if (c == '\n') {
@@ -39,7 +39,7 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
         }
     }
     if (has_colors()) {
-        attroff(colorPair);
+        attroff(COLOR_PAIR(colorPair));
     }
     return true;
 }
