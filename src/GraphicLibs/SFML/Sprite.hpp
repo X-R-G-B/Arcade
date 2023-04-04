@@ -15,24 +15,26 @@ namespace Arcade {
 
     namespace Sfml {
 
-        class SpriteSystem : public ECS::ISystem {
-            public:
-                SpriteSystem(sf::RenderWindow &win);
-                void run(float deltaTime,
-                    ECS::IEventManager &eventManager,
-                    ECS::IEntityManager &entityManager) final;
-            private:
-                sf::RenderWindow &_win;
-                void handleComponent(ECS::IComponent &comp, ECS::IEntity &entity);
-
-        };
-
         struct SfSprite : public ECS::IComponent {
             public:
                 SfSprite(const std::string id, const std::string &path,
                     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
                 sf::RenderWindow &_win;
                 sf::Sprite sprite;
+        };
+
+        class SpriteSystem : public ECS::ISystem {
+            public:
+                SpriteSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
+                void run(double deltaTime,
+                    ECS::IEventManager &eventManager,
+                    ECS::IEntityManager &entityManager) final;
+            private:
+                sf::RenderWindow &_win;
+                std::vector<std::shared_ptr<ECS::IComponent>> &_components;
+                std::shared_ptr<SfSprite> getComponent(std::shared_ptr<Graph::ISprite> TextComp);
+                void handleComponent(std::shared_ptr<Graph::ISprite> TextComp);
+
         };
     }
 }

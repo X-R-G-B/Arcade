@@ -54,7 +54,7 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
     }
 }
 
-void Snake::System::AppleSystem::run(float deltaTime,
+void Snake::System::AppleSystem::run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {

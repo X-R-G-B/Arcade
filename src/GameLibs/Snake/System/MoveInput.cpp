@@ -66,7 +66,7 @@ Arcade::Vector2f Snake::System::MoveInput::toNextCase(const Arcade::Vector3f &po
 }
 
 void Snake::System::MoveInput::run(
-    float deltaTime,
+    double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {

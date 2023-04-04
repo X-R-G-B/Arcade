@@ -57,7 +57,7 @@ Arcade::ECS::IEntityManager &Snake::SnakeGameModule::getCurrentEntityManager()
     return _scenes.front()->getEntityManager();
 }
 
-void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
+void Snake::SnakeGameModule::update(double deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager.update(deltaTime, eventManager, getCurrentEntityManager());
 }

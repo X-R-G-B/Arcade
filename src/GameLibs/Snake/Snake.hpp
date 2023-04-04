@@ -20,7 +20,7 @@ namespace Snake {
             SnakeGameModule();
             ~SnakeGameModule() = default;
 
-            void update(float deltaTime, Arcade::ECS::IEventManager &eventManager) final;
+            void update(double deltaTime, Arcade::ECS::IEventManager &eventManager) final;
 
             Arcade::ECS::IEntityManager &getCurrentEntityManager() final;
 
