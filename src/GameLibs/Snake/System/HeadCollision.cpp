@@ -23,7 +23,7 @@ bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph:
     }
 }
 
-void Snake::System::HeadCollision::run(float deltaTime, Arcade::ECS::IEventManager &eventManager,
+void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentScene)
 {
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById(SNAKE_HEAD);

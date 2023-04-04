@@ -34,7 +34,7 @@ void Arcade::Sfml::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite>
     _win.draw(sprite->sprite);
 }
 
-void Arcade::Sfml::SpriteSystem::run(float deltaTime,
+void Arcade::Sfml::SpriteSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {

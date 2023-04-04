@@ -22,7 +22,7 @@ Arcade::Core::MainMenuModule::~MainMenuModule()
 {
 }
 
-void Arcade::Core::MainMenuModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
+void Arcade::Core::MainMenuModule::update(double deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager->update(deltaTime, eventManager, _mainMenu->getEntityManager());
     if (eventManager.isEventTriggered("KEY_UP_PRESSED").first) {

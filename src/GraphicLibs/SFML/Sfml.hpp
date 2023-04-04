@@ -31,7 +31,7 @@ namespace Arcade {
             public:
                 DisplayModule();
                 ~DisplayModule();
-                void update(float delta,
+                void update(double delta,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:

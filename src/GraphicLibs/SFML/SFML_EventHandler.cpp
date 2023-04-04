@@ -80,7 +80,7 @@ SFML_EventHandler::SFML_EventHandler(sf::RenderWindow &window) : _window(window)
     this->_windowSize = this->_window.getSize();
 }
 
-void SFML_EventHandler::run(float deltaTime,
+void SFML_EventHandler::run(double deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentScene)
 {

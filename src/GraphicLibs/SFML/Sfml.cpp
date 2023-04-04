@@ -27,7 +27,7 @@ Arcade::Sfml::DisplayModule::~DisplayModule()
     _win.close();
 }
 
-void Arcade::Sfml::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
+void Arcade::Sfml::DisplayModule::update(double delta, Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &entityManager)
 {
     _win.clear();
