@@ -59,7 +59,7 @@ bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Comp
     return hit;
 }
 
-void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto snake = entityManager.getEntitiesById(SNAKE);
     auto directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);

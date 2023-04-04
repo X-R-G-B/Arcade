@@ -17,7 +17,7 @@ Snake::Component::SnakeMapComponent::SnakeMapComponent(const std::string &id, co
 {
     this->type = Arcade::ECS::CompType::SNAKE_MAP;
     this->rect = Arcade::Graph::Rect(0, 0, 0, 0);
-    this->path = "assets/snake/map.png";
+    this->path = "assets/snake/normal/bg_green_01.png";
     this->currentRectIndex = 0;
     this->pos = pos;
     this->ttyData = {defaultChar, foregroundColor, backgroundColor};

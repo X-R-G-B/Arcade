@@ -26,7 +26,7 @@ namespace Arcade {
         class SpriteSystem : public ECS::ISystem {
             public:
                 SpriteSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
-                void run(float deltaTime,
+                void run(double deltaTime,
                     ECS::IEventManager &eventManager,
                     ECS::IEntityManager &entityManager) final;
             private:

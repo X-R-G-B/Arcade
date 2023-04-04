@@ -34,7 +34,7 @@ void Arcade::Sfml::TextSystem::handleComponent(std::shared_ptr<Graph::IText> Tex
     _win.draw(text->text);
 }
 
-void Arcade::Sfml::TextSystem::run(float deltaTime,
+void Arcade::Sfml::TextSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {

@@ -17,7 +17,7 @@
 void Snake::System::MoveForward::moveForward(
     Snake::Component::Forward &curDir,
     Arcade::Graph::ISprite &sprite,
-    float deltaTime)
+    double deltaTime)
 {
     switch (curDir.direction) {
         case Snake::Direction::UP:
@@ -32,7 +32,7 @@ void Snake::System::MoveForward::moveForward(
 }
 
 void Snake::System::MoveForward::run(
-    float deltaTime,
+    double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
