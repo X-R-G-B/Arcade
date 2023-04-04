@@ -6,7 +6,6 @@
 */
 
 #include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <string>
 #include <map>
@@ -79,40 +78,64 @@ static const std::map<SDL_KeyCode, const std::string> KeyboardKeys = {
     {SDLK_F12, "KEY_F12_PRESSED"}
 };
 
+void Arcade::SDL::EventHandler::HandleQuitEvent(Arcade::ECS::IEventManager &eventManager, SDL_Event &events)
+{
+    eventManager.addEvent("QUIT");
+}
+
+void Arcade::SDL::EventHandler::HandleMouseEvent(Arcade::ECS::IEventManager &eventManager, SDL_Event &events)
+{
+    if (events.button.button == SDL_BUTTON_LEFT) {
+        eventManager.addEvent("MOUSE_KEY1_PRESSED");
+    } else if (events.button.button == SDL_BUTTON_RIGHT) {
+        eventManager.addEvent("MOUSE_KEY2_PRESSED");
+    }
+}
+
+void Arcade::SDL::EventHandler::HandleWindowEvent(Arcade::ECS::IEventManager &eventManager, SDL_Event &events)
+{
+    if (events.window.event == SDL_WINDOWEVENT_CLOSE) {
+        eventManager.addEvent("QUIT");
+    }
+    if (events.window.event == SDL_WINDOWEVENT_RESIZED) {
+        eventManager.addEvent("WINDOW_RESIZED");
+    }
+}
+
+void Arcade::SDL::EventHandler::HandleKeyboardEvent(Arcade::ECS::IEventManager &eventManager, SDL_Event &events)
+{
+    for (auto &key : KeyboardKeys) {
+        if (events.key.keysym.sym == key.first) {
+            eventManager.addEvent(key.second);
+        }
+    }
+}
+
+void Arcade::SDL::EventHandler::HandleEvents(Arcade::ECS::IEventManager &eventManager, SDL_Event &events)
+{
+    switch (events.type) {
+        case SDL_QUIT:
+            this->HandleQuitEvent(eventManager, events);
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            this->HandleMouseEvent(eventManager, events);
+            break;
+        case SDL_WINDOWEVENT:
+            this->HandleWindowEvent(eventManager, events);
+            break;
+        case SDL_KEYDOWN:
+            this->HandleKeyboardEvent(eventManager, events);
+            break;
+    }
+}
+
 void Arcade::SDL::EventHandler::run(float deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentScene)
 {
     SDL_Event events;
 
-    if (!SDL_PollEvent(&events)) {
-        return;
-    }
-    switch (events.type) {
-        case SDL_QUIT:
-            eventManager.addEvent("QUIT");
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-            if (events.button.button == SDL_BUTTON_LEFT) {
-                eventManager.addEvent("MOUSE_KEY1_PRESSED");
-            } else if (events.button.button == SDL_BUTTON_RIGHT) {
-                eventManager.addEvent("MOUSE_KEY2_PRESSED");
-            }
-            break;
-        case SDL_WINDOWEVENT:
-            if (events.window.event == SDL_WINDOWEVENT_CLOSE) {
-                eventManager.addEvent("QUIT");
-            }
-            if (events.window.event == SDL_WINDOWEVENT_RESIZED) {
-                eventManager.addEvent("WINDOW_RESIZED");
-            }
-            break;
-        case SDL_KEYDOWN:
-            for (auto &key : KeyboardKeys) {
-                if (events.key.keysym.sym == key.first) {
-                    eventManager.addEvent(key.second);
-                }
-            }
-            break;
+    while (SDL_PollEvent(&events)) {
+        this->HandleEvents(eventManager, events);
     }
 }
