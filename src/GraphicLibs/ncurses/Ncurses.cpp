@@ -47,8 +47,8 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     nodelay(stdscr, TRUE);
     notimeout(stdscr, TRUE);
     keypad(stdscr, TRUE);
-    _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>());
-    _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>());
+    _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>(_colorsUsed));
+    _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>(_colorsUsed));
     _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
 }
 
@@ -67,6 +67,7 @@ void Ncurses::DisplayModule::update(double delta, Arcade::ECS::IEventManager &ev
     clear();
     _systems.update(delta, eventManager, entityManager);
     refresh();
+    _colorsUsed.clear();
 }
 
 /*

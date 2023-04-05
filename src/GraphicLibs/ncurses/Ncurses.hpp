@@ -9,6 +9,7 @@
 
 #include "IDisplayModule.hpp"
 #include "SystemManager.hpp"
+#include <map>
 
 namespace Ncurses {
     class DisplayModule : public Arcade::Graph::IDisplayModule {
@@ -25,5 +26,6 @@ namespace Ncurses {
         private:
             double _frames;
             Arcade::ECS::SystemManager _systems;
+            std::map<std::string, short> _colorsUsed;
     };
 }

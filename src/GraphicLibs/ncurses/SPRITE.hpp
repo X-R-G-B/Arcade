@@ -18,12 +18,15 @@ namespace Ncurses {
 
         class SpriteSystem : public Arcade::ECS::ISystem {
             public:
+                SpriteSystem(std::map<std::string, short> &colorsUsed);
                 void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
 
             private:
                 bool printText(std::shared_ptr<Arcade::Graph::Sprite> sprite);
+                short getColorPair(short fr, short fg, short fb, short br, short bg, short bb);
+                std::map<std::string, short> &_colorsUsed;
         };
     }
 }
