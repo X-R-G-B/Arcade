@@ -12,16 +12,26 @@
 
 namespace Arcade {
     namespace SDL {
-        class Music : public ECS::IComponent {
+        class SDLMusic : public ECS::IComponent {
             public:
-                Music(const std::string id, const std::string &path,
+                SDLMusic(const std::string id, const std::string &path,
                 bool loop, bool play);
-                ~Music();
-            protected:
-            private:
+                ~SDLMusic();
+
                 Mix_Music *music;
         };
 
-
+        class MusicSystem : public ECS::ISystem {
+            public:
+                MusicSystem(SDL_Renderer *win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
+                void run(double deltaTime,
+                         ECS::IEventManager &eventManager,
+                         ECS::IEntityManager &entityManager) final;
+            private:
+                SDL_Renderer *_win;
+                std::vector<std::shared_ptr<ECS::IComponent>> &_components;
+                std::shared_ptr<SDLMusic> getComponent(std::shared_ptr<Graph::IMusic> TextComp);
+                void handleComponent(std::shared_ptr<Graph::IMusic> TextComp);
+        };
     }
 }
