@@ -5,6 +5,7 @@
 ** AppleSystem
 */
 
+#include <ctime>
 #include "AppleSystem.hpp"
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
@@ -12,12 +13,18 @@
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
+Snake::System::AppleSystem::AppleSystem()
+{
+    std::srand(std::time(nullptr));
+}
+
+#include <iostream>
 void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
     Arcade::ECS::IComponent &appleIComp = apple->getComponents(APPLE_SPRITE_COMP);
     auto snakeEntities = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
-    std::size_t randNumber = 1 + (std::rand() % _positions.size());
+    std::size_t randNumber = 0 + (std::rand() % _positions.size() - 1);
     Arcade::Vector3f randPosition = _positions[randNumber];
 
     for (auto it = snakeEntities->begin(); it != snakeEntities->end(); it++) {
@@ -39,24 +46,24 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
         Arcade::Graph::Sprite &appleComp = static_cast<Arcade::Graph::Sprite &>(appleIComp);
         appleComp.pos = randPosition;
     }
-    _positions.clear();
 }
 
-void Snake::System::AppleSystem::run(float deltaTime,
+void Snake::System::AppleSystem::run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
-    auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
-
     if (!eventManager.isEventTriggered(EATED_EVENT).first) {
         return;
     }
+    _positions.clear();
+    auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
+    auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
+
     for (auto it = mapComponents.begin(); it != mapComponents.end(); it++) {
         auto comp = *it;
         auto spriteComp = std::static_pointer_cast<Arcade::Graph::Sprite>(comp);
 
         _positions.push_back(spriteComp->pos);
     }
-    this->modifyApplePos(eventManager, currentEntityManager);
+    modifyApplePos(eventManager, currentEntityManager);
 }

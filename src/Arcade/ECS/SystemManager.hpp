@@ -42,7 +42,7 @@ namespace Arcade {
                  * @param entityManager The list of entities
                  * @param eventManager The list of events
                  */
-                void update(float deltaTime,
+                void update(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentScene) final;
             private:

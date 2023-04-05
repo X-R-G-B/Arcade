@@ -24,9 +24,8 @@ Arcade::ECS::EventManager::isEventTriggered(const std::string &event) const
     return std::make_pair(true, it->second);
 }
 
-
 void Arcade::ECS::EventManager::addEvent(const std::string &event,
-std::optional<std::shared_ptr<Arcade::ECS::IComponent>> component)
+    std::optional<std::shared_ptr<Arcade::ECS::IComponent>> component)
 {
     auto it = _events.find(event);
     if (it == _events.end()) {

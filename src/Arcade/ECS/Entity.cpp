@@ -32,7 +32,7 @@ Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
     auto it = this->_components.find(type);
 
     if (it == this->_components.end()) {
-        throw ArcadeExceptions("Component not found");
+        throw ArcadeExceptions("Components of type : " + std::to_string(static_cast<int>(type)) + " not founds");
     }
     return it->second;
 }
@@ -76,11 +76,15 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     }
 }
 
+#include <iostream>
 void Arcade::ECS::Entity::removeComponent(const std::string &id)
 {
     for (auto &component : this->_components) {
         std::remove_if(component.second.begin(), component.second.end(),
         [&id](const std::shared_ptr<Arcade::ECS::IComponent> &component) {
+            if (component.get() == nullptr) {
+                std::cout << "encule" << std::endl;
+            }
             return component->id == id;
         });
     }

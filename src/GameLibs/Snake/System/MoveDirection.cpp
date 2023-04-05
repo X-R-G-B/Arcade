@@ -14,37 +14,39 @@
 #include "SnakeCompType.hpp"
 #include "Sprite.hpp"
 #include "MoveInput.hpp"
+#include "Exceptions.hpp"
 
 /*
-  pos         x             x+CASE_SIZE_WIDTH
+  pos         x             x+PARCELL_SIZE
    ----------------------------------------------------
    |          |             |            |            |
    |          |             |            |            |
  y |----------bbbbbbbbbbbbbbb------------|------------| y
-   |          baaaaaaaaaaaaab            |            | y+(CASE_SIZE_HEIGHT/4)
-   |          baaaaaaaaaaaaab            |            | y+CASE_SIZE_HEIGHT-(CASE_SIZE_HEIGHT/4)
-   |----------bbbbbbbbbbbbbbb------------|------------| y+CASE_SIZE_HEIGHT
+   |          baaaaaaaaaaaaab            |            | y+(PARCELL_SIZE/4)
+   |          baaaaaaaaaaaaab            |            | y+PARCELL_SIZE-(PARCELL_SIZE/4)
+   |----------bbbbbbbbbbbbbbb------------|------------| y+PARCELL_SIZE
    |          |             |            |            |
    |          |             |            |            |
    |----------|-------------|------------|------------|
    |          |             |            |            |
    |          |             |            |            |
    ----------------------------------------------------
-               x+(CASE_SIZE_WIDTH/4)
-                           x+CASE_SIZE_WIDTH-(CASE_SIZE_WIDTH/4)
+               x+(PARCELL_SIZE/4)
+                           x+PARCELL_SIZE-(PARCELL_SIZE/4)
 */
 
+#include <iostream>
 bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
 {
-    auto bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
+    auto &bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
     bool hit = false;
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
-        if (bodySprite->pos.x + (CASE_SIZE_WIDTH / 4) < changeDir->pos.x ||
-            bodySprite->pos.x + CASE_SIZE_WIDTH - (CASE_SIZE_WIDTH / 4) > changeDir->pos.x + CASE_SIZE_WIDTH ||
-            bodySprite->pos.y + (CASE_SIZE_HEIGHT / 4) < changeDir->pos.y ||
-            bodySprite->pos.y + CASE_SIZE_HEIGHT - (CASE_SIZE_HEIGHT / 4) > changeDir->pos.y + CASE_SIZE_HEIGHT
+        if (bodySprite->pos.x + (PARCELL_SIZE / 4) < changeDir->pos.x ||
+            bodySprite->pos.x + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.x + PARCELL_SIZE ||
+            bodySprite->pos.y + (PARCELL_SIZE / 4) < changeDir->pos.y ||
+            bodySprite->pos.y + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.y + PARCELL_SIZE
         ) {
             continue;
         }
@@ -59,12 +61,17 @@ bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Comp
     return hit;
 }
 
-void Snake::System::MoveDirection::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto snake = entityManager.getEntitiesById(SNAKE);
-    auto directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
+    auto snake = entityManager.getEntitiesById(SNAKE_HEAD);
+    std::vector<std::shared_ptr<Arcade::ECS::IComponent>> directionsComponents;
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
-    
+
+    try {
+        directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
+    } catch (ArcadeExceptions &e) {
+        return;
+    }
 
     for (auto it = directionsComponents.begin(); it != directionsComponents.end();) {
         auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(*it);

@@ -32,7 +32,7 @@ extern "C"
      *
      * All game shared lib must have this function
      */
-    EXPORT Arcade::Game::IGameModule *getGameModule(void);
+    EXPORT Arcade::Game::IGameModule *getGameModule();
     /**
      * @brief Destroy the GameModule created by getGameModule
      *
@@ -47,7 +47,7 @@ extern "C"
      *
      * All graph shared lib must have this function
      */
-    EXPORT Arcade::Graph::IDisplayModule *getDisplayModule(void);
+    EXPORT Arcade::Graph::IDisplayModule *getDisplayModule();
     /**
      * @brief Destroy the DisplayModule created by getDisplayModule
      *
@@ -63,7 +63,7 @@ extern "C"
      *
      * All shared lib must have this function
      */
-    EXPORT const char *getName(void);
+    EXPORT const char *getName();
 
     /**
      * @brief The Shared lib entry point to get lib type
@@ -72,5 +72,5 @@ extern "C"
      *
      * All shared lib must have this function
      */
-    EXPORT LibType getType(void);
+    EXPORT LibType getType();
 }
