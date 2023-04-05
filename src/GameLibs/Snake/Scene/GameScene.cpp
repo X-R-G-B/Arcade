@@ -31,8 +31,8 @@ void Snake::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     headS->currentRectIndex = 0;
     headS->ttyData.defaultChar = "#";
-    headS->ttyData.background = {0, 255, 255, 0};
-    headS->ttyData.foreground = {0, 255, 0, 0};
+    headS->ttyData.background = {0, 0, 255, 0};
+    headS->ttyData.foreground = {150, 0, 0, 0};
     head.addComponent(headS);
     head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
 }
