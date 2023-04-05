@@ -21,6 +21,9 @@
 Arcade::Core::Core::Core(const std::string &path)
 {
     getSharedLibsNames();
+    if (_mainMenuLibHandler.getModule() == nullptr) {
+        std::runtime_error("No availible main menu, exiting...");
+    }
     if (path.empty()) {
         nextLib(LibType::GRAPH);
     } else {
