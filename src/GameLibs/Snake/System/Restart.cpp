@@ -12,7 +12,7 @@ Snake::System::Restart::Restart(std::unique_ptr<Arcade::Game::IScene> &scene) : 
 {
 }
 
-void Snake::System::Restart::run(float deltaTime,
+void Snake::System::Restart::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
