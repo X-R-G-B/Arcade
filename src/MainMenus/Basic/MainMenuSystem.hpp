@@ -16,9 +16,9 @@ namespace BasicMenu {
             MainMenuSystem(Arcade::MainMenu::Context *context);
             ~MainMenuSystem() = default;
 
-            virtual void run(double deltaTime,
+            void run(double deltaTime,
             Arcade::ECS::IEventManager &eventManager,
-            Arcade::ECS::IEntityManager &currentEntityManager) = 0;
+            Arcade::ECS::IEntityManager &currentEntityManager) final;
         private:
             Arcade::MainMenu::Context *_context;
             bool _initialized = false;

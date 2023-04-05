@@ -9,12 +9,14 @@
 #include "EntityManager.hpp"
 #include "LibHandler.hpp"
 #include "MainMenuModule.hpp"
-#include "MainMenus/Basic/MainMenuScene.hpp"
+#include "MainMenuScene.hpp"
+#include "MainMenuSystem.hpp"
 
 BasicMenu::MainMenuModule::MainMenuModule(Arcade::MainMenu::Context *context):
     _scene(context), _context(context)
 {
     _scene.init();
+    _systemManager.addSystem("MainMenu", std::make_unique<BasicMenu::MainMenuSystem>(_context));
 }
 
 BasicMenu::MainMenuModule::~MainMenuModule()
