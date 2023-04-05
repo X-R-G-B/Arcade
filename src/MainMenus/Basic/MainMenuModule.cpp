@@ -14,10 +14,12 @@
 BasicMenu::MainMenuModule::MainMenuModule(Arcade::MainMenu::Context *context):
     _scene(context), _context(context)
 {
+    _scene.init();
 }
 
 BasicMenu::MainMenuModule::~MainMenuModule()
 {
+    _scene.close();
 }
 
 void BasicMenu::MainMenuModule::update(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::MainMenu::Context *context)
