@@ -12,7 +12,7 @@
 #include "MUSIC.hpp"
 #include "Ncurses.hpp"
 
-void Ncurses::System::MusicSystem::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Ncurses::System::MusicSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MUSIC);
 

@@ -44,7 +44,7 @@ bool Ncurses::System::SpriteSystem::printText(const std::shared_ptr<Arcade::Grap
     return true;
 }
 
-void Ncurses::System::SpriteSystem::run(float deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Ncurses::System::SpriteSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::SPRITE);
 

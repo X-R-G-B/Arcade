@@ -14,7 +14,7 @@ namespace Ncurses {
     namespace System {
         class MusicSystem : public Arcade::ECS::ISystem {
             public:
-                void run(float deltaTime,
+                void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:

@@ -57,7 +57,7 @@ Ncurses::DisplayModule::~DisplayModule()
     endwin();
 }
 
-void Ncurses::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Ncurses::DisplayModule::update(double delta, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     // _frames += delta;
     // if (delta < 16.66666) {
