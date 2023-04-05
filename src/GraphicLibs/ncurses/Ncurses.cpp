@@ -9,6 +9,7 @@
 #include <memory>
 #include "Ncurses.hpp"
 #include "TEXT.hpp"
+#include "SPRITE.hpp"
 #include "Api.hpp"
 
 extern "C" {
@@ -46,6 +47,7 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     notimeout(stdscr, TRUE);
     keypad(stdscr, TRUE);
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>());
+    _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>());
 }
 
 Ncurses::DisplayModule::~DisplayModule()
