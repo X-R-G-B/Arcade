@@ -15,7 +15,8 @@
 #include <type_traits>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
-#include "Api.hpp"
+#include "Api2.hpp"
+#include "IMainMenuModule.hpp"
 #include "Exceptions.hpp"
 
 /**
@@ -36,6 +37,11 @@ class LibHandler {
                 _type = LibType::GAME;
                 _funcCreator = "getGameModule";
                 _funcDestructor = "destroyGameModule";
+            }
+            else if (std::is_same<T, Arcade::MainMenu::IMainMenuModule>::value) {
+                _type = LibType::MENU;
+                _funcCreator = "getMainMenuModule";
+                _funcDestructor = "destroyMainMenuModule";
             } else {
                 throw ArcadeExceptions("LibHandler: wrong type (type handler are IDisplayModule IGameModule)");
             }

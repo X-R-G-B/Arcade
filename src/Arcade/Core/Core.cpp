@@ -14,7 +14,6 @@
 #include <utility>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
-#include "Api.hpp"
 #include "Core.hpp"
 #include "EntityManager.hpp"
 #include "Exceptions.hpp"
@@ -27,9 +26,6 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
-    _mainMenu = std::make_unique<Arcade::Core::MainMenuModule>(
-        this->_gamesNames, this->_graphicLibsNames,
-        this->_currentGameLib, this->_currentGraphicLib);
 }
 
 void Arcade::Core::Core::addNameToList(const std::string &path)
@@ -52,8 +48,13 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     std::cerr << "File is a shared library: " << path2 << std::endl << std::endl;
     if (type == LibType::GAME) {
         _gamesNames.push_back(std::make_pair(name, path2));
-    } else {
+        _context.gameLibraries.push_back(name);
+    } else if (type == LibType::GRAPH) {
         _graphicLibsNames.push_back(std::make_pair(name, path2));
+        _context.graphicalLibraries.push_back(name);
+    } else {
+        _mainMenuLibHandler.loadLib(path2);
+        std::cerr << "File is main menu, loaded as default (overriding older main menu selected)" << std::endl;
     }
 }
 
@@ -94,8 +95,8 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
     //     _gameLibHandler.getModule()->update(delta.count(), eventManager);
     //     return (_gameLibHandler.getModule()->getCurrentEntityManager());
     // } else {
-    _mainMenu->update(delta.count(), eventManager);
-    return (_mainMenu->getCurrentEntityManager());
+    _mainMenuLibHandler.getModule()->update(delta.count(), eventManager, &_context);
+    return (_mainMenuLibHandler.getModule()->getCurrentEntityManager());
     // }
 }
 
@@ -154,18 +155,18 @@ void Arcade::Core::Core::nextLib(LibType libType)
     if (libType == LibType::GAME) {
         if (path.empty()) {
             _gameLibHandler.reset();
-            _currentGameLib = "";
+            _context.currentGameLibrary = "";
         } else {
             _gameLibHandler.loadLib(path);
-            _currentGameLib = _gameLibHandler.getName();
+            _context.currentGameLibrary = _gameLibHandler.getName();
         }
     } else {
         if (path.empty()) {
             _graphLibHandler.reset();
-            _currentGraphicLib = "";
+            _context.currentGraphicalLibrary = "";
         } else {
             _graphLibHandler.loadLib(path);
-            _currentGraphicLib = _graphLibHandler.getName();
+            _context.currentGraphicalLibrary = _graphLibHandler.getName();
         }
     }
 }

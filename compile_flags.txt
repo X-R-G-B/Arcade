@@ -4,6 +4,7 @@
 -Isrc/Arcade/ECS
 -Isrc/Arcade/Game
 -Isrc/Arcade/Graph
+-Isrc/Arcade/MainMenu
 -Isrc/GameLibs/Snake
 -Isrc/GameLibs/Snake/System
 -Isrc/GameLibs/Snake/Component

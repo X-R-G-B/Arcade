@@ -5,25 +5,19 @@
 ** MainMenuScene
 */
 
+#include <memory>
+#include "EntityManager.hpp"
 #include "Text.hpp"
 #include "MainMenuScene.hpp"
 
-Arcade::Core::MainMenuScene::MainMenuScene(
-    std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
-    const std::vector<std::pair<std::string, std::string>> &gameLibs,
-    const std::vector<std::pair<std::string, std::string>> &graphicLibs,
-    const std::string &currentGameLib,
-    const std::string &currentGraphicLib
-)
-    : AScene(std::move(enitityManager)), _gameLibs(gameLibs), _graphicLibs(graphicLibs),
-      _currentGameLib(currentGameLib), _currentGraphicLib(currentGraphicLib)
+BasicMenu::MainMenuScene::MainMenuScene(Arcade::MainMenu::Context *context):
+    AScene(std::make_unique<Arcade::ECS::EntityManager>()), _context(context)
 {
 }
 
-
 //TODO when IDisplayModule is good, implement the good positions for texts
 
-bool Arcade::Core::MainMenuScene::init()
+bool BasicMenu::MainMenuScene::init()
 {
     Arcade::ECS::IEntityManager &entityManager = getEntityManager();
     Arcade::ECS::IEntity &gamesEntity = entityManager.createEntity("Games");
@@ -38,10 +32,10 @@ bool Arcade::Core::MainMenuScene::init()
     text->pos = compPos;
     gamesEntity.addComponent(text);
     compPos.y = 50;
-    for (std::size_t i = 0; i != _gameLibs.size(); i++) {
-        text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
+    for (const auto &textText : _context->gameLibraries) {
+        text = std::make_shared<Arcade::Graph::Text>(textText);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = _gameLibs[i].first;
+        text->text = textText;
             text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
         compPos.y += 24;
@@ -56,10 +50,10 @@ bool Arcade::Core::MainMenuScene::init()
     text->pos = compPos;
     gamesEntity.addComponent(text);
     compPos.y = 50;
-    for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
-        text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
+    for (const auto &textText : _context->graphicalLibraries) {
+        text = std::make_shared<Arcade::Graph::Text>(textText);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = _graphicLibs[i].first;
+        text->text = textText;
         text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
         compPos.y += 24;
@@ -68,7 +62,7 @@ bool Arcade::Core::MainMenuScene::init()
     return (true);
 }
 
-void Arcade::Core::MainMenuScene::close()
+void BasicMenu::MainMenuScene::close()
 {
     _EntityManager->removeAllEntities();
 }
