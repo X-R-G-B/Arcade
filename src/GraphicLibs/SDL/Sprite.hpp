@@ -32,7 +32,6 @@ namespace Arcade {
                 ~SDLSprite();
                 SDL_Renderer *_win;
                 SDL_Texture *_sprite;
-                SDL_Rect rect;
             };
         }
 }
