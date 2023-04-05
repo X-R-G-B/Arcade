@@ -10,7 +10,7 @@
 #include "MagickValueBasic.hpp"
 
 BasicMenu::MainMenuSystem::MainMenuSystem(Arcade::MainMenu::Context *context)
-    : _context(context)
+    : _context(context), _initialized(false)
 {
 }
 
@@ -29,7 +29,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
         text = std::make_shared<Arcade::Graph::Text>(textText);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = textText;
-            text->textColor = {255, 0, 0, 255};
+        text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
         compPos.y += 24;
         gamesEntity->addComponent(text);

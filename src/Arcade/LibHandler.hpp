@@ -105,7 +105,7 @@ class LibHandler {
             return name;
         }
 
-        void loadLib(const std::string &path)
+        void loadLib(const std::string &path, Arcade::MainMenu::Context *context = nullptr)
         {
             typedef T *(*retType_t)();
             retType_t func = nullptr;
@@ -137,7 +137,13 @@ class LibHandler {
                 std::string error = dlerror();
                 throw ArcadeExceptions("Failed to load function " + _funcCreator + ":: " + error);
             }
-            _module = func();
+            if (_type == LibType::MENU) {
+                typedef T *(*retType1_t)(Arcade::MainMenu::Context *);
+                retType1_t func1 = (retType1_t) func;
+                _module = func1(context);
+            } else {
+                _module = func();
+            }
         }
 
         T *getModule()

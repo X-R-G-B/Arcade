@@ -56,7 +56,7 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
         _graphicLibsNames.push_back(std::make_pair(name, path2));
         _context.graphicalLibraries.push_back(name);
     } else {
-        _mainMenuLibHandler.loadLib(path2);
+        _mainMenuLibHandler.loadLib(path2, &_context);
         std::cerr << "File is main menu, loaded as default (overriding older main menu selected)" << std::endl;
     }
 }
