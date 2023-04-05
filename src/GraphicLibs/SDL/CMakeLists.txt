@@ -5,6 +5,7 @@ target_sources(arcade_sdl2 PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/SDL.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
 )
 
 find_library(LSDL2 SDL2)
