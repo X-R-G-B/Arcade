@@ -7,6 +7,7 @@
 
 #include <curses.h>
 #include <memory>
+#include <iostream>
 #include "Ncurses.hpp"
 #include "TEXT.hpp"
 #include "SPRITE.hpp"
@@ -59,11 +60,12 @@ Ncurses::DisplayModule::~DisplayModule()
 
 void Ncurses::DisplayModule::update(double delta, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    // _frames += delta;
-    // if (delta < 16.66666) {
-    //     return;
-    // }
-    // _frames -= 16.66666;
+    _frames += delta;
+    std::cerr << "FPS: " << _frames << std::endl;
+    if (delta < 16.66666) {
+        return;
+    }
+    _frames -= 16.66666;
     clear();
     _systems.update(delta, eventManager, entityManager);
     refresh();
