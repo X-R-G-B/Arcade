@@ -88,13 +88,13 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
 Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<double> delta,
                     Arcade::ECS::EventManager &eventManager)
 {
-    if (_gameLibHandler.getModule() != nullptr) {
-        _gameLibHandler.getModule()->update(delta.count(), eventManager);
-        return (_gameLibHandler.getModule()->getCurrentEntityManager());
-    } else {
-        _mainMenu->update(delta.count(), eventManager);
-        return (_mainMenu->getCurrentEntityManager());
-    }
+    // if (_gameLibHandler.getModule() != nullptr) {
+    //     _gameLibHandler.getModule()->update(delta.count(), eventManager);
+    //     return (_gameLibHandler.getModule()->getCurrentEntityManager());
+    // } else {
+    _mainMenu->update(delta.count(), eventManager);
+    return (_mainMenu->getCurrentEntityManager());
+    // }
 }
 
 void Arcade::Core::Core::update()
