@@ -36,7 +36,7 @@ bool Arcade::Core::MainMenuScene::init()
         text->text = _gameLibs[i].first;
         text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
-        compPos.x += 10;
+        compPos.x += 24;
         gamesEntity.addComponent(text);
     }
     compPos.y += 20;
@@ -47,7 +47,7 @@ bool Arcade::Core::MainMenuScene::init()
         text->text = _graphicLibs[i].first;
         text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
-        compPos.x += 10;
+        compPos.x += 24;
         graphicsEntity.addComponent(text);
     }
     return (true);
