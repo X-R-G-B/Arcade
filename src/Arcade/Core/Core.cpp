@@ -103,11 +103,10 @@ void Arcade::Core::Core::update()
     while (eventManager.isEventTriggered("QUIT").first == false) {
 
         checkChangeLib(eventManager);
-        eventManager.clearEvents();
         delta = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start);
         start = std::chrono::high_resolution_clock::now();
-        std::cout << "update " << delta.count() * 100 << std::endl;
         auto &entityManager = this->updater(delta, eventManager);
+        eventManager.clearEvents();
         if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
                 delta.count() * 100,
@@ -119,9 +118,9 @@ void Arcade::Core::Core::update()
 
 void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
 {
-    if (eventManager.isEventTriggered("CHANGE_GAME").first == true) {
+    if (eventManager.isEventTriggered("KEY_1_PRESSED").first == true) {
         nextLib(LibType::GAME);
-    } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first == true) {
+    } else if (eventManager.isEventTriggered("KEY_2_PRESSED").first == true) {
         nextLib(LibType::GRAPH);
     }
 }

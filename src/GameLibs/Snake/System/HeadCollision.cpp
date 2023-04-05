@@ -22,20 +22,22 @@ bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, 
     return true;
 }
 
+#include <iostream>
 void Snake::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntityManager &currentScene, std::shared_ptr<Arcade::Graph::Sprite> headS, Arcade::ECS::IEventManager &eventManager)
 {
     std::vector<std::shared_ptr<Arcade::ECS::IEntity>> bodies =
         *(currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD).get());
 
-    if (bodies.size() < 2) {
+    if (bodies.size() < 3) {
         return;
     }
     for (auto const &body : bodies) {
-        if (body->getId() == SNAKE_HEAD) {
+        if (body->getId() == SNAKE_HEAD || body->getId() == std::string(SNAKE_BODY_PART) + "0") {
             continue;
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
             if (checkCollision(*(bodySprite.get()), headS)) {
+                std::cout << "body col restart : " << bodies.size() << " " << body->getId() << std::endl;
                 eventManager.addEvent(RESTART_EVENT);
                 return;
             }
@@ -55,7 +57,7 @@ void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMana
         eventManager.addEvent(EATED_EVENT);
         return;
     }
-    if (headS->pos.x <= 0 || headS->pos.x + headS->rect.width >= 1920 || headS->pos.y <= 0 || headS->pos.y + headS->rect.height >= 1080) {
+    if (headS->pos.x <= SNAKE_PADDING_WINDOW_X || headS->pos.x + headS->rect.width >= MAP_RIGHT || headS->pos.y <= SNAKE_PADDING_WINDOW_Y || headS->pos.y + headS->rect.height >= MAP_BOTTOM) {
         eventManager.addEvent(RESTART_EVENT);
     }
 }

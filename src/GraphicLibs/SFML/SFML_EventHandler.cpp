@@ -87,22 +87,28 @@ Arcade::ECS::IEntityManager &currentScene)
     sf::Event event;
     auto windowSize = this->_window.getSize();
 
-    if (_window.pollEvent(event) && event.type == sf::Event::Closed) {
-        eventManager.addEvent("QUIT");
+    if (_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            eventManager.addEvent("QUIT");
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            for (auto key : KeyboardKeys) {
+                if (event.key.code == key.first) {
+                    eventManager.addEvent(key.second);
+                }
+            }
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                eventManager.addEvent("MOUSE_KEY1_PRESSED");
+            }
+            if (event.mouseButton.button == sf::Mouse::Right) {
+                eventManager.addEvent("MOUSE_KEY2_PRESSED");
+            }
+        }
     }
     if (this->_windowSize != windowSize) {
         this->_windowSize = windowSize;
         eventManager.addEvent("WINDOW_RESIZE");
-    }
-    for (auto &key : KeyboardKeys) {
-        if (sf::Keyboard::isKeyPressed(key.first)) {
-            eventManager.addEvent(key.second);
-        }
-    }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        eventManager.addEvent("MOUSE_KEY1_PRESSED");
-    }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-        eventManager.addEvent("MOUSE_KEY2_PRESSED");
     }
 }

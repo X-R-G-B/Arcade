@@ -16,6 +16,7 @@
 #include "MagicValue.hpp"
 #include "ChangeDir.hpp"
 
+#include <iostream>
 static const std::map<Snake::Direction, std::vector<std::pair<std::string, Snake::Direction>>>
 directionsChoice = {
     {
@@ -46,19 +47,19 @@ directionsChoice = {
 
 Arcade::Vector2f Snake::System::MoveInput::toNextCase(const Arcade::Vector3f &pos, const Snake::Direction &direction)
 {
-    int caseCurX = TO_INT(pos.x) % PARCELL_SIZE;
-    int caseCurY = TO_INT(pos.y) % PARCELL_SIZE;
+    int caseCurX = (TO_INT(pos.x) - SNAKE_PADDING_WINDOW_X) / PARCELL_SIZE;
+    int caseCurY = (TO_INT(pos.y) - SNAKE_PADDING_WINDOW_Y) / PARCELL_SIZE;
 
     if (direction == Direction::UP) {
-        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE) - PARCELL_SIZE / 2 + SNAKE_PADDING_WINDOW_Y};
     } else if (direction == Direction::DOWN) {
-        caseCurY = pos.y + PARCELL_SIZE % PARCELL_SIZE;
-        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+        caseCurY = TO_INT(pos.y) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_Y / PARCELL_SIZE;
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE) + PARCELL_SIZE / 2 + SNAKE_PADDING_WINDOW_Y};
     } else if (direction == Direction::LEFT) {
-        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE) - PARCELL_SIZE / 2 + SNAKE_PADDING_WINDOW_X, pos.y};
     } else if (direction == Direction::RIGHT) {
-        caseCurX = pos.x + PARCELL_SIZE % PARCELL_SIZE;
-        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
+        caseCurX = TO_INT(pos.x) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_X / PARCELL_SIZE;
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE) + PARCELL_SIZE / 2 + SNAKE_PADDING_WINDOW_X, pos.y};
     }
     return {pos.x, pos.y};
 }
@@ -75,6 +76,8 @@ void Snake::System::MoveInput::run(
 
     for (auto &[event, action] : directionsChoice.at(curDir.direction)) {
         if (eventManager.isEventTriggered(event).first) {
+            auto pos = toNextCase(sprite.pos, curDir.direction);
+            std::cout << "create ChangeDir " << pos.x << " " << pos.y << " head " << sprite.pos.x << " " << sprite.pos.y << std::endl;
             head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move),
                 action,

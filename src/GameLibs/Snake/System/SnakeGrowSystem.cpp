@@ -40,7 +40,7 @@ std::shared_ptr<Arcade::ECS::IEntity> Snake::System::SnakeGrowSystem::getLastBod
     if (size == 0) {
         return entityManager.getEntitiesById(SNAKE_HEAD);
     }
-    return entityManager.getEntitiesById("snake_body_part_" + std::to_string(size - 1));
+    return entityManager.getEntitiesById(SNAKE_BODY_PART + std::to_string(size - 1));
 }
 
 Snake::Direction Snake::System::SnakeGrowSystem::getDirection(Arcade::Vector3f &lastBodyPos, Arcade::Vector3f pos)
@@ -107,7 +107,7 @@ void Snake::System::SnakeGrowSystem::placeNewBody(
 
 void Snake::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntityManager &entityManager, int idNbr)
 {
-    const std::string id = "snake_body_part_" + std::to_string(idNbr);
+    const std::string id = SNAKE_BODY_PART + std::to_string(idNbr);
 
     auto &entity = entityManager.createEntity(id);
     auto forward = std::make_shared<Snake::Component::Forward>(FORWARD_KEY, Direction::RIGHT);

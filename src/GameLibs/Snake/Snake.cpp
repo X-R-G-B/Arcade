@@ -18,6 +18,7 @@
 #include "HeadCollision.hpp"
 #include "EatSystem.hpp"
 #include "SnakeGrowSystem.hpp"
+#include "MoveDirection.hpp"
 
 extern "C" {
     LibType getType()
@@ -45,13 +46,14 @@ Snake::SnakeGameModule::SnakeGameModule()
 {
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _scenes.front()->init();
-    _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("AMoveInput", std::make_unique<Snake::System::MoveInput>());
     _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
+    _systemManager.addSystem("MoveDirection", std::make_unique<Snake::System::MoveDirection>());
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
     _systemManager.addSystem("AAcollisionSystem", std::make_unique<Snake::System::HeadCollision>());
     _systemManager.addSystem("AppleGeneration", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("EatSystem", std::make_unique<Snake::System::EatSystem>());
-    _systemManager.addSystem("GrowSystem", std::make_unique<Snake::System::SnakeGrowSystem>());
+    _systemManager.addSystem("AAGrowSystem", std::make_unique<Snake::System::SnakeGrowSystem>());
 }
 
 Arcade::ECS::IEntityManager &Snake::SnakeGameModule::getCurrentEntityManager()

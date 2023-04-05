@@ -21,8 +21,7 @@ void Snake::System::EatSystem::run(double deltaTime,
     if (snakeIncrIComp.type == Arcade::ECS::CompType::SNAKEGROW) {
         auto &snakeIncrComp = static_cast<Snake::Component::SnakeGrow &>(snakeIncrIComp);
         if (eventManager.isEventTriggered(EATED_EVENT).first) {
-            std::cout << "in eatsystem" << std::endl;
-            //snakeIncrComp.grow += 1;
+            snakeIncrComp.grow += 1;
             //TODO increment the score when implemented
         }
     }

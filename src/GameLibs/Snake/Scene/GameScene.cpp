@@ -28,7 +28,7 @@ void Snake::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE);
 
     headS->path = SNAKE_HEAD_PATH;
-    headS->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 5, SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
+    headS->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 5 - 1, SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
     headS->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     headS->currentRectIndex = 0;
     headS->ttyData.defaultChar = "#";
