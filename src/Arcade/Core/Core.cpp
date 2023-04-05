@@ -72,6 +72,15 @@ void Arcade::Core::Core::getSharedLibsNames()
             addNameToList(path);
         }
     }
+    for (const auto &entry : std::filesystem::directory_iterator(_libFolderMainMenuPath)) {
+        path = std::string(entry.path());
+        is_lib = path.ends_with(".so");
+        if (is_lib == false) {
+            std::cerr << "File is not a shared library: " << path << std::endl;
+        } else {
+            addNameToList(path);
+        }
+    }
     if (_gamesNames.empty() && _graphicLibsNames.empty()) {
         throw ArcadeExceptions("Invalid argument => Empty lib folder");
     }

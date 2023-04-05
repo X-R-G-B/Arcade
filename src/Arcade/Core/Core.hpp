@@ -28,6 +28,7 @@ namespace Arcade {
                 void loadGraphicLibFromPath(const std::string &path);
             private:
                 const std::string _libFolderPath = "./lib";
+                const std::string _libFolderMainMenuPath = "./lib/menu";
                 std::vector<std::pair<std::string, std::string>> _gamesNames;
                 std::vector<std::pair<std::string, std::string>> _graphicLibsNames;
                 LibHandler<Graph::IDisplayModule> _graphLibHandler;
