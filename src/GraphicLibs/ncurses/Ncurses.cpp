@@ -10,6 +10,7 @@
 #include "Ncurses.hpp"
 #include "TEXT.hpp"
 #include "SPRITE.hpp"
+#include "MUSIC.hpp"
 #include "Api.hpp"
 
 extern "C" {
@@ -48,6 +49,7 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     keypad(stdscr, TRUE);
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>());
     _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>());
+    _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
 }
 
 Ncurses::DisplayModule::~DisplayModule()
