@@ -9,6 +9,7 @@
 #include "EntityManager.hpp"
 #include "Text.hpp"
 #include "MainMenuScene.hpp"
+#include "MagickValueBasic.hpp"
 
 BasicMenu::MainMenuScene::MainMenuScene(Arcade::MainMenu::Context *context):
     AScene(std::make_unique<Arcade::ECS::EntityManager>()), _context(context)
@@ -20,8 +21,8 @@ BasicMenu::MainMenuScene::MainMenuScene(Arcade::MainMenu::Context *context):
 bool BasicMenu::MainMenuScene::init()
 {
     Arcade::ECS::IEntityManager &entityManager = getEntityManager();
-    Arcade::ECS::IEntity &gamesEntity = entityManager.createEntity("Games");
-    Arcade::ECS::IEntity &graphicsEntity = entityManager.createEntity("Graphics");
+    Arcade::ECS::IEntity &gamesEntity = entityManager.createEntity(GAME_ENTITY_NAME);
+    Arcade::ECS::IEntity &graphicsEntity = entityManager.createEntity(GRAPH_ENTITY_NAME);
     std::shared_ptr<Arcade::Graph::Text> text = nullptr;
     Arcade::Vector3f compPos = {10, 10, 0};
 
@@ -31,16 +32,6 @@ bool BasicMenu::MainMenuScene::init()
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;
     gamesEntity.addComponent(text);
-    compPos.y = 50;
-    for (const auto &textText : _context->gameLibraries) {
-        text = std::make_shared<Arcade::Graph::Text>(textText);
-        text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = textText;
-            text->textColor = {255, 0, 0, 255};
-        text->pos = compPos;
-        compPos.y += 24;
-        gamesEntity.addComponent(text);
-    }
     compPos.x = 1920.0 / 2.0;
     compPos.y = 10;
     text = std::make_shared<Arcade::Graph::Text>("GraphLibsText");
@@ -48,17 +39,7 @@ bool BasicMenu::MainMenuScene::init()
     text->text = "Graphic Libs availible:";
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;
-    gamesEntity.addComponent(text);
-    compPos.y = 50;
-    for (const auto &textText : _context->graphicalLibraries) {
-        text = std::make_shared<Arcade::Graph::Text>(textText);
-        text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
-        text->text = textText;
-        text->textColor = {255, 0, 0, 255};
-        text->pos = compPos;
-        compPos.y += 24;
-        graphicsEntity.addComponent(text);
-    }
+    graphicsEntity.addComponent(text);
     return (true);
 }
 
