@@ -16,22 +16,22 @@
 #include "MoveInput.hpp"
 
 /*
-  pos         x             x+CASE_SIZE_WIDTH
+  pos         x             x+PARCELL_SIZE
    ----------------------------------------------------
    |          |             |            |            |
    |          |             |            |            |
  y |----------bbbbbbbbbbbbbbb------------|------------| y
-   |          baaaaaaaaaaaaab            |            | y+(CASE_SIZE_HEIGHT/4)
-   |          baaaaaaaaaaaaab            |            | y+CASE_SIZE_HEIGHT-(CASE_SIZE_HEIGHT/4)
-   |----------bbbbbbbbbbbbbbb------------|------------| y+CASE_SIZE_HEIGHT
+   |          baaaaaaaaaaaaab            |            | y+(PARCELL_SIZE/4)
+   |          baaaaaaaaaaaaab            |            | y+PARCELL_SIZE-(PARCELL_SIZE/4)
+   |----------bbbbbbbbbbbbbbb------------|------------| y+PARCELL_SIZE
    |          |             |            |            |
    |          |             |            |            |
    |----------|-------------|------------|------------|
    |          |             |            |            |
    |          |             |            |            |
    ----------------------------------------------------
-               x+(CASE_SIZE_WIDTH/4)
-                           x+CASE_SIZE_WIDTH-(CASE_SIZE_WIDTH/4)
+               x+(PARCELL_SIZE/4)
+                           x+PARCELL_SIZE-(PARCELL_SIZE/4)
 */
 
 bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Component::ChangeDir> changeDir, std::shared_ptr<Arcade::ECS::IEntity> entity)
@@ -41,10 +41,10 @@ bool Snake::System::MoveDirection::checkHitChangeDir(std::shared_ptr<Snake::Comp
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
-        if (bodySprite->pos.x + (CASE_SIZE_WIDTH / 4) < changeDir->pos.x ||
-            bodySprite->pos.x + CASE_SIZE_WIDTH - (CASE_SIZE_WIDTH / 4) > changeDir->pos.x + CASE_SIZE_WIDTH ||
-            bodySprite->pos.y + (CASE_SIZE_HEIGHT / 4) < changeDir->pos.y ||
-            bodySprite->pos.y + CASE_SIZE_HEIGHT - (CASE_SIZE_HEIGHT / 4) > changeDir->pos.y + CASE_SIZE_HEIGHT
+        if (bodySprite->pos.x + (PARCELL_SIZE / 4) < changeDir->pos.x ||
+            bodySprite->pos.x + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.x + PARCELL_SIZE ||
+            bodySprite->pos.y + (PARCELL_SIZE / 4) < changeDir->pos.y ||
+            bodySprite->pos.y + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.y + PARCELL_SIZE
         ) {
             continue;
         }

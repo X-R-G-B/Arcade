@@ -11,15 +11,11 @@
 
 namespace Snake {
     namespace System {
-        class EatSystem : Arcade::ECS::ISystem {
+        class EatSystem : public Arcade::ECS::ISystem {
             public:
-                EatSystem() = default;
-
                 void run(double deltaTime,
-                Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
-            private:
+                    Arcade::ECS::IEventManager &eventManager,
+                    Arcade::ECS::IEntityManager &currentEntityManager) final;
         };
     }
 }

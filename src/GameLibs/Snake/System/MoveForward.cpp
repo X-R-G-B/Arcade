@@ -19,16 +19,15 @@ void Snake::System::MoveForward::moveForward(
     Arcade::Graph::ISprite &sprite,
     double deltaTime)
 {
-    switch (curDir.direction) {
-        case Snake::Direction::UP:
-            sprite.pos.y -= deltaTime * SNAKE_MOVE_PER_DTIME;
-        case Snake::Direction::DOWN:
-            sprite.pos.y += deltaTime * SNAKE_MOVE_PER_DTIME;
-        case Snake::Direction::LEFT:
-            sprite.pos.x -= deltaTime * SNAKE_MOVE_PER_DTIME;
-        case Snake::Direction::RIGHT:
-            sprite.pos.x += deltaTime * SNAKE_MOVE_PER_DTIME;
-    };
+    if (curDir.direction == Direction::UP) {
+        sprite.pos.y -= deltaTime * SNAKE_MOVE_PER_DTIME;
+    } else if (curDir.direction == Direction::DOWN) {
+        sprite.pos.y += deltaTime * SNAKE_MOVE_PER_DTIME;
+    } else if (curDir.direction == Direction::LEFT) {
+        sprite.pos.x -= deltaTime * SNAKE_MOVE_PER_DTIME;
+    } else if (curDir.direction == Direction::RIGHT) {
+        sprite.pos.x += deltaTime * SNAKE_MOVE_PER_DTIME;
+    }
 }
 
 void Snake::System::MoveForward::run(
@@ -40,7 +39,7 @@ void Snake::System::MoveForward::run(
 
     for (auto &it : *snakes) {
         auto curDir = static_cast<Component::Forward &>(it->getComponents(FORWARD_KEY));
-        auto sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_HEAD_SPRITE_COMP));
+        auto &sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_SPRITE));
         moveForward(curDir, sprite, deltaTime);
     }
 }

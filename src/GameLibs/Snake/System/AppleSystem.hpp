@@ -13,12 +13,11 @@ namespace Snake {
     namespace System {
         class AppleSystem : public Arcade::ECS::ISystem {
             public:
-                AppleSystem() = default;
+                AppleSystem();
 
                 void run(double deltaTime,
                     Arcade::ECS::IEventManager &eventManager,
                     Arcade::ECS::IEntityManager &entityManager) final;
-            protected:
             private:
                 void modifyApplePos(Arcade::ECS::IEventManager &eventManager,
                     Arcade::ECS::IEntityManager &currentEntityManager);

@@ -11,15 +11,11 @@
 #define TO_INT(x) static_cast<int>(x)
 
 #define SNAKE_HEAD "SNAKE_HEAD"
-#define SNAKE_HEAD_SPRITE_COMP "SNAKE_HEAD_SPRITE_COMP"
+#define SNAKE_SPRITE "SNAKE_SPRITE"
 #define MOVE_INPUT_COMPS "MOVE_INPUT_COMPS"
 
-#define NUMBER_COLUMNS 50
-#define NUMBER_LINES 10
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
-#define CASE_SIZE_WIDTH (TO_FLOAT(SCREEN_WIDTH) / NUMBER_COLUMNS)
-#define CASE_SIZE_HEIGHT (TO_FLOAT(SCREEN_HEIGHT) / NUMBER_LINES)
 
 #define SNAKE_MOVE_PER_DTIME 0.5
 
@@ -30,12 +26,16 @@
 #define SNAKE_GROW_COMPONENT "snakeGrow"
 #define APPLE_ENTITY "Apple"
 #define APPLE_SPRITE_COMP "apple"
-#define APPLE_SPRITE_COMP_PATH "assets/Snake/apple.png"
-#define SNAKE_HEAD_PATH "./assets/Snake/head/"
-#define SNAKEBODYPATH "assets/snake_body.png"
+#define SNAKE_HEAD_PATH "./assets/snake/normal/fill_body.png"
+#define SNAKEBODYPATH "assets/snake/normal/fill_body.png"
 #define SCREENSIZEX 1920
 #define SCREENSIZEY 1080
 #define SNAKE_MAP_ID "snake_map"
-#define SNAKE_MAP_PATH "assets/snake/map.png"
-#define SNAKE_MAP_SIZE 32
-#define POS_OF_APPLE 20
+
+#define SNAKE_PADDING_WINDOW_X 535
+#define SNAKE_PADDING_WINDOW_Y 165
+#define MAP_RIGHT (SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * MAP_PARCELLS_X)
+#define MAP_BOTTOM (SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * MAP_PARCELLS_Y)
+#define PARCELL_SIZE 50
+#define MAP_PARCELLS_X 17
+#define MAP_PARCELLS_Y 15

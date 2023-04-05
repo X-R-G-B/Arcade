@@ -46,23 +46,21 @@ directionsChoice = {
 
 Arcade::Vector2f Snake::System::MoveInput::toNextCase(const Arcade::Vector3f &pos, const Snake::Direction &direction)
 {
-    int caseCurX = TO_INT(pos.x) % TO_INT(CASE_SIZE_WIDTH);
-    int caseCurY = TO_INT(pos.y) % TO_INT(CASE_SIZE_HEIGHT);
+    int caseCurX = TO_INT(pos.x) % PARCELL_SIZE;
+    int caseCurY = TO_INT(pos.y) % PARCELL_SIZE;
 
-    switch (direction) {
-        case Snake::Direction::UP:
-            return {pos.x, caseCurY * CASE_SIZE_HEIGHT};
-        case Snake::Direction::DOWN:
-            caseCurY = TO_INT(pos.y + CASE_SIZE_HEIGHT) % TO_INT(CASE_SIZE_HEIGHT);
-            return {pos.x, caseCurY * CASE_SIZE_HEIGHT};
-        case Snake::Direction::LEFT:
-            return {caseCurX * CASE_SIZE_WIDTH, pos.y};
-        case Snake::Direction::RIGHT:
-            caseCurX = TO_INT(pos.x + CASE_SIZE_WIDTH) % TO_INT(CASE_SIZE_WIDTH);
-            return {caseCurX * CASE_SIZE_WIDTH, pos.y};
-        default:
-            return {pos.x, pos.y};
+    if (direction == Direction::UP) {
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+    } else if (direction == Direction::DOWN) {
+        caseCurY = pos.y + PARCELL_SIZE % PARCELL_SIZE;
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+    } else if (direction == Direction::LEFT) {
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
+    } else if (direction == Direction::RIGHT) {
+        caseCurX = pos.x + PARCELL_SIZE % PARCELL_SIZE;
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
     }
+    return {pos.x, pos.y};
 }
 
 void Snake::System::MoveInput::run(
@@ -73,7 +71,7 @@ void Snake::System::MoveInput::run(
     static int nb_move = 0;
     auto head = currentEntityManager.getEntitiesById(SNAKE_HEAD);
     auto &curDir = static_cast<Component::Forward &>(head->getComponents(FORWARD_KEY));
-    auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(SNAKE_HEAD_SPRITE_COMP));
+    auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(SNAKE_SPRITE));
 
     for (auto &[event, action] : directionsChoice.at(curDir.direction)) {
         if (eventManager.isEventTriggered(event).first) {
