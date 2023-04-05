@@ -49,14 +49,12 @@ void Arcade::Sfml::SpriteSystem::run(double deltaTime,
 Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win) : _win(win)
 {
-    sf::Texture texture;
-
     this->id = id;
     this->type = ECS::CompType::SFSPRITE;
-    if (!texture.loadFromFile(path)) {
+    if (!this->texture.loadFromFile(path)) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
-    this->sprite.setTexture(texture);
+    this->sprite.setTexture(this->texture);
     this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
     this->sprite.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
 }

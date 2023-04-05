@@ -27,6 +27,7 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
+    nextLib(LibType::GAME);
     _mainMenu = std::make_unique<Arcade::Core::MainMenuModule>(this->_gamesNames, this->_graphicLibsNames);
 }
 
@@ -36,18 +37,14 @@ void Arcade::Core::Core::addNameToList(const std::string &path)
     LibType type;
     std::string path2 = path;
 
-    std::cerr << "Trying to load: '" << path2 << "' ..." << std::endl;
     try {
         name = LibHandler<Graph::IDisplayModule>::getLibName(path2);
-        std::cerr << "Name: '" << name << "'" << std::endl;
         type = LibHandler<Graph::IDisplayModule>::getLibType(path2);
-        std::cerr << "Type: '" << type << "'" << std::endl;
     } catch (std::exception &e) {
-        std::cerr << "File is not a shared library: " << path2 << std::endl;
-        std::cerr << e.what() << std::endl << std::endl;
+        std::cerr << e.what() << std::endl;
+        std::cerr << "File is not a compliant shared library: " << path2 << std::endl << std::endl;
         return;
     }
-    std::cerr << "File is a shared library: " << path2 << std::endl << std::endl;
     if (type == LibType::GAME) {
         _gamesNames.push_back(std::make_pair(name, path2));
     } else {
@@ -89,7 +86,7 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
                     Arcade::ECS::EventManager &eventManager)
 {
     if (_gameLibHandler.getModule() != nullptr) {
-        _gameLibHandler.getModule()->update(delta.count(), eventManager);
+        _gameLibHandler.getModule()->update(delta.count() * 100, eventManager);
         return (_gameLibHandler.getModule()->getCurrentEntityManager());
     } else {
         _mainMenu->update(delta.count(), eventManager);
@@ -100,19 +97,19 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
 void Arcade::Core::Core::update()
 {
     Arcade::ECS::EventManager eventManager;
-    std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
+    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> delta(0);
 
     while (eventManager.isEventTriggered("QUIT").first == false) {
-        delta = start - std::chrono::steady_clock::now();
-        start = std::chrono::steady_clock::now();
 
         checkChangeLib(eventManager);
         eventManager.clearEvents();
+        delta = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start);
+        start = std::chrono::high_resolution_clock::now();
         auto &entityManager = this->updater(delta, eventManager);
         if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
-                delta.count(),
+                delta.count() * 100,
                 eventManager,
                 entityManager);
         }
