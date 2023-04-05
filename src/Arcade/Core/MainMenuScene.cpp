@@ -26,7 +26,7 @@ bool Arcade::Core::MainMenuScene::init()
     Arcade::ECS::IEntity &gamesEntity = entityManager.createEntity("Games");
     Arcade::ECS::IEntity &graphicsEntity = entityManager.createEntity("Graphics");
     std::shared_ptr<Arcade::Graph::Text> text = nullptr;
-    Arcade::Vector3f compPos = {10, 20, 0};
+    Arcade::Vector3f compPos = {10, 10, 0};
 
     text = std::make_shared<Arcade::Graph::Text>("GameLibsText");
     text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
