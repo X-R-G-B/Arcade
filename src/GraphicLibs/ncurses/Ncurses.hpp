@@ -7,9 +7,10 @@
 
 #pragma once
 
+#include <map>
 #include "IDisplayModule.hpp"
 #include "SystemManager.hpp"
-#include <map>
+#include "EntityManager.hpp"
 
 namespace Ncurses {
     class DisplayModule : public Arcade::Graph::IDisplayModule {
@@ -27,5 +28,6 @@ namespace Ncurses {
             double _frames;
             Arcade::ECS::SystemManager _systems;
             std::map<std::string, short> _colorsUsed;
+            Arcade::ECS::EntityManager _entityManager;
     };
 }

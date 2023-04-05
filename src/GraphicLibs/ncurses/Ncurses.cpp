@@ -8,6 +8,7 @@
 #include <curses.h>
 #include <memory>
 #include "Ncurses.hpp"
+#include "Sprite.hpp"
 #include "TEXT.hpp"
 #include "SPRITE.hpp"
 #include "MUSIC.hpp"
@@ -50,6 +51,13 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>(_colorsUsed));
     _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>(_colorsUsed));
     _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
+    auto &entity = _entityManager.createEntity("No Place to display");
+    auto textComp = std::make_shared<Arcade::Graph::Text>("Resize");
+    textComp->text = "Please allow more space to this terminal";
+    textComp->pos = {0, 0, 0};
+    textComp->textColor = {255, 255, 255, 255};
+    textComp->backgroundColor = {0, 0, 0, 0};
+    entity.addComponent(textComp);
 }
 
 Ncurses::DisplayModule::~DisplayModule()
@@ -63,9 +71,13 @@ void Ncurses::DisplayModule::update(double delta, Arcade::ECS::IEventManager &ev
     if (_frames < 16.66666) {
         return;
     }
-    _frames -= 16.66666;
     clear();
-    _systems.update(delta, eventManager, entityManager);
+    _frames -= 16.66666;
+    if (COLS < 240 || LINES < 67) {
+        _systems.update(delta, eventManager, _entityManager);
+    } else {
+        _systems.update(delta, eventManager, entityManager);
+    }
     refresh();
     _colorsUsed.clear();
 }
