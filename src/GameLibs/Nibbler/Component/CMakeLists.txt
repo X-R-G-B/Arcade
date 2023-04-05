@@ -5,5 +5,4 @@ target_include_directories(arcade_nibbler PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_sources(arcade_nibbler PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/NibblerMapComponent.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/NibblerWallComponent.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/NibblerWallComponentId.cpp"
 )

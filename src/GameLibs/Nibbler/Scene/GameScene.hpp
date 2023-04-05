@@ -9,10 +9,6 @@
 
 #include "AScene.hpp"
 
-#define NIBBLER_PADDING_WINDOW_X 576
-#define NIBBLER_PADDING_WINDOW_Y 156
-#define APPLE_SPRITE_COMP_PATH "assets/Nibbler/apple.png"
-
 namespace Nibbler {
     namespace Scene {
         class GameScene : public Arcade::Game::AScene {

@@ -5,21 +5,31 @@
 ** NibblerMapComponent
 */
 
+#include "MagicValue.hpp"
 #include "NibblerCompType.hpp"
 #include "NibblerMapComponent.hpp"
 
-static const std::string defaultChar = "~";
 static const Arcade::Graph::Color foregroundColor(0, 180, 0, 0);
 static const Arcade::Graph::Color backgroundColor(0, 180, 0, 0);
+
+#define DARK_PARCELL "assets/snake/normal/bg_green_01.png"
+#define LIGHT_PARCELL "assets/snake/normal/bg_green_02.png"
+#define DEFAULT_CHAR "~"
 
 Nibbler::Component::NibblerMapComponent::NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos)
     : Arcade::Graph::Sprite(id)
 {
+    static bool darkColor = false;
+
     this->type = Arcade::ECS::CompType::SPRITE;
-    this->rect = Arcade::Graph::Rect(0, 0, 128, 128);
-    this->path = "assets/snake/normal/bg_green_01.png";
+    this->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
+    if (darkColor) {
+        this->path = DARK_PARCELL;
+    } else {
+        this->path = LIGHT_PARCELL;
+    }
     this->currentRectIndex = 0;
     this->pos = pos;
-    this->ttyData = {defaultChar, foregroundColor, backgroundColor};
-
+    this->ttyData = {DEFAULT_CHAR, foregroundColor, backgroundColor};
+    darkColor = !darkColor;
 }
