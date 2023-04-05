@@ -21,6 +21,7 @@ namespace Arcade {
                     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win);
                 sf::RenderWindow &_win;
                 sf::Sprite sprite;
+                sf::Texture texture;
         };
 
         class SpriteSystem : public ECS::ISystem {

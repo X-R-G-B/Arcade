@@ -19,6 +19,7 @@ namespace Snake {
                     Arcade::ECS::IEntityManager &currentScene) final;
             private:
                 bool checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head);
+                void checkHeadBodyCollision(Arcade::ECS::IEntityManager &currentScene, std::shared_ptr<Arcade::Graph::Sprite> headS, Arcade::ECS::IEventManager &eventManager);
         };
     }
 }
