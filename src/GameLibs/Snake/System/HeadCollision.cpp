@@ -9,7 +9,6 @@
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
 
-#include <iostream>
 bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
 {
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
@@ -54,10 +53,6 @@ void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMana
     checkHeadBodyCollision(currentScene, headS, eventManager);
     if (checkCollision(apple, headS)) {
         eventManager.addEvent(EATED_EVENT);
-        std::cout << "event added" << std::endl;
-        if (eventManager.isEventTriggered(EATED_EVENT).first) {
-            std::cout << "event triggered" << std::endl;
-        }
         return;
     }
     if (headS->pos.x <= 0 || headS->pos.x + headS->rect.width >= 1920 || headS->pos.y <= 0 || headS->pos.y + headS->rect.height >= 1080) {

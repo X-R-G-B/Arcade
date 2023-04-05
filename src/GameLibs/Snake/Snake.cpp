@@ -48,8 +48,8 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
     _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
-    _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>(_scenes.front()->getEntityManager()));
-    _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
+    _systemManager.addSystem("AAcollisionSystem", std::make_unique<Snake::System::HeadCollision>());
+    _systemManager.addSystem("AppleGeneration", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("EatSystem", std::make_unique<Snake::System::EatSystem>());
     _systemManager.addSystem("GrowSystem", std::make_unique<Snake::System::SnakeGrowSystem>());
 }
