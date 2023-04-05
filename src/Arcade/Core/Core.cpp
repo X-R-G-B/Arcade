@@ -96,15 +96,24 @@ void Arcade::Core::Core::loadGraphicLibFromPath(const std::string &path)
     _graphLibHandler.loadLib(path);
 }
 
-Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<double> delta,
+void Arcade::Core::Core::updater(std::chrono::duration<double> delta,
                     Arcade::ECS::EventManager &eventManager)
 {
+    if (_graphLibHandler.getModule() == nullptr) {
+        return;
+    }
     if (_gameLibHandler.getModule() != nullptr) {
+        _graphLibHandler.getModule()->update(
+            delta.count() * 100,
+            eventManager,
+            _gameLibHandler.getModule()->getCurrentEntityManager());
         _gameLibHandler.getModule()->update(delta.count() * 100, eventManager);
-        return (_gameLibHandler.getModule()->getCurrentEntityManager());
     } else {
+        _graphLibHandler.getModule()->update(
+            delta.count() * 100,
+            eventManager,
+            _mainMenuLibHandler.getModule()->getCurrentEntityManager());
         _mainMenuLibHandler.getModule()->update(delta.count(), eventManager, &_context);
-        return (_mainMenuLibHandler.getModule()->getCurrentEntityManager());
     }
 }
 
@@ -115,18 +124,11 @@ void Arcade::Core::Core::update()
     std::chrono::duration<double> delta(0);
 
     while (eventManager.isEventTriggered("QUIT").first == false) {
-
-        checkChangeLib(eventManager);
         eventManager.clearEvents();
         delta = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start);
         start = std::chrono::high_resolution_clock::now();
-        auto &entityManager = this->updater(delta, eventManager);
-        if (_graphLibHandler.getModule() != nullptr) {
-            _graphLibHandler.getModule()->update(
-                delta.count() * 100,
-                eventManager,
-                entityManager);
-        }
+        this->updater(delta, eventManager);
+        checkChangeLib(eventManager);
     }
 }
 

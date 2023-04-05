@@ -36,7 +36,7 @@ namespace Arcade {
                 MainMenu::Context _context;
                 LibHandler<MainMenu::IMainMenuModule> _mainMenuLibHandler;
 
-                Arcade::ECS::IEntityManager &updater(std::chrono::duration<double> delta,
+                void updater(std::chrono::duration<double> delta,
                     Arcade::ECS::EventManager &eventManager);
                 void getSharedLibsNames();
                 void addNameToList(const std::string &path);
