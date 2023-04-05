@@ -54,11 +54,13 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
     }
 }
 
+#include <iostream>
 void Snake::System::AppleSystem::run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
     if (eventManager.isEventTriggered(EATED_EVENT).first) {
+        std::cout << "ENCULE" << std::endl;
         modifyApplePos(eventManager, currentEntityManager);
     }
 }

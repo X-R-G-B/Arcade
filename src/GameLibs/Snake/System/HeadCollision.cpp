@@ -9,6 +9,7 @@
 #include "SnakeCompType.hpp"
 #include "MagicValue.hpp"
 
+#include <iostream>
 bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, std::shared_ptr<Arcade::Graph::Sprite> &head)
 {
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
@@ -47,12 +48,16 @@ void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMana
     Arcade::ECS::IEntityManager &currentScene)
 {
     std::shared_ptr<Arcade::ECS::IEntity> head = currentScene.getEntitiesById(SNAKE_HEAD);
-    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
     std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
+    Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
 
     checkHeadBodyCollision(currentScene, headS, eventManager);
     if (checkCollision(apple, headS)) {
         eventManager.addEvent(EATED_EVENT);
+        std::cout << "event added" << std::endl;
+        if (eventManager.isEventTriggered(EATED_EVENT).first) {
+            std::cout << "event triggered" << std::endl;
+        }
         return;
     }
     if (headS->pos.x <= 0 || headS->pos.x + headS->rect.width >= 1920 || headS->pos.y <= 0 || headS->pos.y + headS->rect.height >= 1080) {
