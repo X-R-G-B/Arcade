@@ -51,6 +51,7 @@ bool Arcade::Core::MainMenuScene::init()
     text->text = "Graphic Libs availible:";
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;
+    gamesEntity.addComponent(text);
     compPos.y = 50;
     for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
