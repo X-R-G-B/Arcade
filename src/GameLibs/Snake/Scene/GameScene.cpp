@@ -5,7 +5,6 @@
 ** GameScene
 */
 
-#include <iostream>
 #include <memory>
 #include "GameScene.hpp"
 #include "Sprite.hpp"

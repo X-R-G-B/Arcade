@@ -14,7 +14,6 @@
 #include "MagicValue.hpp"
 #include "SnakeCompType.hpp"
 
-#include <iostream>
 void Snake::System::MoveForward::moveForward(
     Snake::Component::Forward &curDir,
     Arcade::Graph::ISprite &sprite,
@@ -41,8 +40,6 @@ void Snake::System::MoveForward::run(
     for (auto &it : *snakes) {
         auto curDir = static_cast<Component::Forward &>(it->getComponents(FORWARD_KEY));
         auto &sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_SPRITE));
-        std::cout << "before " << sprite.pos.x << " " << sprite.pos.y << std::endl;
         moveForward(curDir, sprite, deltaTime);
-        std::cout << "after " << sprite.pos.x << " " << sprite.pos.y << std::endl;
     }
 }
