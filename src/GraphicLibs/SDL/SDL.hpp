@@ -9,8 +9,11 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include "IDisplayModule.hpp"
 #include "SystemManager.hpp"
+#include "EventHandler.hpp"
 
 namespace Arcade {
     namespace ECS {
@@ -21,6 +24,22 @@ namespace Arcade {
             SDLTEXT = 7,
             SDLSPRITE = 8,
             SDLMUSIC = 9
+        };
+    }
+
+    namespace SDL {
+        class DisplayModule : public Graph::IDisplayModule {
+        public:
+            DisplayModule();
+            ~DisplayModule();
+            void update(double delta,
+                        Arcade::ECS::IEventManager &eventManager,
+                        Arcade::ECS::IEntityManager &entityManager) final;
+        private:
+            ECS::SystemManager _systems;
+            SDL_Renderer *_renderer;
+            SDL_Window *_win;
+            std::vector<std::shared_ptr<ECS::IComponent>> _components;
         };
     }
 }

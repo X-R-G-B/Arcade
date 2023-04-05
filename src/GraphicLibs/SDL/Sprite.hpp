@@ -17,8 +17,8 @@ namespace Arcade {
             SDLSprite(const std::string id, const std::string &path,
                       const Arcade::Vector3f &pos, Graph::Rect &rect,
                       SDL_Renderer *renderer);
-
             ~SDLSprite();
+
             SDL_Renderer *_win;
             SDL_Texture *_sprite;
             SDL_Rect _rect;
@@ -28,7 +28,7 @@ namespace Arcade {
             public:
                 SpriteSystem(SDL_Renderer *renderer,
                              std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
-                void run(float deltaTime,
+                void run(double deltaTime,
                          ECS::IEventManager &eventManager,
                          ECS::IEntityManager &entityManager) final;
             private:

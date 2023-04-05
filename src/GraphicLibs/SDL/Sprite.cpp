@@ -34,7 +34,7 @@ void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> 
     SDL_RenderCopy(sprite->_win, sprite->_sprite, NULL, &sprite->_rect);
 }
 
-void Arcade::SDL::SpriteSystem::run(float deltaTime,
+void Arcade::SDL::SpriteSystem::run(double deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {
@@ -68,6 +68,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     this->type = ECS::CompType::SDLSPRITE;
     this->_rect = dest;
     SDL_QueryTexture(_sprite, NULL, NULL, &dest.w, &dest.h);
+    SDL_RenderCopy(this->_win, this->_sprite, NULL, &dest);
 }
 
 Arcade::SDL::SDLSprite::~SDLSprite()
