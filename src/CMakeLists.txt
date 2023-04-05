@@ -8,5 +8,6 @@ target_include_directories(arcade_sdl2 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(arcade_sfml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_subdirectory(Arcade)
+add_subdirectory(MiniAudioWrapper)
 add_subdirectory(GameLibs)
 add_subdirectory(GraphicLibs)
