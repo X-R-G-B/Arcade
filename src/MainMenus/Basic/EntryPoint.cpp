@@ -15,7 +15,7 @@ extern "C" {
         return "Basic Main Menu";
     }
 
-    LibType getLibType()
+    LibType getType()
     {
         return LibType::MENU;
     }
