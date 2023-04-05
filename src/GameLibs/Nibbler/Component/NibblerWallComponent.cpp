@@ -9,11 +9,11 @@
 #include "NibblerCompType.hpp"
 #include "NibblerWallComponent.hpp"
 
-static const Arcade::Graph::Color foregroundColor(0, 180, 40, 0);
-static const Arcade::Graph::Color backgroundColor(0, 180, 50, 0);
+static const Arcade::Graph::Color foregroundColor(160, 80, 0, 0);
+static const Arcade::Graph::Color backgroundColor(120, 80, 0, 0);
 
-#define DEFAULT_CHAR "#"
 #define WALL_PATH "assets/snake/normal/box_02.png"
+#define DEFAULT_CHAR "#####\n#####\n#####"
 
 Nibbler::Component::NibblerWallComponent::NibblerWallComponent(const std::string &id, const Arcade::Vector3f &pos)
     : Arcade::Graph::Sprite(id)
