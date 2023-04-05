@@ -11,9 +11,12 @@
 Arcade::Core::MainMenuScene::MainMenuScene(
     std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
     const std::vector<std::pair<std::string, std::string>> &gameLibs,
-    const std::vector<std::pair<std::string, std::string>> &graphicLibs
-    )
-    : AScene(std::move(enitityManager)), _gameLibs(gameLibs), _graphicLibs(graphicLibs)
+    const std::vector<std::pair<std::string, std::string>> &graphicLibs,
+    const std::string &currentGameLib,
+    const std::string &currentGraphicLib
+)
+    : AScene(std::move(enitityManager)), _gameLibs(gameLibs), _graphicLibs(graphicLibs),
+      _currentGameLib(currentGameLib), _currentGraphicLib(currentGraphicLib)
 {
 }
 
@@ -39,7 +42,11 @@ bool Arcade::Core::MainMenuScene::init()
         text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _gameLibs[i].first;
-        text->textColor = {255, 0, 0, 255};
+        if (_currentGameLib == _gameLibs[i].first) {
+            text->textColor = {255, 255, 0, 255};
+        } else {
+            text->textColor = {255, 0, 0, 255};
+        }
         text->pos = compPos;
         compPos.y += 24;
         gamesEntity.addComponent(text);
@@ -57,7 +64,11 @@ bool Arcade::Core::MainMenuScene::init()
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
         text->text = _graphicLibs[i].first;
-        text->textColor = {255, 0, 0, 255};
+        if (_currentGraphicLib == _graphicLibs[i].first) {
+            text->textColor = {255, 255, 0, 255};
+        } else {
+            text->textColor = {255, 0, 0, 255};
+        }
         text->pos = compPos;
         compPos.y += 24;
         graphicsEntity.addComponent(text);

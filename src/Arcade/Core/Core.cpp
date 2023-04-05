@@ -27,7 +27,9 @@ Arcade::Core::Core::Core(const std::string &path)
     } else {
         loadGraphicLibFromPath(path);
     }
-    _mainMenu = std::make_unique<Arcade::Core::MainMenuModule>(this->_gamesNames, this->_graphicLibsNames);
+    _mainMenu = std::make_unique<Arcade::Core::MainMenuModule>(
+        this->_gamesNames, this->_graphicLibsNames,
+        this->_currentGameLib, this->_currentGraphicLib);
 }
 
 void Arcade::Core::Core::addNameToList(const std::string &path)
@@ -152,14 +154,18 @@ void Arcade::Core::Core::nextLib(LibType libType)
     if (libType == LibType::GAME) {
         if (path.empty()) {
             _gameLibHandler.reset();
+            _currentGameLib = "";
         } else {
             _gameLibHandler.loadLib(path);
+            _currentGameLib = _gameLibHandler.getName();
         }
     } else {
         if (path.empty()) {
             _graphLibHandler.reset();
+            _currentGraphicLib = "";
         } else {
             _graphLibHandler.loadLib(path);
+            _currentGraphicLib = _graphLibHandler.getName();
         }
     }
 }

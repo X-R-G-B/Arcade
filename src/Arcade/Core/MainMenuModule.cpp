@@ -6,13 +6,18 @@
 */
 
 #include "EntityManager.hpp"
+#include "LibHandler.hpp"
 #include "MainMenuModule.hpp"
 
 Arcade::Core::MainMenuModule::MainMenuModule(
     const std::vector<std::pair<std::string, std::string>> &gameLibs,
-    const std::vector<std::pair<std::string, std::string>> &graphicLibs
+    const std::vector<std::pair<std::string, std::string>> &graphicLibs,
+    const std::string &currentGameLib,
+    const std::string &currentGraphicLib
 )
-    : _mainMenu(std::make_unique<MainMenuScene>(std::make_unique<Arcade::ECS::EntityManager>(), gameLibs, graphicLibs)),
+    : _mainMenu(std::make_unique<MainMenuScene>(
+        std::make_unique<Arcade::ECS::EntityManager>(),
+        gameLibs, graphicLibs, currentGameLib, currentGraphicLib)),
      _systemManager(std::make_unique<Arcade::ECS::SystemManager>())
 {
     _mainMenu->init();

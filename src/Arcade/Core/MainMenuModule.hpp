@@ -18,8 +18,10 @@ namespace Arcade {
             public:
                 MainMenuModule(
                     const std::vector<std::pair<std::string, std::string>> &gameLibs,
-                    const std::vector<std::pair<std::string, std::string>> &graphicLibs
-                    );
+                    const std::vector<std::pair<std::string, std::string>> &graphicLibs,
+                    const std::string &currentGameLib,
+                    const std::string &currentGraphicLib
+                );
                 ~MainMenuModule();
 
                 void update(double deltaTime, Arcade::ECS::IEventManager &eventManager) final;

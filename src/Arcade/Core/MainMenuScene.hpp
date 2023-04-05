@@ -16,7 +16,9 @@ namespace Arcade {
                 MainMenuScene(
                     std::unique_ptr<Arcade::ECS::IEntityManager> enitityManager,
                     const std::vector<std::pair<std::string, std::string>> &gameLibs,
-                    const std::vector<std::pair<std::string, std::string>> &graphicLibs
+                    const std::vector<std::pair<std::string, std::string>> &graphicLibs,
+                    const std::string &currentGameLib,
+                    const std::string &currentGraphicLib
                 );
                 ~MainMenuScene() = default;
 
@@ -26,6 +28,8 @@ namespace Arcade {
             private:
                 const std::vector<std::pair<std::string, std::string>> &_gameLibs;
                 const std::vector<std::pair<std::string, std::string>> &_graphicLibs;
+                const std::string &_currentGameLib;
+                const std::string &_currentGraphicLib;
         };
     }
 }
