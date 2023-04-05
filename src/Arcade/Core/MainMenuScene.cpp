@@ -28,6 +28,13 @@ bool Arcade::Core::MainMenuScene::init()
     std::shared_ptr<Arcade::Graph::Text> text = nullptr;
     Arcade::Vector3f compPos = {10, 20, 0};
 
+    text = std::make_shared<Arcade::Graph::Text>("GameLibsText");
+    text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+    text->text = "Game Libs availible:";
+    text->textColor = {255, 0, 0, 255};
+    text->pos = compPos;
+    gamesEntity.addComponent(text);
+    compPos.y = 50;
     for (std::size_t i = 0; i != _gameLibs.size(); i++) {
         text = std::make_shared<Arcade::Graph::Text>(_gameLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
@@ -37,8 +44,14 @@ bool Arcade::Core::MainMenuScene::init()
         compPos.y += 24;
         gamesEntity.addComponent(text);
     }
-    compPos.y = 10;
     compPos.x = 1920.0 / 2.0;
+    compPos.y = 10;
+    text = std::make_shared<Arcade::Graph::Text>("GraphLibsText");
+    text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+    text->text = "Graphic Libs availible:";
+    text->textColor = {255, 0, 0, 255};
+    text->pos = compPos;
+    compPos.y = 50;
     for (std::size_t i = 0; i != _graphicLibs.size(); i++) {
         text = std::make_shared<Arcade::Graph::Text>(_graphicLibs[i].first);
         text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
