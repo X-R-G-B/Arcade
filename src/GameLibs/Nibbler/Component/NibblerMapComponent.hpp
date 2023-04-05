@@ -13,7 +13,7 @@ namespace Nibbler {
     namespace Component {
         class NibblerMapComponent : public Arcade::Graph::Sprite {
             public:
-                NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos);
+                NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos, const bool darkColor);
         };
     }
 }

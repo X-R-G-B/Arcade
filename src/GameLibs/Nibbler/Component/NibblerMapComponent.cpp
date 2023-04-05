@@ -16,11 +16,9 @@ static const Arcade::Graph::Color backgroundColor(0, 180, 0, 0);
 #define LIGHT_PARCELL "assets/snake/normal/bg_green_02.png"
 #define DEFAULT_CHAR "~"
 
-Nibbler::Component::NibblerMapComponent::NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos)
+Nibbler::Component::NibblerMapComponent::NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos, const bool darkColor)
     : Arcade::Graph::Sprite(id)
 {
-    static bool darkColor = false;
-
     this->type = Arcade::ECS::CompType::SPRITE;
     this->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     if (darkColor) {
@@ -31,5 +29,4 @@ Nibbler::Component::NibblerMapComponent::NibblerMapComponent(const std::string &
     this->currentRectIndex = 0;
     this->pos = pos;
     this->ttyData = {DEFAULT_CHAR, foregroundColor, backgroundColor};
-    darkColor = !darkColor;
 }

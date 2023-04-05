@@ -6,6 +6,7 @@
 */
 
 #include <memory>
+#include <random>
 #include <functional>
 #include "GameScene.hpp"
 #include "Sprite.hpp"
@@ -24,75 +25,71 @@ void Nibbler::Scene::GameScene::addNibblerHeadSprite(Arcade::ECS::IEntity &head)
 {
 }
 
-bool Nibbler::Scene::GameScene::checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const  Arcade::Vector3f &pos)
+bool Nibbler::Scene::GameScene::checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, std::vector<std::string> &idToIgnore)
 {
     const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
 
+    if (pos.x < NIBBLER_PADDING_WINDOW_X || pos.x >= MAP_RIGHT || pos.y < NIBBLER_PADDING_WINDOW_Y || pos.y >= MAP_BOTTOM) {
+        return true;
+    }
     if (walls.size() == 0) {
         return false;
     }
-    if (pos.x < 0 || pos.x > MAP_RIGHT || pos.y < 0 || pos.y > MAP_BOTTOM) {
-        return true;
-    }
     for (auto tmp : walls) {
         auto wall = std::static_pointer_cast<Nibbler::Component::NibblerWallComponent>(tmp);
-        auto wallPos = wall->pos;
-        if (pos.x >= wallPos.x && pos.x <= wallPos.x + PARCELL_SIZE
-                && pos.y >= wallPos.y && pos.y <= wallPos.y + PARCELL_SIZE) {
+        if (std::find(idToIgnore.begin(), idToIgnore.end(), wall->id) != idToIgnore.end()) {
+            continue;
+        }
+        auto &wallPos = wall->pos;
+        if (pos.x >= wallPos.x && pos.x < wallPos.x + PARCELL_SIZE
+                && pos.y >= wallPos.y && pos.y < wallPos.y + PARCELL_SIZE) {
             return true;
         }
         // check border right
-        if (pos.x + PARCELL_SIZE >= wallPos.x && pos.x + PARCELL_SIZE <= wallPos.x + PARCELL_SIZE
-                && pos.y >= wallPos.y && pos.y <= wallPos.y + PARCELL_SIZE) {
+        if (pos.x + PARCELL_SIZE >= wallPos.x && pos.x + PARCELL_SIZE < wallPos.x + PARCELL_SIZE
+                && pos.y >= wallPos.y && pos.y < wallPos.y + PARCELL_SIZE) {
             return true;
         }
         // check broder down
-        if (pos.x >= wallPos.x && pos.x <= wallPos.x + PARCELL_SIZE
-                && pos.y + PARCELL_SIZE >= wallPos.y && pos.y + PARCELL_SIZE <= wallPos.y + PARCELL_SIZE) {
+        if (pos.x >= wallPos.x && pos.x < wallPos.x + PARCELL_SIZE
+                && pos.y + PARCELL_SIZE >= wallPos.y && pos.y + PARCELL_SIZE < wallPos.y + PARCELL_SIZE) {
             return true;
         }
         // check border left
-        if (pos.x - PARCELL_SIZE >= wallPos.x && pos.x - PARCELL_SIZE <= wallPos.x + PARCELL_SIZE
-                && pos.y >= wallPos.y && pos.y <= wallPos.y + PARCELL_SIZE) {
+        if (pos.x - PARCELL_SIZE >= wallPos.x && pos.x - PARCELL_SIZE < wallPos.x + PARCELL_SIZE
+                && pos.y >= wallPos.y && pos.y < wallPos.y + PARCELL_SIZE) {
             return true;
         }
         // check border up
-        if (pos.x >= wallPos.x && pos.x <= wallPos.x + PARCELL_SIZE
-                && pos.y - PARCELL_SIZE >= wallPos.y && pos.y - PARCELL_SIZE <= wallPos.y + PARCELL_SIZE) {
+        if (pos.x >= wallPos.x && pos.x < wallPos.x + PARCELL_SIZE
+                && pos.y - PARCELL_SIZE >= wallPos.y && pos.y - PARCELL_SIZE < wallPos.y + PARCELL_SIZE) {
             return true;
         }
     }
     return false;
 }
 
-bool Nibbler::Scene::GameScene::checkParcelCollision(Arcade::ECS::IEntity &nibblerWalls,
-    const Arcade::Vector3f &pos)
+int Nibbler::Scene::GameScene::generateRandomInt(int max)
 {
-    const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
-
-    if (pos.x < 0 || pos.x > PARCELL_SIZE || pos.y < 0 || pos.y > PARCELL_SIZE) {
-        return true;
-    }
-    for (auto tmp : walls) {
-        auto wall = std::static_pointer_cast<Nibbler::Component::NibblerWallComponent>(tmp);
-        auto wallPos = wall->pos;
-        if (pos.x >= wallPos.x && pos.x <= wallPos.x + PARCELL_SIZE
-                && pos.y >= wallPos.y && pos.y <= wallPos.y + PARCELL_SIZE) {
-            return true;
-        }
-    }
-    return false;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distr(0, max);
+    return distr(gen);
 }
 
 void Nibbler::Scene::GameScene::addNibblerWallSquare(Arcade::ECS::IEntity &nibblerWalls,
     const Arcade::Vector3f &src_pos, const int id)
 {
     Arcade::Vector3f pos = src_pos;
-    int borderTodelete = rand() % 3;
+    std::vector<std::string> toIgnore;
+    std::string wallId;
+    int borderTodelete = generateRandomInt(3);
 
     for (int i = 0; i < 4; i++) {
-        if (!checkWallCollision(nibblerWalls, pos) && i != borderTodelete) {
-            nibblerWalls.addComponent(std::make_shared<Nibbler::Component::NibblerWallComponent>(NIBBLER_WALL_ID, pos));
+        if (!checkWallCollision(nibblerWalls, pos, toIgnore) && i != borderTodelete) {
+            wallId = std::string(NIBBLER_WALL_ID) + "_" + std::to_string(id) + "_nbr_" + std::to_string(i);
+            nibblerWalls.addComponent(std::make_shared<Nibbler::Component::NibblerWallComponent>(wallId, pos));
+            toIgnore.push_back(wallId);
         }
         switch (i) {
             case 0:
@@ -110,26 +107,49 @@ void Nibbler::Scene::GameScene::addNibblerWallSquare(Arcade::ECS::IEntity &nibbl
     }
 }
 
-void Nibbler::Scene::GameScene::addNibblerWall(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, int nbrOfWalls)
+bool Nibbler::Scene::GameScene::checkParcelCollision(Arcade::ECS::IEntity &nibblerWalls,
+    const Arcade::Vector3f &pos)
 {
-    static std::vector<std::function<void (Arcade::ECS::IEntity &, const Arcade::Vector3f &, int borderToDelete)>> addNibblerWallFunctions = {
-        std::bind(&Nibbler::Scene::GameScene::addNibblerWallSquare, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-    };
-    auto funcNbr = rand() % (addNibblerWallFunctions.size() - 1);
+    const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
 
-    addNibblerWallFunctions[funcNbr](nibblerWalls, pos, nbrOfWalls);
+    if (pos.x < NIBBLER_PADDING_WINDOW_X || pos.x >= MAP_RIGHT || pos.y < NIBBLER_PADDING_WINDOW_Y || pos.y >= MAP_BOTTOM) {
+        return true;
+    }
+    for (auto tmp : walls) {
+        auto wall = std::static_pointer_cast<Nibbler::Component::NibblerWallComponent>(tmp);
+        auto wallPos = wall->pos;
+        if (pos.x >= wallPos.x && pos.x < wallPos.x + PARCELL_SIZE
+                && pos.y >= wallPos.y && pos.y < wallPos.y + PARCELL_SIZE) {
+            return true;
+        }
+    }
+    return false;
 }
 
-void Nibbler::Scene::GameScene::addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id)
+void Nibbler::Scene::GameScene::addNibblerWall(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, int nbrOfWalls)
 {
-    if (checkParcelCollision(nibblerMap, pos)) {
+    std::vector<std::function<void(Nibbler::Scene::GameScene&, Arcade::ECS::IEntity &, const Arcade::Vector3f &, int)>> addNibblerWallFuncs = {
+        &Nibbler::Scene::GameScene::addNibblerWallSquare
+    };
+    auto funcNbr = generateRandomInt(addNibblerWallFuncs.size() - 1);
+
+    addNibblerWallFuncs[0](*this, nibblerWalls, pos, nbrOfWalls);
+    this->addNibblerWallSquare(nibblerWalls, pos, nbrOfWalls);
+}
+
+void Nibbler::Scene::GameScene::addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id, Arcade::ECS::IEntity &nibblerWalls)
+{
+    static bool darkColor = true;
+
+    darkColor = !darkColor;
+    if (pos.x < NIBBLER_PADDING_WINDOW_X || pos.x > MAP_RIGHT || pos.y < NIBBLER_PADDING_WINDOW_Y || pos.y > MAP_BOTTOM) {
         return;
     }
-    if (pos.x < 0 || pos.x > SCREEN_WIDTH || pos.y < 0 || pos.y > SCREEN_HEIGHT) {
+    if (checkParcelCollision(nibblerWalls, pos)) {
         return;
     }
     nibblerMap.addComponent(std::make_shared<Nibbler::Component::NibblerMapComponent>(
-            std::string(NIBBLER_MAP_ID), pos));
+            std::string(NIBBLER_MAP_ID) + "_" + std::to_string(id), pos, darkColor));
 }
 
 void Nibbler::Scene::GameScene::addNibblerMap()
@@ -141,14 +161,14 @@ void Nibbler::Scene::GameScene::addNibblerMap()
     int nibblerMapParcelNbr = 0;
 
     for (int i = 0; i < NBR_OF_WALLS; i++) {
-        wallsPos.push_back(rand() % (MAP_PARCELLS_X * MAP_PARCELLS_Y));
+        wallsPos.push_back(generateRandomInt(MAP_PARCELLS_X * MAP_PARCELLS_Y));
     }
     for (int y = 0; y < MAP_PARCELLS_Y; y++, nibblerMapParcelNbr++) {
         for (int x = 0; x < MAP_PARCELLS_X; x++, nibblerMapParcelNbr++) {
-        if (std::find(wallsPos.begin(), wallsPos.end(), nibblerMapParcelNbr) != wallsPos.end()) {
-                addNibblerWall(nibblerMap,
+            if (std::find(wallsPos.begin(), wallsPos.end(), nibblerMapParcelNbr) != wallsPos.end()) {
+                addNibblerWall(nibblerWalls,
                     Arcade::Vector3f(NIBBLER_PADDING_WINDOW_X + x * PARCELL_SIZE,
-                    NIBBLER_PADDING_WINDOW_Y + y * MAP_PARCELLS_X, 0),
+                    NIBBLER_PADDING_WINDOW_Y + y * PARCELL_SIZE, 0),
                     nibblerMapParcelNbr);
             }
         }
@@ -156,10 +176,10 @@ void Nibbler::Scene::GameScene::addNibblerMap()
     nibblerMapParcelNbr = 0;
     for (int y = 0; y < MAP_PARCELLS_Y; y++, nibblerMapParcelNbr++) {
         for (int x = 0; x < MAP_PARCELLS_X; x++, nibblerMapParcelNbr++) {
-            addNibblerParcel(nibblerWalls,
+            addNibblerParcel(nibblerMap,
                 Arcade::Vector3f(NIBBLER_PADDING_WINDOW_X + x * PARCELL_SIZE,
                 NIBBLER_PADDING_WINDOW_Y + y * PARCELL_SIZE, 0),
-                nibblerMapParcelNbr);
+                nibblerMapParcelNbr, nibblerWalls);
         }
     }
 }

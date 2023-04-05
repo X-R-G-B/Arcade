@@ -25,9 +25,10 @@ namespace Nibbler {
             private:
                 void addNibblerWallSquare(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &src_pos, int id);
                 void addNibblerWall(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, int id);
-                void addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id);
-                bool checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const  Arcade::Vector3f &pos);
+                void addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id, Arcade::ECS::IEntity &nibblerWalls);
+                bool checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const  Arcade::Vector3f &pos, std::vector<std::string> &idToIgnore);
                 bool checkParcelCollision(Arcade::ECS::IEntity &nibblerMap, const  Arcade::Vector3f &pos);
+                int generateRandomInt(int max);
         };
     }
 }
