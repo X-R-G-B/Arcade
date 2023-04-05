@@ -104,7 +104,7 @@ bool test_scene::init()
     Arcade::Graph::Sprite &sprite_player = static_cast<Arcade::Graph::Sprite &>(
     this->getEntityManager().getEntitiesById("player")->getComponents(
     "player sprite"));
-    sprite_player.path = "/assets/leplayer.png";
+    sprite_player.path = "/assets/snake/normal/apple.png";
     sprite_player.pos = {0, 10, 15};
     sprite_player.rect = {10, 10, 80, 80};
     sprite_player.ttyData = {"@", {1, 2, 3, 4}, {5, 6, 7, 8}};
@@ -119,7 +119,7 @@ bool test_scene::init()
     Arcade::Graph::Sprite &sprite_enemy = static_cast<Arcade::Graph::Sprite &>(
     this->getEntityManager().getEntitiesById("enemy")->getComponents(
     "Enemy sprite"));
-    sprite_enemy.path = "/assets/leennemy.png";
+    sprite_enemy.path = "/assets/snake/normal/apple.png";
     sprite_enemy.pos = {0, 10, 15};
     sprite_enemy.rect = {10, 10, 80, 80};
     sprite_enemy.ttyData = {"@", {1, 2, 3, 4}, {0, 0, 0, 0}};

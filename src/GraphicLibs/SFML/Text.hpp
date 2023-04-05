@@ -17,18 +17,6 @@ namespace Arcade {
 
     namespace Sfml {
 
-        class TextSystem : public ECS::ISystem {
-            public:
-                TextSystem(sf::RenderWindow &win);
-                void run(float deltaTime,
-                    ECS::IEventManager &eventManager,
-                    ECS::IEntityManager &entityManager) final;
-            private:
-                sf::RenderWindow &_win;
-                void handleComponent(ECS::IComponent &comp, ECS::IEntity &entity);
-
-        };
-
         struct SfText : public ECS::IComponent {
             public:
                 SfText(const std::string id, const std::string &path,
@@ -37,6 +25,20 @@ namespace Arcade {
                 sf::RenderWindow &_win;
                 sf::Font font;
                 sf::Text text;
+        };
+
+        class TextSystem : public ECS::ISystem {
+            public:
+                TextSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
+                void run(double deltaTime,
+                    ECS::IEventManager &eventManager,
+                    ECS::IEntityManager &entityManager) final;
+            private:
+                sf::RenderWindow &_win;
+                std::vector<std::shared_ptr<ECS::IComponent>> &_components;
+                std::shared_ptr<SfText> getComponent(std::shared_ptr<Graph::IText> TextComp);
+                void handleComponent(std::shared_ptr<Graph::IText> TextComp);
+
         };
     }
 }

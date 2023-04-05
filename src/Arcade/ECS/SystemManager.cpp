@@ -30,7 +30,7 @@ namespace Arcade {
             _systems.erase(it);
         }
 
-        void SystemManager::update(float deltaTime,
+        void SystemManager::update(double deltaTime,
             Arcade::ECS::IEventManager &eventManager,
             Arcade::ECS::IEntityManager &currentScene)
         {
