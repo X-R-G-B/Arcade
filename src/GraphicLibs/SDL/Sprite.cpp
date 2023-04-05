@@ -68,6 +68,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     this->type = ECS::CompType::SDLSPRITE;
     this->_rect = dest;
     SDL_QueryTexture(_sprite, NULL, NULL, &dest.w, &dest.h);
+    SDL_RenderCopy(this->_win, this->_sprite, NULL, &dest);
 }
 
 Arcade::SDL::SDLSprite::~SDLSprite()

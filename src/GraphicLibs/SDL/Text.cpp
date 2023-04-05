@@ -8,6 +8,44 @@
 #include "Text.hpp"
 #include "Exceptions.hpp"
 
+Arcade::SDL::TextSystem::TextSystem(SDL_Renderer *win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
+    : _win(win), _components(components)
+{
+
+}
+
+std::shared_ptr<Arcade::SDL::SDLText> Arcade::SDL::TextSystem::getComponent(std::shared_ptr<Graph::IText> TextComp)
+{
+    for (auto const &comp : this->_components) {
+        if (comp->id == TextComp->id) {
+            return (std::static_pointer_cast<SDLText>(comp));
+        }
+    }
+
+    std::shared_ptr<SDLText> text = std::make_shared<SDLText>(TextComp->id, TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos, this->_win);
+    _components.push_back(text);
+    return (text);
+}
+
+void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> TextComp)
+{
+    std::shared_ptr<SDLText> text = this->getComponent(TextComp);
+
+    SDL_RenderCopy(text->_win, text->_text, NULL, &text->_rect);
+}
+
+void Arcade::SDL::TextSystem::run(float deltaTime,
+                                  ECS::IEventManager &eventManager,
+                                  ECS::IEntityManager &entityManager)
+{
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents =
+        entityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+
+    for (auto const &text : *(textComponents)) {
+        this->handleComponent(std::static_pointer_cast<Graph::IText>(text));
+    }
+}
+
 Arcade::SDL::SDLText::SDLText(const std::string id, const std::string &path,
                               const std::string &text, const Graph::Color &textColor,
                               const Arcade::Vector3f &pos, SDL_Renderer *win)
@@ -17,7 +55,7 @@ Arcade::SDL::SDLText::SDLText(const std::string id, const std::string &path,
                               (uint8_t) textColor.g,
                               (uint8_t) textColor.b,
                               (uint8_t) textColor.a };
-    SDL_Rect SDLrect;
+    SDL_Rect dest;
 
     if (win == nullptr) {
         throw ArcadeExceptions("Unexpected error was caugth");
@@ -39,6 +77,12 @@ Arcade::SDL::SDLText::SDLText(const std::string id, const std::string &path,
         SDL_FreeSurface(surface);
         throw ArcadeExceptions("Unable to load texture");
     }
+    dest.x = pos.x;
+    dest.y = pos.y;
+    dest.w = surface->w;
+    dest.h = surface->h;
+    this->_rect = dest;
+    SDL_RenderCopy(this->_win, this->_text, NULL, &dest);
     SDL_FreeSurface(surface);
 }
 

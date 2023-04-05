@@ -17,8 +17,8 @@ namespace Arcade {
             SDLSprite(const std::string id, const std::string &path,
                       const Arcade::Vector3f &pos, Graph::Rect &rect,
                       SDL_Renderer *renderer);
-
             ~SDLSprite();
+
             SDL_Renderer *_win;
             SDL_Texture *_sprite;
             SDL_Rect _rect;
