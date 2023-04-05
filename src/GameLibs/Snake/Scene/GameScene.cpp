@@ -30,7 +30,7 @@ void Snake::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
     headS->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 5, SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
     headS->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     headS->currentRectIndex = 0;
-    headS->ttyData.defaultChar = "####\n####";
+    headS->ttyData.defaultChar = "#####\n#####\n#####";
     headS->ttyData.background = {0, 0, 255, 0};
     headS->ttyData.foreground = {150, 0, 0, 0};
     head.addComponent(headS);
@@ -73,7 +73,7 @@ void Snake::Scene::GameScene::createApple()
     Arcade::ECS::IEntity &appleEntity = entityManager.createEntity(APPLE_ENTITY);
     std::shared_ptr<Arcade::Graph::Sprite> apple = std::make_shared<Arcade::Graph::Sprite>(APPLE_SPRITE_COMP);
 
-    apple->ttyData = {"****\n****", {255, 0, 0, 255}, {255, 0, 0, 255}};
+    apple->ttyData = {"*****\n*****\n*****", {255, 0, 0, 255}, {255, 0, 0, 255}};
     apple->path = APPLE_SPRITE_COMP_PATH;
     apple->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 10, SNAKE_PADDING_WINDOW_Y + 8 * PARCELL_SIZE, 0};
     apple->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
