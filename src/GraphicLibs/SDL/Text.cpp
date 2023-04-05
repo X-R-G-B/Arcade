@@ -34,7 +34,7 @@ void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> Text
     SDL_RenderCopy(text->_win, text->_text, NULL, &text->_rect);
 }
 
-void Arcade::SDL::TextSystem::run(float deltaTime,
+void Arcade::SDL::TextSystem::run(double deltaTime,
                                   ECS::IEventManager &eventManager,
                                   ECS::IEntityManager &entityManager)
 {

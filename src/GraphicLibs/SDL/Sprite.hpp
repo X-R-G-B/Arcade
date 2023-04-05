@@ -28,7 +28,7 @@ namespace Arcade {
             public:
                 SpriteSystem(SDL_Renderer *renderer,
                              std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components);
-                void run(float deltaTime,
+                void run(double deltaTime,
                          ECS::IEventManager &eventManager,
                          ECS::IEntityManager &entityManager) final;
             private:

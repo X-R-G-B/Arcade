@@ -34,7 +34,7 @@ void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> 
     SDL_RenderCopy(sprite->_win, sprite->_sprite, NULL, &sprite->_rect);
 }
 
-void Arcade::SDL::SpriteSystem::run(float deltaTime,
+void Arcade::SDL::SpriteSystem::run(double deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {

@@ -36,7 +36,7 @@ Arcade::SDL::DisplayModule::~DisplayModule()
     SDL_Quit();
 }
 
-void Arcade::SDL::DisplayModule::update(float delta, Arcade::ECS::IEventManager &eventManager,
+void Arcade::SDL::DisplayModule::update(double delta, Arcade::ECS::IEventManager &eventManager,
                                         Arcade::ECS::IEntityManager &entityManager)
 {
     SDL_RenderClear(this->_renderer);

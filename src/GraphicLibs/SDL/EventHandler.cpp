@@ -129,7 +129,7 @@ void Arcade::SDL::EventHandler::HandleEvents(Arcade::ECS::IEventManager &eventMa
     }
 }
 
-void Arcade::SDL::EventHandler::run(float deltaTime,
+void Arcade::SDL::EventHandler::run(double deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentScene)
 {
