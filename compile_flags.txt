@@ -8,6 +8,8 @@
 -Isrc/GameLibs/Snake/System
 -Isrc/GameLibs/Snake/Component
 -Isrc/GameLibs/Snake/Scene
+-I_deps/miniaudio-src
+-Isrc/MiniAudioWrapper
 -std=c++20
 -Wall
 -Wextra
