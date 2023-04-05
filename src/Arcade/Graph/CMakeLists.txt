@@ -12,3 +12,32 @@ target_sources(arcade PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
 )
+
+target_sources(arcade_nibbler PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+)
+
+target_sources(arcade_snake PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+)
+
+target_sources(arcade_ncurses PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+)
+
+target_sources(arcade_sdl2 PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+)
+target_sources(arcade_sfml PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+)
