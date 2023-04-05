@@ -8,7 +8,7 @@
 #include "GraphStruct.hpp"
 #include "SnakeMapComponent.hpp"
 
-static const std::string defaultChar = "~~\n~~";
+static const std::string defaultChar = "~~~\n~~~";
 static const Arcade::Graph::Color foregroundColorDark(0, 180, 0, 0);
 static const Arcade::Graph::Color backgroundColorDark(0, 180, 0, 0);
 static const Arcade::Graph::Color foregroundColorBright(0, 160, 0, 0);
