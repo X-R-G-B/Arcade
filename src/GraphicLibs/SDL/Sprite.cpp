@@ -8,32 +8,30 @@
 #include "Sprite.hpp"
 #include "Exceptions.hpp"
 
-Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer *renderer)
-    : _win(renderer)
+Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer *renderer,
+    std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
+    : _win(renderer), _components(components)
 {
-
 }
 
-void Arcade::SDL::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(std::shared_ptr <Graph::ISprite> SpriteComp)
 {
-    Graph::ISprite &SpriteComp = static_cast<Graph::ISprite &>(IComp);
-    SDL_Rect dest;
+    for (auto const &comp : this->_components) {
+        if (comp->id == SpriteComp->id) {
+            return (std::static_pointer_cast<SDLSprite>(comp));
+        }
+    }
 
-    try {
-        entity.addComponent(std::make_shared<SDL::SDLSprite>(SpriteComp.id + "_SDL", SpriteComp.path, SpriteComp.pos, SpriteComp.rect, this->_win));
-    } catch (std::exception &e) {
-    }
-    ECS::IComponent &comp = entity.getComponents(SpriteComp.id + "_SDL");
-    if (comp.type != ECS::CompType::SDLSPRITE) {
-        return;
-    }
-    SDL::SDLSprite &sprite = static_cast<SDL::SDLSprite &>(comp);
-    dest.x = SpriteComp.pos.x;
-    dest.y = SpriteComp.pos.y;
-    dest.h = SpriteComp.rect.height;
-    dest.w = SpriteComp.rect.width;
-    SDL_QueryTexture(sprite._sprite, NULL, NULL, &dest.w, &dest.h);
-    SDL_RenderCopy(sprite._win, sprite._sprite, NULL, &dest);
+    std::shared_ptr<SDLSprite> sprite = std::make_shared<SDLSprite>(SpriteComp->id, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, this->_win);
+    _components.push_back(sprite);
+    return (sprite);
+}
+void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
+{
+    std::shared_ptr<SDLSprite> sprite = this->getComponent(SpriteComp);
+
+    SDL_QueryTexture(sprite->_sprite, NULL, NULL, &sprite->_rect.w, &sprite->_rect.h);
+    SDL_RenderCopy(sprite->_win, sprite->_sprite, NULL, &sprite->_rect);
     SDL_RenderPresent(this->_win);
 }
 
@@ -41,17 +39,12 @@ void Arcade::SDL::SpriteSystem::run(float deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> spriteEntities =
-            entityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
-    std::vector<std::shared_ptr<ECS::IComponent>> components;
+    std::unique_ptr<std::vector<std::shared_ptr<ECS::IComponent>>> spriteComponents =
+            entityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
 
-    for (auto const &entity : *(spriteEntities.get())) {
-        components = entity->getComponents(ECS::CompType::SPRITE);
-        for (auto const &component : components) {
-            this->handleComponent(*(component.get()), *(entity.get()));
+        for (auto const &sprite : *(spriteComponents.get())) {
+            this->handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
         }
-    }
-
 }
 
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
@@ -74,6 +67,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     }
     this->id = id;
     this->type = ECS::CompType::SDLSPRITE;
+    this->_rect = dest;
     SDL_QueryTexture(_sprite, NULL, NULL, &dest.w, &dest.h);
 }
 
