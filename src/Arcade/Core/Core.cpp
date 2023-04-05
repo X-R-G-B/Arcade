@@ -106,7 +106,6 @@ void Arcade::Core::Core::update()
         eventManager.clearEvents();
         delta = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start);
         start = std::chrono::high_resolution_clock::now();
-        std::cout << "update " << delta.count() * 100 << std::endl;
         auto &entityManager = this->updater(delta, eventManager);
         if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
