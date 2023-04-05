@@ -4,7 +4,8 @@ target_sources(arcade_sdl2 PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/SDL.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
 )
 
-find_library(LSDLGRAPHICS SDL2 SDL2_image)
+find_library(LSDLGRAPHICS SDL2 SDL2_image SDL2_ttf)
 target_link_libraries(arcade_sdl2 PRIVATE ${LSDLGRAPHICS})
