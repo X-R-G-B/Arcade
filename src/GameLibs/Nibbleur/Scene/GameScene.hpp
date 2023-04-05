@@ -9,7 +9,6 @@
 
 #include "AScene.hpp"
 
-#define NBR_OF_PARCELS_IN_LINE 6
 #define NIBBLER_PADDING_WINDOW_X 576
 #define NIBBLER_PADDING_WINDOW_Y 156
 #define APPLE_SPRITE_COMP_PATH "assets/Nibbler/apple.png"
@@ -28,9 +27,11 @@ namespace Nibbler {
                 void createApple();
                 void addNibblerMap();
             private:
-                void addNibblerWallSquare(Arcade::ECS::IEntityManager &entityManager, const Arcade::Vector3f &src_pos);
-                void addNibblerWall(Arcade::ECS::IEntityManager &entityManager, const Arcade::Vector3f &pos, int nbrOfParcels);
-                void addNibblerParcel(Arcade::ECS::IEntityManager &entityManager, const Arcade::Vector3f &pos, int nbrOfParcels);
+                void addNibblerWallSquare(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &src_pos, int id);
+                void addNibblerWall(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, int id);
+                void addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id);
+                bool checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const  Arcade::Vector3f &pos);
+                bool checkParcelCollision(Arcade::ECS::IEntity &nibblerMap, const  Arcade::Vector3f &pos);
         };
     }
 }
