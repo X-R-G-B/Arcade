@@ -14,9 +14,9 @@ void Snake::System::InputsSystem::run(double deltaTime,
 {
     if (eventManager.isEventTriggered("KEY_ESC_PRESSED").first) {
         eventManager.addEvent("GAME_END");
-    } else if (eventManager.isEventTriggered("KEY_1_PRESSED")) {
+    } else if (eventManager.isEventTriggered("KEY_1_PRESSED").first) {
         eventManager.addEvent("CHANGE_GAME");
-    } else if (eventManager.isEventTriggered("KEY_2_PRESSED")) {
+    } else if (eventManager.isEventTriggered("KEY_2_PRESSED").first) {
         eventManager.addEvent("CHANGE_GRAPH");
     }
 }
