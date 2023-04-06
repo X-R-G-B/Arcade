@@ -18,8 +18,8 @@ namespace Nibbler {
                 bool init() final;
                 void close() final;
             protected:
-                void createNibbler();
-                void addNibblerHeadSprite(Arcade::ECS::IEntity &head);
+                void createSnake();
+                void addSnakeHeadSprite(Arcade::ECS::IEntity &head);
                 void createApple();
                 void addNibblerMap();
             private:

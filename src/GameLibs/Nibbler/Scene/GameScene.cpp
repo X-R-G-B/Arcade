@@ -185,9 +185,31 @@ void Nibbler::Scene::GameScene::addNibblerMap()
     }
 }
 
-void Nibbler::Scene::GameScene::createNibbler()
+void Snake::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 {
+    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE);
 
+    headS->path = SNAKE_HEAD_PATH;
+    headS->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 5, SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
+    headS->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
+    headS->currentRectIndex = 0;
+    headS->ttyData.defaultChar = "#####\n#####\n#####";
+    headS->ttyData.background = {0, 0, 255, 0};
+    headS->ttyData.foreground = {150, 0, 0, 0};
+    head.addComponent(headS);
+    head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
+}
+
+void Nibbler::Scene::GameScene::createSnake()
+{
+    Arcade::ECS::IEntityManager &EntityManager = getEntityManager();
+    Arcade::ECS::IEntity &snake = EntityManager.createEntity(SNAKE);
+    Arcade::ECS::IEntity &head = EntityManager.createEntity(SNAKE_HEAD);
+
+    snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
+    Snake::Component::SnakeGrow &grow = static_cast<Snake::Component::SnakeGrow&>(snake.getComponents(SNAKE_GROW_COMPONENT));
+    grow.grow = 0;
+    addSnakeHeadSprite(head);
 }
 
 void Nibbler::Scene::GameScene::createApple()
