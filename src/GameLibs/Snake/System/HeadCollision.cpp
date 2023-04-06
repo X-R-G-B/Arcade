@@ -14,10 +14,10 @@ bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, 
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
 
     if (
-        (head->pos.x >= fstS.pos.x + fstS.rect.width) ||
-        (head->pos.x + head->rect.width <= fstS.pos.x) ||
-        (head->pos.y >= fstS.pos.y + fstS.rect.height) ||
-        (head->pos.y + head->rect.height <= fstS.pos.y)
+        (head->pos.x + 5 >= fstS.pos.x + fstS.rect.width) ||
+        (head->pos.x + head->rect.width - 5 < fstS.pos.x) ||
+        (head->pos.y + 5 > fstS.pos.y + fstS.rect.height) ||
+        (head->pos.y + head->rect.height - 5< fstS.pos.y)
     ) {
         return false;
     }
