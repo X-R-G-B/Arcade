@@ -69,3 +69,4 @@ build.ninja
 
 libloader_test
 vgcore.*
+*.cbp
