@@ -6,6 +6,7 @@
 */
 
 #include <memory>
+#include "InputsSystem.hpp"
 #include "Api.hpp"
 #include "Snake.hpp"
 #include "MoveInput.hpp"
@@ -47,6 +48,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _scenes.front()->init();
     _systemManager.addSystem("AMoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("InputsSystem", std::make_unique<Snake::System::InputsSystem>());
     _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
     _systemManager.addSystem("MoveDirection", std::make_unique<Snake::System::MoveDirection>());
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
