@@ -19,8 +19,8 @@ void Snake::System::MoveForward::moveForward(
     Arcade::Graph::ISprite &sprite,
     double vector)
 {
-    int caseCurX = (TO_INT(sprite.pos.x)) % PARCELL_SIZE;
-    int caseCurY = (TO_INT(sprite.pos.y)) % PARCELL_SIZE;
+    int caseCurX = ((TO_INT(sprite.pos.x)) % PARCELL_SIZE) * PARCELL_SIZE;
+    int caseCurY = ((TO_INT(sprite.pos.y)) % PARCELL_SIZE) * PARCELL_SIZE;
 
     if (curDir.direction == Direction::UP) {
         sprite.pos.y -= vector;
