@@ -5,12 +5,12 @@
 ** Sfml
 */
 
+#include <SFML/Graphics/Texture.hpp>
 #include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "GraphStruct.hpp"
 #include "ISprite.hpp"
 #include "Sfml.hpp"
-#include <SFML/Graphics/Texture.hpp>
 
 namespace Arcade {
 
@@ -34,8 +34,8 @@ namespace Arcade {
             private:
                 sf::RenderWindow &_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SfSprite> getComponent(std::shared_ptr<Graph::ISprite> TextComp);
-                void handleComponent(std::shared_ptr<Graph::ISprite> TextComp);
+                std::shared_ptr<SfSprite> getComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
+                void handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
         };
     }
 }
