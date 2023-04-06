@@ -63,7 +63,7 @@ void Snake::Scene::GameScene::createSnake()
 
     snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
     Snake::Component::SnakeGrow &grow = static_cast<Snake::Component::SnakeGrow&>(snake.getComponents(SNAKE_GROW_COMPONENT));
-    grow.grow = 0;
+    grow.grow = 4;
     addSnakeHeadSprite(head);
 }
 

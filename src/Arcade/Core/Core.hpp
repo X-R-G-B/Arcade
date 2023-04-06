@@ -13,9 +13,8 @@
 #include "ICore.hpp"
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
-#include "Api.hpp"
 #include "LibHandler.hpp"
-#include "MainMenuModule.hpp"
+#include "IMainMenuModule.hpp"
 #include "EntityManager.hpp"
 #include "EventManager.hpp"
 
@@ -29,13 +28,15 @@ namespace Arcade {
                 void loadGraphicLibFromPath(const std::string &path);
             private:
                 const std::string _libFolderPath = "./lib";
+                const std::string _libFolderMainMenuPath = "./lib/menu";
                 std::vector<std::pair<std::string, std::string>> _gamesNames;
                 std::vector<std::pair<std::string, std::string>> _graphicLibsNames;
                 LibHandler<Graph::IDisplayModule> _graphLibHandler;
                 LibHandler<Game::IGameModule> _gameLibHandler;
-                std::unique_ptr<Arcade::Core::MainMenuModule> _mainMenu;
+                MainMenu::Context _context;
+                LibHandler<MainMenu::IMainMenuModule> _mainMenuLibHandler;
 
-                Arcade::ECS::IEntityManager &updater(std::chrono::duration<double> delta,
+                void updater(std::chrono::duration<double> delta,
                     Arcade::ECS::EventManager &eventManager);
                 void getSharedLibsNames();
                 void addNameToList(const std::string &path);

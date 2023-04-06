@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "ChangeDir.hpp"
 
@@ -23,7 +24,8 @@ namespace Snake {
             private:
                 bool checkHitChangeDir(
                 std::shared_ptr<Snake::Component::ChangeDir> changeDir,
-                std::shared_ptr<Arcade::ECS::IEntity> entity);
+                std::shared_ptr<Arcade::ECS::IEntity> entity,
+                Arcade::ECS::IComponent &lastSnakeBody);
         };
     }
 }
