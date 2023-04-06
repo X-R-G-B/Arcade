@@ -82,6 +82,7 @@ void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventMana
         if (hit) {
             it++;
         } else {
+            snake->removeComponent((*it)->id);
             it = directionsComponents.erase(it);
         }
     }
