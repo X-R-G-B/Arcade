@@ -8,9 +8,9 @@ target_include_directories(arcade_ncurses PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(arcade_sdl2 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(arcade_sfml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
-target_sources(arcade PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/AScene.cpp"
-)
+# target_sources(arcade PRIVATE
+#     "${CMAKE_CURRENT_SOURCE_DIR}/AScene.cpp"
+# )
 
 target_sources(arcade_menu_main PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/AScene.cpp"
