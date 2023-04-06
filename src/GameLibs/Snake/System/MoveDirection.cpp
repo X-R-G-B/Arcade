@@ -37,7 +37,7 @@
                            x+PARCELL_SIZE-(PARCELL_SIZE/4)
 */
 
-static const double PADDING_SIZE = PARCELL_SIZE / 6.0;
+static const double PADDING_SIZE = PARCELL_SIZE / 12.0;
 
 bool Snake::System::MoveDirection::checkHitChangeDir(
     std::shared_ptr<Snake::Component::ChangeDir> changeDir,
@@ -58,9 +58,9 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
             continue;
         }
         auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(FORWARD_KEY));
-        auto nextCase = Snake::System::MoveInput::toNextCase(bodySprite->pos, bodyDir.direction);
-        bodySprite->pos.x = nextCase.x;
-        bodySprite->pos.y = nextCase.y;
+        // auto nextCase = Snake::System::MoveInput::toNextCase(bodySprite->pos, bodyDir.direction);
+        // bodySprite->pos.x = nextCase.x;
+        // bodySprite->pos.y = nextCase.y;
         bodyDir.direction = changeDir->direction;
         if (entity->getId() == bodyGrowComp.lastIdBodyComp) {
             hit = true;
