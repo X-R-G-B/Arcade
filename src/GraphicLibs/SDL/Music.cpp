@@ -41,10 +41,17 @@ void Arcade::SDL::MusicSystem::handleComponent(std::shared_ptr<Graph::IMusic> Mu
 
 void Arcade::SDL::MusicSystem::run(double deltaTime, ECS::IEventManager &eventManager, ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musicComponents =
-        entityManager.getComponentsByComponentType(ECS::CompType::MUSIC);
-
-    for (auto const &music : *(musicComponents)) {
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musicComponents;
+ 
+    try {
+        musicComponents = entityManager.getComponentsByComponentType(ECS::CompType::MUSIC);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (musicComponents == nullptr) {
+        return;
+    }
+    for (auto const &music : *musicComponents) {
         handleComponent(std::static_pointer_cast<Graph::IMusic>(music));
     }
 }
@@ -55,7 +62,7 @@ Arcade::SDL::SDLMusic::SDLMusic(const std::string id, const std::string &path,
     this->id = id;
     this->type = Arcade::ECS::CompType::SDLMUSIC;
     this->music = Mix_LoadMUS(path.data());
-    if (music = nullptr) {
+    if (music == nullptr) {
         throw ArcadeExceptions("Wrong path for music : " + path);
     }
     if (play && loop) {

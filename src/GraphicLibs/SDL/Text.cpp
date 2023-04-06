@@ -38,9 +38,16 @@ void Arcade::SDL::TextSystem::run(double deltaTime,
                                   ECS::IEventManager &eventManager,
                                   ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents =
-        entityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents;
 
+    try {
+        textComponents = entityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (textComponents == nullptr) {
+        return;
+    }
     for (auto const &text : *(textComponents)) {
         this->handleComponent(std::static_pointer_cast<Graph::IText>(text));
     }

@@ -48,12 +48,19 @@ void Arcade::SDL::SpriteSystem::run(double deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IComponent>>> spriteComponents =
-            entityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+    std::unique_ptr<std::vector<std::shared_ptr<ECS::IComponent>>> spriteComponents;
 
-        for (auto const &sprite : *(spriteComponents)) {
-            this->handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
-        }
+    try {
+        spriteComponents = entityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (spriteComponents == nullptr) {
+        return;
+    }
+    for (auto const &sprite : *spriteComponents) {
+        this->handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
+    }
 }
 
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,

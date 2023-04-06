@@ -38,10 +38,17 @@ void Arcade::Sfml::SpriteSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> spriteComponents =
-        currentEntityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
-
-    for (auto const &sprite : *(spriteComponents.get())) {
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> spriteComponents;
+ 
+    try {
+        spriteComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (spriteComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &sprite : *spriteComponents) {
         handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
     }
 }
