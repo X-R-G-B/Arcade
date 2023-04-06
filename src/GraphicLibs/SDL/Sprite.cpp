@@ -55,7 +55,7 @@ void Arcade::SDL::SpriteSystem::run(double deltaTime,
     } catch (const std::exception &e) {
         return;
     }
-    if (spriteComponents == nullptr) {
+    if (spriteComponents.get() == nullptr) {
         return;
     }
     for (auto const &sprite : *spriteComponents) {
