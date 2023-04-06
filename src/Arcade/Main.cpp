@@ -7,6 +7,7 @@
 
 #include <exception>
 #include <iostream>
+#include <string>
 #include "Core.hpp"
 
 void launchCore(int ac, char **av)
@@ -23,8 +24,36 @@ void launchCore(int ac, char **av)
     core->update();
 }
 
+bool checkHelp(int ac, char **av)
+{
+    std::string str;
+
+    if (ac != 2) {
+        return false;
+    }
+    str = av[1];
+    if (str == "-h" || str == "--help") {
+        return true;
+    }
+    return false;
+}
+
+void printHelp()
+{
+    std::cout << "USAGE: " << std::endl;
+    std::cout << "./arcade [-h | --help]" << std::endl;
+    std::cout << "./arcade" << std::endl;
+    std::cout << "./arcade [lib/arcade_sfml.so | lib/arcade_sdl2.so | lib/arcade_ncurses.so]" << std::endl;
+    std::cout << "DESCRIPTION: " << std::endl;
+    std::cout << "The arcade game." << std::endl;
+}
+
 int main(int ac, char **av)
 {
+    if (checkHelp(ac, av)) {
+        printHelp();
+        return 0;
+    }
     if (ac > 2) {
         return 84;
     }
