@@ -12,6 +12,7 @@
 #include "Forward.hpp"
 #include "MoveForward.hpp"
 #include "MagicValue.hpp"
+#include "MoveInput.hpp"
 #include "SnakeCompType.hpp"
 
 void Snake::System::MoveForward::moveForward(
@@ -19,14 +20,20 @@ void Snake::System::MoveForward::moveForward(
     Arcade::Graph::ISprite &sprite,
     double vector)
 {
+    auto dirNext = Snake::System::MoveInput::toNextCase(sprite.pos, curDir.direction);
+
     if (curDir.direction == Direction::UP) {
         sprite.pos.y -= vector;
+        sprite.pos.x = dirNext.x;
     } else if (curDir.direction == Direction::DOWN) {
         sprite.pos.y += vector;
+        sprite.pos.x = dirNext.x;
     } else if (curDir.direction == Direction::LEFT) {
         sprite.pos.x -= vector;
+        sprite.pos.y = dirNext.y;
     } else if (curDir.direction == Direction::RIGHT) {
         sprite.pos.x += vector;
+        sprite.pos.y = dirNext.y;
     }
 }
 
