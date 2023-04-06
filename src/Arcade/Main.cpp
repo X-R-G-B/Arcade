@@ -41,11 +41,11 @@ bool checkHelp(int ac, char **av)
 void printHelp()
 {
     std::cout << "USAGE: " << std::endl;
-    std::cout << "./arcade [-h | --help]" << std::endl;
-    std::cout << "./arcade" << std::endl;
-    std::cout << "./arcade [lib/arcade_sfml.so | lib/arcade_sdl2.so | lib/arcade_ncurses.so]" << std::endl;
+    std::cout << "\t./arcade [-h | --help]" << std::endl;
+    std::cout << "\t./arcade" << std::endl;
+    std::cout << "\t./arcade [lib/arcade_sfml.so | lib/arcade_sdl2.so | lib/arcade_ncurses.so]" << std::endl;
     std::cout << "DESCRIPTION: " << std::endl;
-    std::cout << "The arcade game." << std::endl;
+    std::cout << "\tThe arcade game." << std::endl;
 }
 
 int main(int ac, char **av)
