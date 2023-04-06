@@ -14,20 +14,19 @@
 #include "MagicValue.hpp"
 #include "SnakeCompType.hpp"
 
-#include <iostream>
 void Snake::System::MoveForward::moveForward(
     Snake::Component::Forward &curDir,
     Arcade::Graph::ISprite &sprite,
-    double deltaTime)
+    double vector)
 {
     if (curDir.direction == Direction::UP) {
-        sprite.pos.y -= deltaTime * SNAKE_MOVE_PER_DTIME;
+        sprite.pos.y -= vector;
     } else if (curDir.direction == Direction::DOWN) {
-        sprite.pos.y += deltaTime * SNAKE_MOVE_PER_DTIME;
+        sprite.pos.y += vector;
     } else if (curDir.direction == Direction::LEFT) {
-        sprite.pos.x -= deltaTime * SNAKE_MOVE_PER_DTIME;
+        sprite.pos.x -= vector;
     } else if (curDir.direction == Direction::RIGHT) {
-        sprite.pos.x += deltaTime * SNAKE_MOVE_PER_DTIME;
+        sprite.pos.x += vector;
     }
 }
 
@@ -37,10 +36,11 @@ void Snake::System::MoveForward::run(
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
     auto snakes = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
+    double move = SNAKE_MOVE_PER_DTIME * deltaTime;
 
     for (auto &it : *snakes) {
         auto curDir = static_cast<Component::Forward &>(it->getComponents(FORWARD_KEY));
         auto &sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_SPRITE));
-        moveForward(curDir, sprite, deltaTime);
+        moveForward(curDir, sprite, move);
     }
 }

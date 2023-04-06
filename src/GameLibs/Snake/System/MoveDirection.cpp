@@ -37,6 +37,8 @@
                            x+PARCELL_SIZE-(PARCELL_SIZE/4)
 */
 
+static const double PADDING_SIZE = PARCELL_SIZE / 6.0;
+
 bool Snake::System::MoveDirection::checkHitChangeDir(
     std::shared_ptr<Snake::Component::ChangeDir> changeDir,
     std::shared_ptr<Arcade::ECS::IEntity> entity,
@@ -48,10 +50,10 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
 
     for (auto &bodySpriteComp : bodySpriteComps) {
         auto bodySprite = std::static_pointer_cast<Arcade::Graph::Sprite>(bodySpriteComp);
-        if (bodySprite->pos.x + (PARCELL_SIZE / 4) < changeDir->pos.x ||
-            bodySprite->pos.x + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.x + PARCELL_SIZE ||
-            bodySprite->pos.y + (PARCELL_SIZE / 4) < changeDir->pos.y ||
-            bodySprite->pos.y + PARCELL_SIZE - (PARCELL_SIZE / 4) > changeDir->pos.y + PARCELL_SIZE
+        if (bodySprite->pos.x + PADDING_SIZE < changeDir->pos.x ||
+            bodySprite->pos.x + PARCELL_SIZE - (PADDING_SIZE) > changeDir->pos.x + PARCELL_SIZE ||
+            bodySprite->pos.y + PADDING_SIZE < changeDir->pos.y ||
+            bodySprite->pos.y + PARCELL_SIZE - PADDING_SIZE > changeDir->pos.y + PARCELL_SIZE
         ) {
             continue;
         }
