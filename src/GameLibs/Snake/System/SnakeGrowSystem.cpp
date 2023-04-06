@@ -111,7 +111,7 @@ void Snake::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntityM
 
     auto &entity = entityManager.createEntity(id);
     auto snake = entityManager.getEntitiesById(SNAKE);
-    auto growCompGrow = static_cast<Snake::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
+    auto &growCompGrow = static_cast<Snake::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
     auto forward = std::make_shared<Snake::Component::Forward>(FORWARD_KEY, Direction::RIGHT);
     entity.addComponent(std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE));
     auto &comp = entity.getComponents(SNAKE_SPRITE);
