@@ -41,8 +41,12 @@ Arcade::ECS::IComponent &Arcade::ECS::Entity::getComponents(const std::string &i
 { 
     for (auto &component : _components) {
         for (auto &comp : component.second) {
-            if (comp->id == id)
-                return *(comp.get());
+            if (comp.get() == nullptr) {
+                continue;
+            }
+            if (comp->id == id) {
+                return *comp;
+            }
         }
     }
     throw ArcadeExceptions("Invalid argument => getComponents(id) : Unknown id : " + id);
@@ -52,8 +56,12 @@ bool Arcade::ECS::Entity::isAlreadyStored(const std::string &id)
 {
     for (auto &component : _components) {
         for (auto &comp : component.second) {
-            if (comp->id == id)
+            if (comp.get() == nullptr) {
+                continue;
+            }
+            if (comp->id == id) {
                 return true;
+            }
         }
     }
     return false;
@@ -76,21 +84,25 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     }
 }
 
-#include <iostream>
 void Arcade::ECS::Entity::removeComponent(const std::string &id)
 {
     for (auto &component : this->_components) {
-        std::remove_if(component.second.begin(), component.second.end(),
-        [&id](const std::shared_ptr<Arcade::ECS::IComponent> &component) {
-            if (component.get() == nullptr) {
-                std::cout << "encule" << std::endl;
+        for (auto it = component.second.begin(); it != component.second.end(); ++it) {
+            if (*it == nullptr) {
+                continue;
             }
-            return component->id == id;
-        });
+            if ((*it)->id == id) {
+                component.second.erase(it);
+                return;
+            }
+        }
     }
 }
 
 void Arcade::ECS::Entity::removeComponent(Arcade::ECS::CompType type)
 {
+    if (this->_components.find(type) == this->_components.end()) {
+        return;
+    }
     this->_components.erase(type);
 }

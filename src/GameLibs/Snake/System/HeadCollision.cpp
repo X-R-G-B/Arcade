@@ -57,7 +57,10 @@ void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMana
         eventManager.addEvent(EATED_EVENT);
         return;
     }
-    if (headS->pos.x <= SNAKE_PADDING_WINDOW_X || headS->pos.x + headS->rect.width >= MAP_RIGHT || headS->pos.y <= SNAKE_PADDING_WINDOW_Y || headS->pos.y + headS->rect.height >= MAP_BOTTOM) {
+    if (headS->pos.x < SNAKE_PADDING_WINDOW_X ||
+            headS->pos.x + headS->rect.width > MAP_RIGHT ||
+            headS->pos.y < SNAKE_PADDING_WINDOW_Y ||
+            headS->pos.y + headS->rect.height > MAP_BOTTOM) {
         eventManager.addEvent(RESTART_EVENT);
     }
 }
