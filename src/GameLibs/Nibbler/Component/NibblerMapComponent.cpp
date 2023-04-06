@@ -1,12 +1,13 @@
 /*
 ** EPITECH PROJECT, 2023
-** Arcade Promo 2026 Toulouse
+** Arcade
 ** File description:
-** SnakeMapComponent
+** NibblerMapComponent
 */
 
-#include "GraphStruct.hpp"
-#include "SnakeMapComponent.hpp"
+#include "MagicValue.hpp"
+#include "NibblerCompType.hpp"
+#include "NibblerMapComponent.hpp"
 
 static const Arcade::Graph::Color foregroundColorDark(0, 220, 0, 0);
 static const Arcade::Graph::Color backgroundColorDark(0, 220, 0, 0);
@@ -17,7 +18,7 @@ static const Arcade::Graph::Color backgroundColorBright(0, 150, 0, 0);
 #define LIGHT_PARCELL "assets/snake/normal/bg_green_02.png"
 #define DEFAULT_CHAR "~~~~~\n~~~~~\n~~~~~"
 
-Snake::Component::SnakeMapComponent::SnakeMapComponent(const std::string &id, const Arcade::Vector3f &pos, bool darkColor)
+Nibbler::Component::NibblerMapComponent::NibblerMapComponent(const std::string &id, const Arcade::Vector3f &pos, const bool darkColor)
     : Arcade::Graph::Sprite(id)
 {
     this->type = Arcade::ECS::CompType::SPRITE;

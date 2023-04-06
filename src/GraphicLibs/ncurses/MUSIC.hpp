@@ -2,24 +2,23 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** EatSystem
+** Text
 */
 
 #pragma once
 
 #include "ISystem.hpp"
+#include "MiniAudioWrapper.hpp"
 
-namespace Snake {
+namespace Ncurses {
     namespace System {
-        class EatSystem : public Arcade::ECS::ISystem {
+        class MusicSystem : public Arcade::ECS::ISystem {
             public:
-                EatSystem() = default;
-
                 void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
+                Arcade::ECS::IEntityManager &entityManager) final;
             private:
+                MiniAudio::MiniAudioWrapper _miniAudioWrapper;
         };
     }
 }

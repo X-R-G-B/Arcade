@@ -86,7 +86,7 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
                     Arcade::ECS::EventManager &eventManager)
 {
     if (_gameLibHandler.getModule() != nullptr) {
-        _gameLibHandler.getModule()->update(delta.count(), eventManager);
+        _gameLibHandler.getModule()->update(delta.count() * 100, eventManager);
         return (_gameLibHandler.getModule()->getCurrentEntityManager());
     } else {
         _mainMenu->update(delta.count(), eventManager);
@@ -97,19 +97,19 @@ Arcade::ECS::IEntityManager &Arcade::Core::Core::updater(std::chrono::duration<d
 void Arcade::Core::Core::update()
 {
     Arcade::ECS::EventManager eventManager;
-    std::chrono::_V2::steady_clock::time_point start = std::chrono::steady_clock::now();
+    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> delta(0);
 
     while (eventManager.isEventTriggered("QUIT").first == false) {
-        delta = start - std::chrono::steady_clock::now();
-        start = std::chrono::steady_clock::now();
 
         checkChangeLib(eventManager);
         eventManager.clearEvents();
+        delta = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start);
+        start = std::chrono::high_resolution_clock::now();
         auto &entityManager = this->updater(delta, eventManager);
         if (_graphLibHandler.getModule() != nullptr) {
             _graphLibHandler.getModule()->update(
-                delta.count(),
+                delta.count() * 100,
                 eventManager,
                 entityManager);
         }
