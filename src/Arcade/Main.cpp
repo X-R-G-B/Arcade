@@ -14,9 +14,11 @@ void launchCore(int ac, char **av)
     std::unique_ptr<Arcade::Core::Core> core = nullptr;
     std::string str;
 
-    if (ac == 2) {
-        str = av[1];
+    str = (ac != 2) ? "" : av[1];
+    try {
         core = std::make_unique<Arcade::Core::Core>(str);
+    } catch (const std::exception &e) {
+        throw;
     }
     core->update();
 }
@@ -28,7 +30,7 @@ int main(int ac, char **av)
     }
     try {
         launchCore(ac, av);
-    } catch (std::exception &e) {
+    } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 84;
     }
