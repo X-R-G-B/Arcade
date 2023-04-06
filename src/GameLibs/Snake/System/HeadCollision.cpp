@@ -42,7 +42,6 @@ void Snake::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntityMa
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
             if (checkCollision(*bodySprite, headS)) {
-                std::cout << "body col restart : " << bodies.size() << " " << body->getId() << std::endl;
                 eventManager.addEvent(RESTART_EVENT);
                 return;
             }
