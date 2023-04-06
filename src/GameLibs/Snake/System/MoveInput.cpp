@@ -77,7 +77,6 @@ void Snake::System::MoveInput::run(
     for (auto &[event, action] : directionsChoice.at(curDir.direction)) {
         if (eventManager.isEventTriggered(event).first) {
             auto pos = toNextCase(sprite.pos, curDir.direction);
-            std::cout << "create ChangeDir " << pos.x << " " << pos.y << " head " << sprite.pos.x << " " << sprite.pos.y << std::endl;
             head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move),
                 action,
