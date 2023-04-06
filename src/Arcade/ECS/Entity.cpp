@@ -84,17 +84,18 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
     }
 }
 
-#include <iostream>
 void Arcade::ECS::Entity::removeComponent(const std::string &id)
 {
     for (auto &component : this->_components) {
-        auto _ = std::remove_if(component.second.begin(), component.second.end(),
-        [&id](const std::shared_ptr<Arcade::ECS::IComponent> &component) {
-            if (component.get() == nullptr) {
-                return false;
+        for (auto it = component.second.begin(); it != component.second.end(); ++it) {
+            if (*it == nullptr) {
+                continue;
             }
-            return component->id == id;
-        });
+            if ((*it)->id == id) {
+                component.second.erase(it);
+                return;
+            }
+        }
     }
 }
 
