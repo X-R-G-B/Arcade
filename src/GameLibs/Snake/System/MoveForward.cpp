@@ -19,21 +19,21 @@ void Snake::System::MoveForward::moveForward(
     Arcade::Graph::ISprite &sprite,
     double vector)
 {
-    int caseCurX = ((TO_INT(sprite.pos.x) - SNAKE_PADDING_WINDOW_X) % PARCELL_SIZE) * PARCELL_SIZE;
-    int caseCurY = ((TO_INT(sprite.pos.y) - SNAKE_PADDING_WINDOW_Y) % PARCELL_SIZE) * PARCELL_SIZE;
+    int caseCurX = (TO_INT(sprite.pos.x) - SNAKE_PADDING_WINDOW_X) % PARCELL_SIZE;
+    int caseCurY = (TO_INT(sprite.pos.y) - SNAKE_PADDING_WINDOW_Y) % PARCELL_SIZE;
 
     if (curDir.direction == Direction::UP) {
         sprite.pos.y -= vector;
-        sprite.pos.x = caseCurX;
+        sprite.pos.x = caseCurX * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_X;
     } else if (curDir.direction == Direction::DOWN) {
         sprite.pos.y += vector;
-        sprite.pos.x = caseCurX;
+        sprite.pos.x = caseCurX * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_X;
     } else if (curDir.direction == Direction::LEFT) {
         sprite.pos.x -= vector;
-        sprite.pos.y = caseCurY;
+        sprite.pos.y = caseCurY * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_Y;
     } else if (curDir.direction == Direction::RIGHT) {
         sprite.pos.x += vector;
-        sprite.pos.y = caseCurY;
+        sprite.pos.y = caseCurY * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_Y;
     }
 }
 
