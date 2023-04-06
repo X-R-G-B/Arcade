@@ -1,0 +1,86 @@
+/*
+** EPITECH PROJECT, 2023
+** Arcade
+** File description:
+** AutoTurnSystem
+*/
+
+#include <map>
+#include <string>
+#include <vector>
+#include "ArcadeStruct.hpp"
+#include "ISprite.hpp"
+#include "Direction.hpp"
+#include "Forward.hpp"
+#include "MagicValue.hpp"
+#include "ChangeDir.hpp"
+#include "AutoTurnSystem.hpp"
+
+static const std::map<Nibbler::Direction, std::vector<std::pair<std::string, Nibbler::Direction>>>
+directionsChoice = {
+{
+Nibbler::Direction::UP, {
+                      std::make_pair("KEY_LEFT_PRESSED", Nibbler::Direction::LEFT),
+                      std::make_pair("KEY_RIGHT_PRESSED", Nibbler::Direction::RIGHT),
+                      }
+},
+{
+Nibbler::Direction::DOWN, {
+                        std::make_pair("KEY_LEFT_PRESSED", Nibbler::Direction::LEFT),
+                        std::make_pair("KEY_RIGHT_PRESSED", Nibbler::Direction::RIGHT),
+                        }
+},
+{
+Nibbler::Direction::RIGHT, {
+                         std::make_pair("KEY_UP_PRESSED", Nibbler::Direction::UP),
+                         std::make_pair("KEY_DOWN_PRESSED", Nibbler::Direction::DOWN),
+                         }
+},
+{
+Nibbler::Direction::LEFT, {
+                        std::make_pair("KEY_UP_PRESSED", Nibbler::Direction::UP),
+                        std::make_pair("KEY_DOWN_PRESSED", Nibbler::Direction::DOWN),
+                        }
+}
+};
+
+Arcade::Vector2f Nibbler::System::AutoTurnSystem::toNextCase(const Arcade::Vector3f &pos, const Nibbler::Direction &direction)
+{
+    int caseCurX = TO_INT(pos.x) % PARCELL_SIZE;
+    int caseCurY = TO_INT(pos.y) % PARCELL_SIZE;
+
+    if (direction == Direction::UP) {
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+    } else if (direction == Direction::DOWN) {
+        caseCurY = pos.y + PARCELL_SIZE % PARCELL_SIZE;
+        return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE)};
+    } else if (direction == Direction::LEFT) {
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
+    } else if (direction == Direction::RIGHT) {
+        caseCurX = pos.x + PARCELL_SIZE % PARCELL_SIZE;
+        return {caseCurX * TO_FLOAT(PARCELL_SIZE), pos.y};
+    }
+    return {pos.x, pos.y};
+}
+
+void Nibbler::System::AutoTurnSystem::run(
+double deltaTime,
+Arcade::ECS::IEventManager &eventManager,
+Arcade::ECS::IEntityManager &currentEntityManager)
+{
+    static int nb_move = 0;
+    auto head = currentEntityManager.getEntitiesById(NIBBLER_HEAD);
+    auto &curDir = static_cast<Component::Forward &>(head->getComponents(FORWARD_KEY));
+    auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(NIBBLER_SPRITE));
+
+    for (auto &[event, action] : directionsChoice.at(curDir.direction)) {
+        if (eventManager.isEventTriggered(event).first) {
+            head->addComponent(std::make_shared<Component::ChangeDir>(
+            MOVE_INPUT_COMPS + std::to_string(++nb_move),
+            action,
+            toNextCase(sprite.pos, curDir.direction)
+            ));
+            break;
+        }
+    }
+}
