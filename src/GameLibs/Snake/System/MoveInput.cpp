@@ -47,18 +47,18 @@ directionsChoice = {
 
 Arcade::Vector2f Snake::System::MoveInput::toNextCase(const Arcade::Vector3f &pos, const Snake::Direction &direction)
 {
-    int caseCurX = (TO_INT(pos.x) - SNAKE_PADDING_WINDOW_X) / PARCELL_SIZE;
-    int caseCurY = (TO_INT(pos.y) - SNAKE_PADDING_WINDOW_Y) / PARCELL_SIZE;
+    int caseCurX = (TO_INT(pos.x) - SNAKE_PADDING_WINDOW_X) % PARCELL_SIZE;
+    int caseCurY = (TO_INT(pos.y) - SNAKE_PADDING_WINDOW_Y) % PARCELL_SIZE;
 
     if (direction == Direction::UP) {
         return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_Y};
     } else if (direction == Direction::DOWN) {
-        caseCurY = (TO_INT(pos.y) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_Y) / PARCELL_SIZE;
+        caseCurY = (TO_INT(pos.y) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_Y) % PARCELL_SIZE;
         return {pos.x, caseCurY * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_Y};
     } else if (direction == Direction::LEFT) {
         return {caseCurX * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_X, pos.y};
     } else if (direction == Direction::RIGHT) {
-        caseCurX = (TO_INT(pos.x) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_X) / PARCELL_SIZE;
+        caseCurX = (TO_INT(pos.x) + PARCELL_SIZE - SNAKE_PADDING_WINDOW_X) % PARCELL_SIZE;
         return {caseCurX * TO_FLOAT(PARCELL_SIZE) + SNAKE_PADDING_WINDOW_X, pos.y};
     }
     return {pos.x, pos.y};
