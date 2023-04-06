@@ -58,7 +58,7 @@ Arcade::ECS::IEntityManager &currentEntityManager)
     auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(NIBBLER_SPRITE));
     auto wallsEntity = currentEntityManager.getEntitiesById(NIBBLER_WALL_ID);
     const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
-    Arcade::Vector3f pos = {0, 0, 0};
+    bool isMoved = false;
 
     if (eventManager.isEventTriggered(COLLISION_EVENT).first) {
         return;
@@ -69,12 +69,12 @@ Arcade::ECS::IEntityManager &currentEntityManager)
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::LEFT,
                 toNextCase(sprite.pos, curDir.direction)));
-                break;
+                isMoved = true;
             } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + PARCELL_SIZE, sprite.pos.y), walls)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::RIGHT,
                 toNextCase(sprite.pos, curDir.direction)));
-                break;
+                isMoved = true;
             }
             break;
         case Direction::LEFT || Direction::RIGHT:
@@ -82,13 +82,16 @@ Arcade::ECS::IEntityManager &currentEntityManager)
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::UP,
                 toNextCase(sprite.pos, curDir.direction)));
-                break;
+                isMoved = true;
             } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y + PARCELL_SIZE), walls)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::DOWN,
                 toNextCase(sprite.pos, curDir.direction)));
-                break;
+                isMoved = true;
             }
             break;
+    }
+    if (!isMoved) {
+        eventManager.addEvent(RESTART_EVENT);
     }
 }
