@@ -36,7 +36,6 @@ void Snake::System::MoveForward::run(
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    return;
     auto snakes = currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
 
     for (auto &it : *snakes) {
