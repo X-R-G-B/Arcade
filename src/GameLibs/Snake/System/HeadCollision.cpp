@@ -13,10 +13,12 @@ bool Snake::System::HeadCollision::checkCollision(Arcade::ECS::IComponent &fst, 
 {
     Arcade::Graph::Sprite &fstS = static_cast<Arcade::Graph::Sprite&>(fst);
 
-    if((head->pos.x >= fstS.pos.x + fstS.rect.width)
-        || (head->pos.x + head->rect.width <= fstS.pos.x)
-        || (head->pos.y >= fstS.pos.y + fstS.rect.height)
-        || (head->pos.y + head->rect.height <= fstS.pos.y)) {
+    if (
+        (head->pos.x + 5 >= fstS.pos.x + fstS.rect.width - 5) ||
+        (head->pos.x + head->rect.width - 5 < fstS.pos.x + 5) ||
+        (head->pos.y + 5 > fstS.pos.y + fstS.rect.height - 5) ||
+        (head->pos.y + head->rect.height - 5 < fstS.pos.y + 5)
+    ) {
         return false;
     }
     return true;
@@ -27,15 +29,19 @@ void Snake::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntityMa
     std::vector<std::shared_ptr<Arcade::ECS::IEntity>> bodies =
         *(currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD).get());
 
-    if (bodies.size() < 2) {
+    if (bodies.size() < 3) {
         return;
     }
     for (auto const &body : bodies) {
-        if (body->getId() == SNAKE_HEAD) {
+        if (body->getId() == SNAKE_HEAD ||
+                body->getId() == std::string(SNAKE_BODY_PART) + "0" ||
+                body->getId() == std::string(SNAKE_BODY_PART) + "1" ||
+                body->getId() == std::string(SNAKE_BODY_PART) + "2" ||
+                body->getId() == std::string(SNAKE_BODY_PART) + "3") {
             continue;
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
-            if (checkCollision(*(bodySprite.get()), headS)) {
+            if (checkCollision(*bodySprite, headS)) {
                 eventManager.addEvent(RESTART_EVENT);
                 return;
             }
@@ -55,7 +61,10 @@ void Snake::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMana
         eventManager.addEvent(EATED_EVENT);
         return;
     }
-    if (headS->pos.x <= 0 || headS->pos.x + headS->rect.width >= 1920 || headS->pos.y <= 0 || headS->pos.y + headS->rect.height >= 1080) {
+    if (headS->pos.x < SNAKE_PADDING_WINDOW_X ||
+            headS->pos.x + headS->rect.width > MAP_RIGHT ||
+            headS->pos.y < SNAKE_PADDING_WINDOW_Y ||
+            headS->pos.y + headS->rect.height > MAP_BOTTOM) {
         eventManager.addEvent(RESTART_EVENT);
     }
 }

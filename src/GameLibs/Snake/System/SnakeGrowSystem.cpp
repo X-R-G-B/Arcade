@@ -40,7 +40,7 @@ std::shared_ptr<Arcade::ECS::IEntity> Snake::System::SnakeGrowSystem::getLastBod
     if (size == 0) {
         return entityManager.getEntitiesById(SNAKE_HEAD);
     }
-    return entityManager.getEntitiesById("snake_body_part_" + std::to_string(size - 1));
+    return entityManager.getEntitiesById(SNAKE_BODY_PART + std::to_string(size - 1));
 }
 
 Snake::Direction Snake::System::SnakeGrowSystem::getDirection(Arcade::Vector3f &lastBodyPos, Arcade::Vector3f pos)
@@ -107,9 +107,11 @@ void Snake::System::SnakeGrowSystem::placeNewBody(
 
 void Snake::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntityManager &entityManager, int idNbr)
 {
-    const std::string id = "snake_body_part_" + std::to_string(idNbr);
+    const std::string id = SNAKE_BODY_PART + std::to_string(idNbr);
 
     auto &entity = entityManager.createEntity(id);
+    auto snake = entityManager.getEntitiesById(SNAKE);
+    auto &growCompGrow = static_cast<Snake::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
     auto forward = std::make_shared<Snake::Component::Forward>(FORWARD_KEY, Direction::RIGHT);
     entity.addComponent(std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE));
     auto &comp = entity.getComponents(SNAKE_SPRITE);
@@ -122,6 +124,7 @@ void Snake::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntityM
     body.ttyData.foreground = {0, 255, 0, 0};
     placeNewBody(entityManager, forward, body, idNbr);
     entity.addComponent(forward);
+    growCompGrow.lastIdBodyComp = id;
 }
 
 void Snake::System::SnakeGrowSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager,

@@ -14,6 +14,15 @@ set_target_properties(arcade PROPERTIES
     COMPILE_FLAGS "-fno-gnu-unique"
 )
 ##############################################################################
+# arcade main menu
+add_library(arcade_menu_main SHARED)
+set_target_properties(arcade_menu_main PROPERTIES
+    CXX_STANDARD 20
+    COMPILE_FLAGS "-fno-gnu-unique"
+    PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/menu/"
+)
+##############################################################################
 # Game .so libs
 add_library(arcade_nibbler SHARED)
 set_target_properties(arcade_nibbler PROPERTIES

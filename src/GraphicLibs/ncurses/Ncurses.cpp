@@ -12,6 +12,7 @@
 #include "TEXT.hpp"
 #include "SPRITE.hpp"
 #include "MUSIC.hpp"
+#include "EVENTS.hpp"
 #include "Api.hpp"
 
 extern "C" {
@@ -51,6 +52,7 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>(_colorsUsed));
     _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>(_colorsUsed));
     _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
+    _systems.addSystem("Events", std::make_unique<Ncurses::System::EventsSystem>());
     auto &entity = _entityManager.createEntity("No Place to display");
     auto textComp = std::make_shared<Arcade::Graph::Text>("Resize");
     textComp->text = "Please allow more space to this terminal";
