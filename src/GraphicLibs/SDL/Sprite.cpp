@@ -8,10 +8,15 @@
 #include "Sprite.hpp"
 #include "Exceptions.hpp"
 
-Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer *renderer,
+Arcade::SDL::SpriteSystem::SpriteSystem(SDL_Renderer &renderer,
     std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
     : _win(renderer), _components(components)
 {
+}
+
+SDL_Texture &Arcade::SDL::SDLSprite::getSprite()
+{
+    return (*this->_sprite);
 }
 
 std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(std::shared_ptr <Graph::ISprite> SpriteComp)
@@ -26,12 +31,17 @@ std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(
     _components.push_back(sprite);
     return (sprite);
 }
+
 void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
 {
     std::shared_ptr<SDLSprite> sprite = this->getComponent(SpriteComp);
 
-    SDL_QueryTexture(sprite->_sprite, NULL, NULL, &sprite->_rect.w, &sprite->_rect.h);
-    SDL_RenderCopy(sprite->_win, sprite->_sprite, NULL, &sprite->_rect);
+    sprite->_rect.x = SpriteComp->pos.x;
+    sprite->_rect.y = SpriteComp->pos.y;
+    sprite->_rect.w = SpriteComp->rect.width;
+    sprite->_rect.h = SpriteComp->rect.height;
+    SDL_QueryTexture(&(sprite->getSprite()), NULL, NULL, &sprite->_rect.w, &sprite->_rect.h);
+    SDL_RenderCopy(&sprite->_win, &sprite->getSprite(), NULL, &sprite->_rect);
 }
 
 void Arcade::SDL::SpriteSystem::run(double deltaTime,
@@ -48,8 +58,8 @@ void Arcade::SDL::SpriteSystem::run(double deltaTime,
 
 Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
                                   const Arcade::Vector3f &pos, Graph::Rect &rect,
-                                  SDL_Renderer *renderer)
-                                  : _win(renderer)
+                                  SDL_Renderer &renderer)
+    : _win(renderer)
 {
     SDL_Rect dest;
 
@@ -57,10 +67,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     dest.y = pos.y;
     dest.w = rect.width;
     dest.h = rect.height;
-    if (renderer == nullptr) {
-        throw ArcadeExceptions("Unexpected error was caugth");
-    }
-    this->_sprite = IMG_LoadTexture(renderer, path.data());
+    this->_sprite = IMG_LoadTexture(&renderer, path.data());
     if (_sprite == nullptr) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
@@ -68,7 +75,7 @@ Arcade::SDL::SDLSprite::SDLSprite(const std::string id, const std::string &path,
     this->type = ECS::CompType::SDLSPRITE;
     this->_rect = dest;
     SDL_QueryTexture(_sprite, NULL, NULL, &dest.w, &dest.h);
-    SDL_RenderCopy(this->_win, this->_sprite, NULL, &dest);
+    SDL_RenderCopy(&this->_win, this->_sprite, NULL, &dest);
 }
 
 Arcade::SDL::SDLSprite::~SDLSprite()
