@@ -80,10 +80,10 @@ std::shared_ptr<Arcade::ECS::IComponent> component)
 void Arcade::ECS::Entity::removeComponent(const std::string &id)
 {
     for (auto &component : this->_components) {
-        std::remove_if(component.second.begin(), component.second.end(),
+        auto _ = std::remove_if(component.second.begin(), component.second.end(),
         [&id](const std::shared_ptr<Arcade::ECS::IComponent> &component) {
             if (component.get() == nullptr) {
-                std::cout << "encule" << std::endl;
+                return false;
             }
             return component->id == id;
         });
