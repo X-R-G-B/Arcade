@@ -45,7 +45,7 @@ void Arcade::SDL::TextSystem::run(double deltaTime,
     } catch (const std::exception &e) {
         return;
     }
-    if (textComponents == nullptr) {
+    if (textComponents.get() == nullptr) {
         return;
     }
     for (auto const &text : *(textComponents)) {

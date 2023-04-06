@@ -41,7 +41,7 @@ void Arcade::Sfml::TextSystem::run(double deltaTime,
     std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents;
  
     try {
-        currentEntityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+        textComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::TEXT);
     } catch (const std::exception &e) {
         return;
     }

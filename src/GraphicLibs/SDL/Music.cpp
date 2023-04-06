@@ -48,7 +48,7 @@ void Arcade::SDL::MusicSystem::run(double deltaTime, ECS::IEventManager &eventMa
     } catch (const std::exception &e) {
         return;
     }
-    if (musicComponents == nullptr) {
+    if (musicComponents.get() == nullptr) {
         return;
     }
     for (auto const &music : *musicComponents) {
