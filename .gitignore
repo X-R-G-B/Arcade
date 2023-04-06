@@ -61,7 +61,6 @@ _deps
 
 lib/*
 !lib/.gitkeep
-!lib/menu/.gitkeep
 .clang-format
 .cmake/
 .idea/

@@ -26,7 +26,7 @@ Arcade::SDL::DisplayModule::DisplayModule()
     }
     this->_systems.addSystem("musicSystem", std::make_unique<TextSystem>(this->_renderer, this->_components));
     this->_systems.addSystem("textSystem", std::make_unique<TextSystem>(this->_renderer, this->_components));
-    this->_systems.addSystem("spriteSystem", std::make_unique<SpriteSystem>(*this->_renderer, this->_components));
+    this->_systems.addSystem("spriteSystem", std::make_unique<SpriteSystem>(this->_renderer, this->_components));
     _systems.addSystem("eventHandler", std::make_unique<EventHandler>());
 }
 

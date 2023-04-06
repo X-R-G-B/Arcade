@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 #include "IComponent.hpp"
 
@@ -18,7 +17,6 @@ namespace Snake {
                 SnakeGrow(const std::string &id);
                 int grow;
                 int size;
-                std::string lastIdBodyComp;
         };
     }
 }
