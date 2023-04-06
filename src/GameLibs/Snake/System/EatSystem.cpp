@@ -10,7 +10,6 @@
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
-#include <iostream>
 void Snake::System::EatSystem::run(double deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
