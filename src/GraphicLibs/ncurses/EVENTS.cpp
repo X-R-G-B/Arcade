@@ -61,6 +61,7 @@ static const std::map<int, std::string> keyMap = {
     {KEY_END, "QUIT"},
     {KEY_RESIZE, "WINDOW_RESIZE"},
     {CTRL('c'), "QUIT"},
+    {27, "KEY_ESC_PRESSED"},
 };
 
 void Ncurses::System::EventsSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
