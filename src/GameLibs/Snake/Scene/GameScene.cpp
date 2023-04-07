@@ -6,6 +6,7 @@
 */
 
 #include <memory>
+#include <string>
 #include "GameScene.hpp"
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
@@ -97,14 +98,14 @@ void Snake::Scene::GameScene::addScore()
     scoreCurText->text = "Current Score: 0";
     try {
         scores = SaveScore.loadScore();
-        scoreMaxText->text = "Max Score: 0";
+        scoreMaxText->text = "Max Score: " + scores["grow"];
     } catch (...) {
         scoreMaxText->text = "Max Score: (no data)";
     }
     scoreMaxText->pos = {10, 10, 0};
     scoreCurText->pos = {10, 50, 0};
     scoreMaxText->textColor = {255, 255, 255, 255};
-    scoreMaxText->textColor = {255, 255, 255, 255};
+    scoreCurText->textColor = {255, 255, 255, 255};
     scoreMaxText->backgroundColor = {0, 0, 0, 255};
     scoreCurText->backgroundColor = {0, 0, 0, 255};
     scoreMaxText->fontPath = PATH_FONT;
