@@ -6,6 +6,7 @@
 */
 
 #include <memory>
+#include <string>
 #include "GameScene.hpp"
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
@@ -14,6 +15,8 @@
 #include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeMapComponent.hpp"
+#include "Text.hpp"
+#include "SaveScore.hpp"
 
 #define APPLE_SPRITE_COMP_PATH "assets/snake/normal/apple.png"
 
@@ -81,11 +84,40 @@ void Snake::Scene::GameScene::createApple()
     appleEntity.addComponent(apple);
 }
 
+void Snake::Scene::GameScene::addScore()
+{
+    Arcade::ECS::IEntityManager &entityManager = getEntityManager();
+    Arcade::ECS::IEntity &score = entityManager.createEntity(SCORE_ENTITY);
+    std::shared_ptr<Arcade::Graph::Text> scoreCurText = std::make_shared<Arcade::Graph::Text>(SCORE_ENTITY_COMP_CURRENT);
+    std::shared_ptr<Arcade::Graph::Text> scoreMaxText = std::make_shared<Arcade::Graph::Text>(SCORE_ENTITY_COMP_MAX);
+    SaveScore::SaveScore SaveScore(PATH_SCORE);
+    std::map<std::string, std::string> scores;
+
+    score.addComponent(scoreCurText);
+    score.addComponent(scoreMaxText);
+    scoreCurText->text = std::string(SCORE_TITLE) + "0";
+    try {
+        scores = SaveScore.loadScore();
+        scoreMaxText->text = MAX_SCORE_TITLE + scores[SAVE_SCORE_NAME];
+    } catch (...) {
+        scoreMaxText->text = std::string(MAX_SCORE_TITLE) + "(no data)";
+    }
+    scoreMaxText->pos = {10, 10, 0};
+    scoreCurText->pos = {10, 50, 0};
+    scoreMaxText->textColor = {255, 255, 255, 255};
+    scoreCurText->textColor = {255, 255, 255, 255};
+    scoreMaxText->backgroundColor = {0, 0, 0, 255};
+    scoreCurText->backgroundColor = {0, 0, 0, 255};
+    scoreMaxText->fontPath = PATH_FONT;
+    scoreCurText->fontPath = PATH_FONT;
+}
+
 bool Snake::Scene::GameScene::init()
 {
     addSnakeMap();
     createApple();
     createSnake();
+    addScore();
     return (true);
 }
 

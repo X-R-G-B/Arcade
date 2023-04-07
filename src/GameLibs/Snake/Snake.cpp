@@ -20,6 +20,7 @@
 #include "EatSystem.hpp"
 #include "SnakeGrowSystem.hpp"
 #include "MoveDirection.hpp"
+#include "Score.hpp"
 
 extern "C" {
     LibType getType()
@@ -56,6 +57,7 @@ Snake::SnakeGameModule::SnakeGameModule()
     _systemManager.addSystem("AppleGeneration", std::make_unique<Snake::System::AppleSystem>());
     _systemManager.addSystem("EatSystem", std::make_unique<Snake::System::EatSystem>());
     _systemManager.addSystem("AAGrowSystem", std::make_unique<Snake::System::SnakeGrowSystem>());
+    _systemManager.addSystem("ZScoreSystem", std::make_unique<Snake::System::Score>());
 }
 
 Arcade::ECS::IEntityManager &Snake::SnakeGameModule::getCurrentEntityManager()
