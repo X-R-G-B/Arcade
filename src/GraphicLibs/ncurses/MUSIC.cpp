@@ -14,16 +14,21 @@
 
 void Ncurses::System::MusicSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::MUSIC);
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musics;
 
-    for (const auto &entity : *texts) {
-        auto textComponents = entity->getComponents(Arcade::ECS::CompType::MUSIC);
-        for (const auto &textComponent : textComponents) {
-            const auto text = std::static_pointer_cast<Arcade::Graph::Music>(textComponent);
-            if (text->play) {
-                text->play = false;
-                _miniAudioWrapper.playSound(text->path);
-            }
+    try {
+        musics = entityManager.getComponentsByComponentType(Arcade::ECS::CompType::MUSIC);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (musics.get() == nullptr) {
+        return;
+    }
+    for (const auto &comp : *musics) {
+        const auto musicComp = std::static_pointer_cast<Arcade::Graph::Music>(comp);
+        if (musicComp->play) {
+            musicComp->play = false;
+            _miniAudioWrapper.playSound(musicComp->path);
         }
     }
 }
