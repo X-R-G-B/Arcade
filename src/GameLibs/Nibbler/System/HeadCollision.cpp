@@ -54,9 +54,9 @@ void Nibbler::System::HeadCollision::checkHeadWallCollision(Arcade::ECS::IEntity
     auto wallsEntity = currentScene.getEntitiesById(NIBBLER_WALL_ID);
     auto walls = wallsEntity->getComponents(Arcade::ECS::CompType::SPRITE);
 
-    for (auto const wall : walls) {
+    for (auto const &wall : walls) {
         if (checkCollision(*wall, headS)) {
-            eventManager.addEvent(COLLISION_EVENT);
+            eventManager.addEvent(COLLISION_EVENT);g
         }
     }
 }
