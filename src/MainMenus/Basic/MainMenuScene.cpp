@@ -40,6 +40,14 @@ bool BasicMenu::MainMenuScene::init()
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;
     graphicsEntity.addComponent(text);
+    compPos.x = 1920.0 / 3.0;
+    compPos.y = 10;
+    text = std::make_shared<Arcade::Graph::Text>("Scores");
+    text->fontPath = PATH_FONT;
+    text->text = "Scores:";
+    text->textColor = {255, 0, 0, 255};
+    text->pos = compPos;
+    graphicsEntity.addComponent(text);
     return (true);
 }
 
