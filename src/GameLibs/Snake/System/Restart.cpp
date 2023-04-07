@@ -31,13 +31,13 @@ void Snake::System::Restart::run(double deltaTime,
         auto &growCompGrow = static_cast<Snake::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
         SaveScore::SaveScore saveScore(PATH_SCORE);
         auto score = saveScore.loadScore();
-        if (score.find("grow") == score.end()) {
-            score["grow"] = std::to_string(growCompGrow.size);
+        if (score.find(SAVE_SCORE_NAME) == score.end()) {
+            score[SAVE_SCORE_NAME] = std::to_string(growCompGrow.size);
         } else {
-            std::stringstream ss(score.at("grow"));
+            std::stringstream ss(score.at(SAVE_SCORE_NAME));
             int res;
             ss >> res;
-            score["grow"] = std::to_string(std::max(res, growCompGrow.size));
+            score[SAVE_SCORE_NAME] = std::to_string(std::max(res, growCompGrow.size));
         }
         saveScore.saveScore(score);
     } catch (const std::exception &e) {
