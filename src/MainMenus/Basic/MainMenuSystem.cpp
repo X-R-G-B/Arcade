@@ -50,7 +50,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
     compPos.y = 50;
     try {
         scores = _saveScore.loadScore();
-    } catch (const std::runtime_error &e) {
+    } catch (const std::exception &e) {
         scores = std::map<std::string, std::string>();
         scores.insert({"No score", "0"});
     }
