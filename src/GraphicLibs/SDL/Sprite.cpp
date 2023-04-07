@@ -34,7 +34,7 @@ std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(
 
 void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity)
 {
-    std::shared_ptr<SDLSprite> sprite = this->getComponent(SpriteComp);
+    std::shared_ptr<SDLSprite> sprite = this->getComponent(SpriteComp, idEntity);
 
     sprite->_rect.x = SpriteComp->pos.x;
     sprite->_rect.y = SpriteComp->pos.y;
