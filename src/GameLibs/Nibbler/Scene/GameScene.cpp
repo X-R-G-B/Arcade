@@ -15,13 +15,13 @@
 #include "NibblerCompType.hpp"
 #include "NibblerMapComponent.hpp"
 #include "NibblerWallComponent.hpp"
+#include "Forward.hpp"
+#include "SnakeGrow.hpp"
+
+#define APPLE_SPRITE_COMP_PATH "assets/snake/normal/apple.png"
 
 Nibbler::Scene::GameScene::GameScene()
     : Arcade::Game::AScene(std::make_unique<Arcade::ECS::EntityManager>())
-{
-}
-
-void Nibbler::Scene::GameScene::addNibblerHeadSprite(Arcade::ECS::IEntity &head)
 {
 }
 
@@ -185,12 +185,12 @@ void Nibbler::Scene::GameScene::addNibblerMap()
     }
 }
 
-void Snake::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
+void Nibbler::Scene::GameScene::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
 {
     std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE);
 
     headS->path = SNAKE_HEAD_PATH;
-    headS->pos = {SNAKE_PADDING_WINDOW_X + PARCELL_SIZE * 5, SNAKE_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
+    headS->pos = {NIBBLER_PADDING_WINDOW_X + PARCELL_SIZE * 5, NIBBLER_PADDING_WINDOW_Y + PARCELL_SIZE * 8, 0};
     headS->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     headS->currentRectIndex = 0;
     headS->ttyData.defaultChar = "#####\n#####\n#####";
@@ -207,21 +207,30 @@ void Nibbler::Scene::GameScene::createSnake()
     Arcade::ECS::IEntity &head = EntityManager.createEntity(SNAKE_HEAD);
 
     snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
-    Snake::Component::SnakeGrow &grow = static_cast<Snake::Component::SnakeGrow&>(snake.getComponents(SNAKE_GROW_COMPONENT));
-    grow.grow = 0;
+    Nibbler::Component::SnakeGrow &grow = static_cast<Nibbler::Component::SnakeGrow&>(snake.getComponents(SNAKE_GROW_COMPONENT));
+    grow.grow = 4;
     addSnakeHeadSprite(head);
 }
 
 void Nibbler::Scene::GameScene::createApple()
 {
+    Arcade::ECS::IEntityManager &entityManager = getEntityManager();
+    Arcade::ECS::IEntity &appleEntity = entityManager.createEntity(APPLE_ENTITY);
+    std::shared_ptr<Arcade::Graph::Sprite> apple = std::make_shared<Arcade::Graph::Sprite>(APPLE_SPRITE_COMP);
 
+    apple->ttyData = {"*****\n*****\n*****", {255, 0, 0, 255}, {255, 0, 0, 255}};
+    apple->path = APPLE_SPRITE_COMP_PATH;
+    apple->pos = {NIBBLER_PADDING_WINDOW_X + PARCELL_SIZE * 10, NIBBLER_PADDING_WINDOW_Y + 8 * PARCELL_SIZE, 0};
+    apple->rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
+    apple->currentRectIndex = 0;
+    appleEntity.addComponent(apple);
 }
 
 bool Nibbler::Scene::GameScene::init()
 {
-    createApple();
-    createNibbler();
     addNibblerMap();
+    createApple();
+    createSnake();
     return (true);
 }
 
