@@ -8,16 +8,16 @@
 #include <memory>
 #include "Api.hpp"
 #include "Nibbler.hpp"
-//#include "MoveInput.hpp"
-//#include "MoveForward.hpp"
+#include "MoveInput.hpp"
+#include "MoveForward.hpp"
 #include "GameScene.hpp"
-//#include "AppleSystem.hpp"
-//#include "NibblerGrow.hpp"
+#include "AppleSystem.hpp"
+#include "SnakeGrow.hpp"
 #include "NibblerCompType.hpp"
-//#include "Restart.hpp"
-//#include "HeadCollision.hpp"
-//#include "EatSystem.hpp"
-//#include "NibblerGrowSystem.hpp"
+#include "Restart.hpp"
+#include "HeadCollision.hpp"
+#include "EatSystem.hpp"
+#include "SnakeGrowSystem.hpp"
 
 extern "C" {
     LibType getType()
@@ -45,13 +45,13 @@ Nibbler::NibblerGameModule::NibblerGameModule()
 {
     _scenes.push_back(std::make_unique<Nibbler::Scene::GameScene>());
     _scenes.front()->init();
-//    _systemManager.addSystem("MoveInput", std::make_unique<Nibbler::System::MoveInput>());
-//    _systemManager.addSystem("MoveForward", std::make_unique<Nibbler::System::MoveForward>());
-//    _systemManager.addSystem("Restart", std::make_unique<Nibbler::System::Restart>(_scenes.front()));
-//    _systemManager.addSystem("Apple", std::make_unique<Nibbler::System::AppleSystem>(_scenes.front()->getEntityManager()));
-//    _systemManager.addSystem("collisionSystem", std::make_unique<Nibbler::System::HeadCollision>());
-//    _systemManager.addSystem("EatSystem", std::make_unique<Nibbler::System::EatSystem>());
-//    _systemManager.addSystem("GrowSystem", std::make_unique<Nibbler::System::NibblerGrowSystem>());
+    _systemManager.addSystem("MoveInput", std::make_unique<Nibbler::System::MoveInput>());
+    _systemManager.addSystem("MoveForward", std::make_unique<Nibbler::System::MoveForward>());
+    _systemManager.addSystem("Restart", std::make_unique<Nibbler::System::Restart>(_scenes.front()));
+    _systemManager.addSystem("Apple", std::make_unique<Nibbler::System::AppleSystem>());
+    _systemManager.addSystem("collisionSystem", std::make_unique<Nibbler::System::HeadCollision>());
+    _systemManager.addSystem("EatSystem", std::make_unique<Nibbler::System::EatSystem>());
+    _systemManager.addSystem("GrowSystem", std::make_unique<Nibbler::System::SnakeGrowSystem>());
 }
 
 Arcade::ECS::IEntityManager &Nibbler::NibblerGameModule::getCurrentEntityManager()

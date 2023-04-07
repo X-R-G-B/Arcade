@@ -9,16 +9,16 @@
 #include "AppleSystem.hpp"
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
-#include "SnakeCompType.hpp"
+#include "NibblerCompType.hpp"
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
-Snake::System::AppleSystem::AppleSystem()
+Nibbler::System::AppleSystem::AppleSystem()
 {
     std::srand(std::time(nullptr));
 }
 
-void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
+void Nibbler::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);
     Arcade::ECS::IComponent &appleIComp = apple->getComponents(APPLE_SPRITE_COMP);
@@ -47,7 +47,7 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
     }
 }
 
-void Snake::System::AppleSystem::run(double deltaTime,
+void Nibbler::System::AppleSystem::run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager)
 {
@@ -55,7 +55,7 @@ void Snake::System::AppleSystem::run(double deltaTime,
         return;
     }
     _positions.clear();
-    auto mapEntity = currentEntityManager.getEntitiesById(SNAKE_MAP_ID);
+    auto mapEntity = currentEntityManager.getEntitiesById(NIBBLER_MAP_ID);
     auto mapComponents = mapEntity->getComponents(Arcade::ECS::CompType::SPRITE);
 
     for (auto it = mapComponents.begin(); it != mapComponents.end(); it++) {
