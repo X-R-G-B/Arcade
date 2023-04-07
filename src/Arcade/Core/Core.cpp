@@ -138,6 +138,8 @@ void Arcade::Core::Core::checkChangeLib(ECS::IEventManager &eventManager)
         nextLib(LibType::GAME);
     } else if (eventManager.isEventTriggered("CHANGE_GRAPH").first == true) {
         nextLib(LibType::GRAPH);
+    } else if (eventManager.isEventTriggered("GAME_END").first) {
+        _gameLibHandler.reset();
     }
 }
 
