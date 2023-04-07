@@ -11,14 +11,9 @@
 #define TO_FLOAT(x) static_cast<float>(x)
 #define TO_INT(x) static_cast<int>(x)
 
-<<<<<<< HEAD
 #define NIBBLER_HEAD "NIBBLER_HEAD"
 #define NIBBLER_HEAD_SPRITE_COMP "NIBBLER_HEAD_SPRITE_COMP"
 #define NIBBLER_SPRITE "NIBBLER_SPRITE"
-=======
-#define SNAKE_HEAD "SNAKE_HEAD"
-#define SNAKE_SPRITE "SNAKE_SPRITE"
->>>>>>> ARCADE-7-nibbler
 #define MOVE_INPUT_COMPS "MOVE_INPUT_COMPS"
 #define LAST_SNAKE_BODY_COMP "LAST_SNAKE_BODY_COMP"
 
