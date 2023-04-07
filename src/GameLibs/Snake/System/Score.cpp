@@ -6,15 +6,18 @@
 */
 
 #include <sstream>
+#include <string>
 #include "Score.hpp"
 #include "SnakeGrow.hpp"
 #include "MagicValue.hpp"
 #include "Text.hpp"
 
+#include <iostream>
+
 void Snake::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     _float += deltaTime;
-    if (_float < 10) {
+    if (_float < 1.6) {
         return;
     }
     _float -= 10;
@@ -24,10 +27,13 @@ void Snake::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &eve
     auto &scoreMax = static_cast<Arcade::Graph::Text &>(scores->getComponents(SCORE_ENTITY_COMP_MAX));
     auto &growComp = static_cast<Snake::Component::SnakeGrow &>(grow);
     std::stringstream ss;
+    std::string str;
     int Score;
 
     scoreCur.text = "Current Score: " + std::to_string(growComp.size);
-    ss.str(scoreMax.text.substr(scoreMax.text.find(": ") + 2, scoreMax.text.npos));
+    str = scoreMax.text.substr(scoreMax.text.find(": ") + 2, scoreMax.text.npos);
+    std::cout << str << std::endl;
+    ss << str;
     ss >> Score;
     if (Score < growComp.size) {
         scoreMax.text = "Max Score: " + std::to_string(Score);
