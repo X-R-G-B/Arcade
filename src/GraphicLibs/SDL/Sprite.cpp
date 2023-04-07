@@ -19,20 +19,20 @@ SDL_Texture &Arcade::SDL::SDLSprite::getSprite()
     return (*this->_sprite);
 }
 
-std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(std::shared_ptr <Graph::ISprite> SpriteComp)
+std::shared_ptr<Arcade::SDL::SDLSprite> Arcade::SDL::SpriteSystem::getComponent(std::shared_ptr <Graph::ISprite> SpriteComp, const std::string &idEntity)
 {
     for (auto const &comp : this->_components) {
-        if (comp->id == SpriteComp->id) {
+        if (comp->id == SpriteComp->id + idEntity) {
             return (std::static_pointer_cast<SDLSprite>(comp));
         }
     }
 
-    std::shared_ptr<SDLSprite> sprite = std::make_shared<SDLSprite>(SpriteComp->id, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, this->_win);
+    std::shared_ptr<SDLSprite> sprite = std::make_shared<SDLSprite>(SpriteComp->id + idEntity, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, this->_win);
     _components.push_back(sprite);
     return (sprite);
 }
 
-void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
+void Arcade::SDL::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity)
 {
     std::shared_ptr<SDLSprite> sprite = this->getComponent(SpriteComp);
 
@@ -48,18 +48,26 @@ void Arcade::SDL::SpriteSystem::run(double deltaTime,
                                ECS::IEventManager &eventManager,
                                ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IComponent>>> spriteComponents;
-
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> entities;
+ 
     try {
-        spriteComponents = entityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+        entities = entityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
     } catch (const std::exception &e) {
         return;
     }
-    if (spriteComponents.get() == nullptr) {
+    if (entities.get() == nullptr) {
         return;
     }
-    for (auto const &sprite : *spriteComponents) {
-        this->handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
+    for (auto const &entity : *entities) {
+        try {
+            const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &sprites =
+                entity->getComponents(Arcade::ECS::CompType::SPRITE);
+            for (auto const &sprite : sprites) {
+                handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite), entity->getId());
+            }
+        } catch (...) {
+            continue;
+        }
     }
 }
 

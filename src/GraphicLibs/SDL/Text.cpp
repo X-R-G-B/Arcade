@@ -14,22 +14,22 @@ Arcade::SDL::TextSystem::TextSystem(SDL_Renderer *win, std::vector<std::shared_p
 
 }
 
-std::shared_ptr<Arcade::SDL::SDLText> Arcade::SDL::TextSystem::getComponent(std::shared_ptr<Graph::IText> TextComp)
+std::shared_ptr<Arcade::SDL::SDLText> Arcade::SDL::TextSystem::getComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity)
 {
     for (auto const &comp : this->_components) {
-        if (comp->id == TextComp->id) {
+        if (comp->id == TextComp->id + idEntity) {
             return (std::static_pointer_cast<SDLText>(comp));
         }
     }
 
-    std::shared_ptr<SDLText> text = std::make_shared<SDLText>(TextComp->id, TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos, this->_win);
+    std::shared_ptr<SDLText> text = std::make_shared<SDLText>(TextComp->id + idEntity, TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos, this->_win);
     _components.push_back(text);
     return (text);
 }
 
-void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> TextComp)
+void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity)
 {
-    std::shared_ptr<SDLText> text = this->getComponent(TextComp);
+    std::shared_ptr<SDLText> text = this->getComponent(TextComp, idEntity);
 
     SDL_RenderCopy(text->_win, text->_text, NULL, &text->_rect);
 }
@@ -38,18 +38,26 @@ void Arcade::SDL::TextSystem::run(double deltaTime,
                                   ECS::IEventManager &eventManager,
                                   ECS::IEntityManager &entityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents;
-
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> entities;
+ 
     try {
-        textComponents = entityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+        entities = entityManager.getEntitiesByComponentType(ECS::CompType::TEXT);
     } catch (const std::exception &e) {
         return;
     }
-    if (textComponents.get() == nullptr) {
+    if (entities.get() == nullptr) {
         return;
     }
-    for (auto const &text : *(textComponents)) {
-        this->handleComponent(std::static_pointer_cast<Graph::IText>(text));
+    for (auto const &entity : *entities) {
+        try {
+            const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &sprites =
+                entity->getComponents(Arcade::ECS::CompType::TEXT);
+            for (auto const &sprite : sprites) {
+                handleComponent(std::static_pointer_cast<Graph::IText>(sprite), entity->getId());
+            }
+        } catch (...) {
+            continue;
+        }
     }
 }
 
