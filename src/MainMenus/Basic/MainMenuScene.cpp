@@ -27,7 +27,7 @@ bool BasicMenu::MainMenuScene::init()
     Arcade::Vector3f compPos = {10, 10, 0};
 
     text = std::make_shared<Arcade::Graph::Text>("GameLibsText");
-    text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+    text->fontPath = PATH_FONT;
     text->text = "Game Libs availible:";
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;
@@ -35,7 +35,7 @@ bool BasicMenu::MainMenuScene::init()
     compPos.x = 1920.0 / 2.0;
     compPos.y = 10;
     text = std::make_shared<Arcade::Graph::Text>("GraphLibsText");
-    text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+    text->fontPath = PATH_FONT;
     text->text = "Graphic Libs availible:";
     text->textColor = {255, 0, 0, 255};
     text->pos = compPos;

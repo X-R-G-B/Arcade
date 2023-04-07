@@ -27,7 +27,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
     compPos.y = 50;
     for (const auto &textText : _context->gameLibraries) {
         text = std::make_shared<Arcade::Graph::Text>(textText);
-        text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+        text->fontPath = PATH_FONT;
         text->text = textText;
         text->textColor = {255, 0, 0, 255};
         text->pos = compPos;
@@ -38,7 +38,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
     compPos.y = 50;
     for (const auto &textText : _context->graphicalLibraries) {
         text = std::make_shared<Arcade::Graph::Text>(textText);
-        text->fontPath = "./assets/Menu/Roboto-Thin.ttf";
+        text->fontPath = PATH_FONT;
         text->text = textText;
         text->textColor = {255, 0, 0, 255};
         text->pos = compPos;

@@ -41,3 +41,11 @@
 #define PARCELL_SIZE 64
 #define MAP_PARCELLS_X 17
 #define MAP_PARCELLS_Y 15
+
+#define SAVE_FILE_SNAKE ".snake.txt"
+
+#define SCORE_ENTITY "SCORE_ENTITY"
+#define SCORE_ENTITY_COMP_CURRENT "SCORE_ENTITY_COMP_CURRENT"
+#define SCORE_ENTITY_COMP_MAX "SCORE_ENTITY_COMP_MAX"
+
+#define PATH_FONT "./assets/fonts/arial.ttf"
