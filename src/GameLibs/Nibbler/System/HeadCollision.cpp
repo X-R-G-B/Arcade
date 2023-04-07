@@ -51,11 +51,12 @@ void Nibbler::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntity
 
 void Nibbler::System::HeadCollision::checkHeadWallCollision(Arcade::ECS::IEntityManager &currentScene, std::shared_ptr<Arcade::Graph::Sprite> headS, Arcade::ECS::IEventManager &eventManager)
 {
-    auto wall;//TODO = ??
+    auto wallsEntity = currentScene.getEntitiesById(NIBBLER_WALL_ID);
+    auto walls = wallsEntity->getComponents(Arcade::ECS::CompType::SPRITE);
 
     for (auto const wall : walls) {
-        if (checkCollision(wall, headS)) {
-            event.addEvent(COLLIION_EVENT);
+        if (checkCollision(*wall, headS)) {
+            eventManager.addEvent(COLLISION_EVENT);
         }
     }
 }
