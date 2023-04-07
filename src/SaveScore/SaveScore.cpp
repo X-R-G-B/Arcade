@@ -17,8 +17,13 @@ SaveScore::SaveScore::SaveScore(const std::string &fileName, const std::string &
 
 void SaveScore::SaveScore::saveScore(const std::map<std::string, std::string> &scores)
 {
-    std::ofstream file(_fileName, std::ios::app);
+    std::ofstream file(_fileName);
 
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file");
+    }
+    file.close();
+    file.open(_fileName);
     if (!file.is_open()) {
         throw std::runtime_error("Could not open file");
     }
