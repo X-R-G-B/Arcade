@@ -113,7 +113,7 @@ void Arcade::Core::Core::updater(std::chrono::duration<double> delta,
             delta.count() * 100,
             eventManager,
             _mainMenuLibHandler.getModule()->getCurrentEntityManager());
-        _mainMenuLibHandler.getModule()->update(delta.count(), eventManager, &_context);
+        _mainMenuLibHandler.getModule()->update(delta.count() * 100, eventManager, &_context);
     }
 }
 
