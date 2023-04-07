@@ -8,11 +8,11 @@ target_include_directories(arcade_ncurses PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(arcade_sdl2 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(arcade_sfml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
-target_sources(arcade PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
-)
+# target_sources(arcade PRIVATE
+#     "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"
+#     "${CMAKE_CURRENT_SOURCE_DIR}/Sprite.cpp"
+#     "${CMAKE_CURRENT_SOURCE_DIR}/Text.cpp"
+# )
 
 target_sources(arcade_menu_main PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Music.cpp"

@@ -67,13 +67,18 @@ bool Ncurses::System::TextSystem::printText(const std::shared_ptr<Arcade::Graph:
 
 void Ncurses::System::TextSystem::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto texts = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::TEXT);
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> texts;
 
-    for (const auto &entity : *texts) {
-        auto textComponents = entity->getComponents(Arcade::ECS::CompType::TEXT);
-        for (const auto &textComponent : textComponents) {
-            const auto text = std::static_pointer_cast<Arcade::Graph::Text>(textComponent);
-            this->printText(text);
-        }
+    try {
+        texts = entityManager.getComponentsByComponentType(Arcade::ECS::CompType::TEXT);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (texts.get() == nullptr) {
+        return;
+    }
+    for (const auto &comp : *texts) {
+        const auto text = std::static_pointer_cast<Arcade::Graph::Text>(comp);
+        this->printText(text);
     }
 }

@@ -40,10 +40,17 @@ void Arcade::Sfml::MusicSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musicComponents =
-        currentEntityManager.getComponentsByComponentType(ECS::CompType::MUSIC);
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musicComponents;
 
-    for (auto const &music : *(musicComponents.get())) {
+    try {
+        musicComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::MUSIC);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (musicComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &music : *musicComponents) {
         handleComponent(std::static_pointer_cast<Graph::IMusic>(music));
     }
 }
