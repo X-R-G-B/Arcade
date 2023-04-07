@@ -9,6 +9,7 @@
 
 #include "IMainMenuModule.hpp"
 #include "ISystem.hpp"
+#include "SaveScore.hpp"
 
 namespace BasicMenu {
     class MainMenuSystem : public Arcade::ECS::ISystem {
@@ -22,5 +23,6 @@ namespace BasicMenu {
         private:
             Arcade::MainMenu::Context *_context;
             bool _initialized = false;
+            SaveScore::SaveScore _saveScore;
     };
 }

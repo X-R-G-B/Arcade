@@ -22,6 +22,7 @@ namespace Snake {
                 void addSnakeHeadSprite(Arcade::ECS::IEntity &head);
                 void createApple();
                 void addSnakeMap();
+                void addScore();
             private:
         };
     }
