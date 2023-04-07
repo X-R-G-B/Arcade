@@ -25,7 +25,8 @@ void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &even
         auto components = entity->getComponents(Arcade::ECS::CompType::SPRITE).front();
         auto moveableSprite = std::static_pointer_cast<Arcade::Graph::Sprite>(components);
 
-        if (moveableSprite->pos.x == randPosition.x && moveableSprite->pos.y == randPosition.y) {
+        if ((moveableSprite->pos.x == randPosition.x && moveableSprite->pos.y == randPosition.y) ||
+                (randPosition.x == 0 && randPosition.y == 0) {
             randPosition = _positions[1 + (std::rand() % _positions.size())];
             it = snakeEntities->begin();
             _positions.erase(std::next(_positions.begin(), randNumber));
