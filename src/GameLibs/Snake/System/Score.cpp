@@ -12,8 +12,6 @@
 #include "MagicValue.hpp"
 #include "Text.hpp"
 
-#include <iostream>
-
 void Snake::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     _float += deltaTime;
@@ -32,7 +30,6 @@ void Snake::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &eve
 
     scoreCur.text = "Current Score: " + std::to_string(growComp.size);
     str = scoreMax.text.substr(scoreMax.text.find(": ") + 2, scoreMax.text.npos);
-    std::cout << str << std::endl;
     ss << str;
     ss >> Score;
     if (Score < growComp.size) {
