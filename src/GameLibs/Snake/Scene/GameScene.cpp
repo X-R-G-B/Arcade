@@ -90,17 +90,17 @@ void Snake::Scene::GameScene::addScore()
     Arcade::ECS::IEntity &score = entityManager.createEntity(SCORE_ENTITY);
     std::shared_ptr<Arcade::Graph::Text> scoreCurText = std::make_shared<Arcade::Graph::Text>(SCORE_ENTITY_COMP_CURRENT);
     std::shared_ptr<Arcade::Graph::Text> scoreMaxText = std::make_shared<Arcade::Graph::Text>(SCORE_ENTITY_COMP_MAX);
-    SaveScore::SaveScore SaveScore(SAVE_FILE_SNAKE);
+    SaveScore::SaveScore SaveScore(PATH_SCORE);
     std::map<std::string, std::string> scores;
 
     score.addComponent(scoreCurText);
     score.addComponent(scoreMaxText);
-    scoreCurText->text = "Current Score: 0";
+    scoreCurText->text = std::string(SCORE_TITLE) + "0";
     try {
         scores = SaveScore.loadScore();
-        scoreMaxText->text = "Max Score: " + scores["grow"];
+        scoreMaxText->text = MAX_SCORE_TITLE + scores[SAVE_SCORE_NAME];
     } catch (...) {
-        scoreMaxText->text = "Max Score: (no data)";
+        scoreMaxText->text = std::string(MAX_SCORE_TITLE) + "(no data)";
     }
     scoreMaxText->pos = {10, 10, 0};
     scoreCurText->pos = {10, 50, 0};
