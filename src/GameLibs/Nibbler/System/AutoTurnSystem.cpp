@@ -14,6 +14,7 @@
 #include "Forward.hpp"
 #include "MagicValue.hpp"
 #include "ChangeDir.hpp"
+#include "NibblerCompType.hpp"
 #include "NibblerWallComponent.hpp"
 #include "AutoTurnSystem.hpp"
 
@@ -65,7 +66,7 @@ bool Nibbler::System::AutoTurnSystem::checkAllBodiesCollision(const Arcade::Vect
             continue;
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
-            if (checkBodyCollision(*bodySprite, headPos)) {
+            if (checkBodyCollision(headPos, *bodySprite)) {
                 return true;
             }
         }
@@ -92,20 +93,22 @@ double deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentEntityManager)
 {
+    static int nb_move = 0;
     auto head = currentEntityManager.getEntitiesById(NIBBLER_HEAD);
     auto &curDir = static_cast<Component::Forward &>(head->getComponents(FORWARD_KEY));
     auto &sprite = static_cast<Arcade::Graph::ISprite &>(head->getComponents(NIBBLER_SPRITE));
     auto wallsEntity = currentEntityManager.getEntitiesById(NIBBLER_WALL_ID);
-    const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
+    const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = wallsEntity->getComponents(Arcade::ECS::CompType::SPRITE);
     std::vector<std::shared_ptr<Arcade::ECS::IEntity>> bodies =
-    *currentScene.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
+    *currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     bool isMoved = false;
 
     if (eventManager.isEventTriggered(COLLISION_EVENT).first) {
         return;
     }
     switch (curDir.direction) {
-        case Direction::UP || Direction::DOWN:
+        case Direction::UP:
+        case Direction::DOWN:
             if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - PARCELL_SIZE, sprite.pos.y), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::LEFT,
@@ -118,13 +121,14 @@ Arcade::ECS::IEntityManager &currentEntityManager)
                 isMoved = true;
             }
             break;
-        case Direction::LEFT || Direction::RIGHT:
-            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y - PARCELL_SIZE), walls)) {
+        case Direction::LEFT:
+        case Direction::RIGHT:
+            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y - PARCELL_SIZE), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::UP,
                 toNextCase(sprite.pos, curDir.direction)));
                 isMoved = true;
-            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y + PARCELL_SIZE), walls)) {
+            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y + PARCELL_SIZE), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::DOWN,
                 toNextCase(sprite.pos, curDir.direction)));

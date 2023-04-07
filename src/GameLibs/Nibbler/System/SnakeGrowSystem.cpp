@@ -38,9 +38,9 @@ Nibbler::Component::Forward &Nibbler::System::SnakeGrowSystem::getMovableFromBod
 std::shared_ptr<Arcade::ECS::IEntity> Nibbler::System::SnakeGrowSystem::getLastBody(Arcade::ECS::IEntityManager &entityManager, int size)
 {
     if (size == 0) {
-        return entityManager.getEntitiesById(SNAKE_HEAD);
+        return entityManager.getEntitiesById(NIBBLER_HEAD);
     }
-    return entityManager.getEntitiesById(SNAKE_BODY_PART + std::to_string(size - 1));
+    return entityManager.getEntitiesById(NIBBLER_BODY_PART + std::to_string(size - 1));
 }
 
 Nibbler::Direction Nibbler::System::SnakeGrowSystem::getDirection(Arcade::Vector3f &lastBodyPos, Arcade::Vector3f pos)
@@ -107,16 +107,16 @@ void Nibbler::System::SnakeGrowSystem::placeNewBody(
 
 void Nibbler::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntityManager &entityManager, int idNbr)
 {
-    const std::string id = SNAKE_BODY_PART + std::to_string(idNbr);
+    const std::string id = NIBBLER_BODY_PART + std::to_string(idNbr);
 
     auto &entity = entityManager.createEntity(id);
-    auto snake = entityManager.getEntitiesById(SNAKE);
-    auto &growCompGrow = static_cast<Nibbler::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
+    auto snake = entityManager.getEntitiesById(NIBBLER);
+    auto &growCompGrow = static_cast<Nibbler::Component::SnakeGrow &>(snake->getComponents(NIBBLER_GROW_COMPONENT));
     auto forward = std::make_shared<Nibbler::Component::Forward>(FORWARD_KEY, Direction::RIGHT);
-    entity.addComponent(std::make_shared<Arcade::Graph::Sprite>(SNAKE_SPRITE));
-    auto &comp = entity.getComponents(SNAKE_SPRITE);
+    entity.addComponent(std::make_shared<Arcade::Graph::Sprite>(NIBBLER_SPRITE));
+    auto &comp = entity.getComponents(NIBBLER_SPRITE);
     auto &body = static_cast<Arcade::Graph::Sprite &>(comp);
-    body.path = SNAKEBODYPATH;
+    body.path = NIBBLERBODYPATH;
     body.rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     body.currentRectIndex = 0;
     body.ttyData.defaultChar = "#";

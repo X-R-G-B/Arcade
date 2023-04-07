@@ -14,8 +14,8 @@ void Nibbler::System::EatSystem::run(double deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    auto snakeEntity = currentEntityManager.getEntitiesById(SNAKE);
-    auto &snakeIncrIComp = snakeEntity->getComponents(SNAKE_GROW_COMPONENT);
+    auto snakeEntity = currentEntityManager.getEntitiesById(NIBBLER);
+    auto &snakeIncrIComp = snakeEntity->getComponents(NIBBLER_GROW_COMPONENT);
 
     if (snakeIncrIComp.type == Arcade::ECS::CompType::SNAKEGROW) {
         auto &snakeIncrComp = static_cast<Nibbler::Component::SnakeGrow &>(snakeIncrIComp);

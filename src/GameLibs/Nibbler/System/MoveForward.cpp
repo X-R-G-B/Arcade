@@ -40,7 +40,7 @@ void Nibbler::System::MoveForward::run(
 
     for (auto &it : *snakes) {
         auto curDir = static_cast<Component::Forward &>(it->getComponents(FORWARD_KEY));
-        auto &sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(SNAKE_SPRITE));
+        auto &sprite = static_cast<Arcade::Graph::ISprite &>(it->getComponents(NIBBLER_SPRITE));
         moveForward(curDir, sprite, move);
     }
 }
