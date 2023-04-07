@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "IComponent.hpp"
 #include "ISystem.hpp"
 #include "ChangeDir.hpp"
 
@@ -17,13 +18,14 @@ namespace Snake {
                 MoveDirection() = default;
                 ~MoveDirection() = default;
 
-                void run(float deltaTime,
+                void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &entityManager) final;
             private:
                 bool checkHitChangeDir(
                 std::shared_ptr<Snake::Component::ChangeDir> changeDir,
-                std::shared_ptr<Arcade::ECS::IEntity> entity);
+                std::shared_ptr<Arcade::ECS::IEntity> entity,
+                Arcade::ECS::IComponent &lastSnakeBody);
         };
     }
 }

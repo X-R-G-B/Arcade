@@ -8,55 +8,60 @@
 #include "Sprite.hpp"
 #include "Exceptions.hpp"
 
-Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win) : _win(win)
+Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
+    : _win(win), _components(components)
 {
 }
 
-void Arcade::Sfml::SpriteSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+std::shared_ptr<Arcade::Sfml::SfSprite> Arcade::Sfml::SpriteSystem::getComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
 {
-    Graph::ISprite &SpriteComp = static_cast<Graph::ISprite&>(IComp);
+    for (auto const &comp : _components) {
+        if (comp->id == SpriteComp->id) {
+           return std::static_pointer_cast<SfSprite>(comp);
+        }
+    }
 
-    try {
-        entity.addComponent(std::make_shared<SfSprite>(SpriteComp.id + "_Sfml", SpriteComp.path, SpriteComp.pos, SpriteComp.rect, _win));
-    } catch (std::exception &e) {
-    }
-    ECS::IComponent &comp = entity.getComponents(SpriteComp.id + "_Sfml");
-    if (comp.type != ECS::CompType::SFSPRITE) {
-        return;
-    }
-    SfSprite &sprite = static_cast<SfSprite&>(comp);
-    sprite.sprite.setPosition(sf::Vector2f(SpriteComp.pos.x, SpriteComp.pos.y));
-    sprite.sprite.setTextureRect(sf::Rect(SpriteComp.rect.top, SpriteComp.rect.left, SpriteComp.rect.height, SpriteComp.rect.width));
-    _win.draw(sprite.sprite);
+    std::shared_ptr<SfSprite> sprite = std::make_shared<SfSprite>(SpriteComp->id, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, _win);
+    _components.push_back(sprite);
+    return sprite;
 }
 
-void Arcade::Sfml::SpriteSystem::run(float deltaTime,
+void Arcade::Sfml::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
+{
+    std::shared_ptr<SfSprite> sprite = getComponent(SpriteComp);
+    sprite->sprite.setPosition(sf::Vector2f(SpriteComp->pos.x, SpriteComp->pos.y));
+    sprite->sprite.setTextureRect(sf::Rect(SpriteComp->rect.top, SpriteComp->rect.left, SpriteComp->rect.height, SpriteComp->rect.width));
+    _win.draw(sprite->sprite);
+}
+
+void Arcade::Sfml::SpriteSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containSpriteEntities =
-        currentEntityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
-    std::vector<std::shared_ptr<ECS::IComponent>> _components;
-
-    for (auto const &entity : *(_containSpriteEntities.get())) {
-        _components = entity->getComponents(ECS::CompType::SPRITE);
-        for (auto const &component : _components) {
-            handleComponent(*(component.get()), *(entity.get()));
-        }
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> spriteComponents;
+ 
+    try {
+        spriteComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (spriteComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &sprite : *spriteComponents) {
+        handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
     }
 }
 
 Arcade::Sfml::SfSprite::SfSprite(const std::string id, const std::string &path,
     const Arcade::Vector3f &pos, Graph::Rect &rect, sf::RenderWindow &win) : _win(win)
 {
-    sf::Texture texture;
-
     this->id = id;
     this->type = ECS::CompType::SFSPRITE;
-    if (!texture.loadFromFile(path)) {
+    if (!this->texture.loadFromFile(path)) {
         throw ArcadeExceptions("Wrong path for sprite : " + path);
     }
-    this->sprite.setTexture(texture);
+    this->sprite.setTexture(this->texture);
     this->sprite.setPosition(sf::Vector2f(pos.x, pos.y));
     this->sprite.setTextureRect(sf::Rect(rect.top, rect.left, rect.height, rect.width));
 }
