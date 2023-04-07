@@ -36,6 +36,6 @@ void Snake::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &eve
     ss << str;
     ss >> Score;
     if (Score < growComp.size) {
-        scoreMax.text = "Max Score: " + std::to_string(Score);
+        scoreMax.text = "Max Score: " + std::to_string(growComp.size);
     }
 }
