@@ -6,6 +6,7 @@
 */
 
 #include <algorithm>
+#include <exception>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -39,7 +40,8 @@ void Snake::System::Restart::run(double deltaTime,
             score["grow"] = std::to_string(std::max(res, growCompGrow.size));
         }
         saveScore.saveScore(score);
-    } catch (...) {
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
         std::cerr << "Could not get what is necessary to write score!" << std::endl;
     }
     _scene->close();

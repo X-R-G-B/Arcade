@@ -13,6 +13,7 @@
 SaveScore::SaveScore::SaveScore(const std::string &fileName, const std::string &delim):
     _fileName(fileName), _delim(delim)
 {
+    std::ofstream file(fileName, std::ios::out | std::ios::app);
 }
 
 void SaveScore::SaveScore::saveScore(const std::map<std::string, std::string> &scores)
