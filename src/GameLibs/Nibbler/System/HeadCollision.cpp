@@ -56,7 +56,7 @@ void Nibbler::System::HeadCollision::checkHeadWallCollision(Arcade::ECS::IEntity
 
     for (auto const &wall : walls) {
         if (checkCollision(*wall, headS)) {
-            eventManager.addEvent(COLLISION_EVENT);g
+            eventManager.addEvent(COLLISION_EVENT);
         }
     }
 }
