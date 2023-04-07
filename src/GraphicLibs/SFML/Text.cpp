@@ -8,40 +8,48 @@
 #include "Text.hpp"
 #include "Exceptions.hpp"
 
-Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win) : _win(win)
+Arcade::Sfml::TextSystem::TextSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
+    : _win(win), _components(components)
 {
 }
 
-void Arcade::Sfml::TextSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+std::shared_ptr<Arcade::Sfml::SfText> Arcade::Sfml::TextSystem::getComponent(std::shared_ptr<Graph::IText> TextComp)
 {
-    Graph::IText &TextComp = static_cast<Graph::IText&>(IComp);
+    for (auto const &comp : _components) {
+        if (comp->id == TextComp->id) {
+           return std::static_pointer_cast<SfText>(comp);
+        }
+    }
 
-    try {
-        entity.addComponent(std::make_shared<SfText>(TextComp.id + "_Sfml", TextComp.fontPath, TextComp.text, TextComp.textColor, TextComp.pos, _win));
-    } catch (std::exception &e) {
-    }
-    ECS::IComponent &comp = entity.getComponents(TextComp.id + "_Sfml");
-    if (comp.type != ECS::CompType::SFTEXT) {
-        return;
-    }
-    SfText &text = static_cast<SfText&>(comp);
-    text.text.setPosition(sf::Vector2f(TextComp.pos.x, TextComp.pos.y));
-    _win.draw(text.text);
+    std::shared_ptr<SfText> text = std::make_shared<SfText>(TextComp->id, TextComp->fontPath, TextComp->text, TextComp->textColor, TextComp->pos, _win);
+    _components.push_back(text);
+    return text;
 }
 
-void Arcade::Sfml::TextSystem::run(float deltaTime,
+void Arcade::Sfml::TextSystem::handleComponent(std::shared_ptr<Graph::IText> TextComp)
+{
+    std::shared_ptr<SfText> text = getComponent(TextComp);
+    text->text.setString(TextComp->text);
+    text->text.setPosition(sf::Vector2f(TextComp->pos.x, TextComp->pos.y));
+    _win.draw(text->text);
+}
+
+void Arcade::Sfml::TextSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containTextEntities =
-        currentEntityManager.getEntitiesByComponentType(ECS::CompType::TEXT);
-    std::vector<std::shared_ptr<ECS::IComponent>> _components;
-
-    for (auto const &entity : *(_containTextEntities.get())) {
-        _components = entity->getComponents(ECS::CompType::TEXT);
-        for (auto const &component : _components) {
-            handleComponent(*(component.get()), *(entity.get()));
-        }
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents;
+ 
+    try {
+        textComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (textComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &text : *textComponents) {
+        handleComponent(std::static_pointer_cast<Graph::IText>(text));
     }
 }
 

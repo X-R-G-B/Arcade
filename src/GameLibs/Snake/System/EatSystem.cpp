@@ -7,11 +7,10 @@
 
 #include "EatSystem.hpp"
 #include "SnakeCompType.hpp"
-#include "Sprite.hpp"
 #include "MagicValue.hpp"
 #include "SnakeGrow.hpp"
 
-void Snake::System::EatSystem::run(float deltaTime,
+void Snake::System::EatSystem::run(double deltaTime,
                               Arcade::ECS::IEventManager &eventManager,
                               Arcade::ECS::IEntityManager &currentEntityManager)
 {

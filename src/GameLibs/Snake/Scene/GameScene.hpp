@@ -18,6 +18,10 @@ namespace Snake {
                 bool init() final;
                 void close() final;
             protected:
+                void createSnake();
+                void addSnakeHeadSprite(Arcade::ECS::IEntity &head);
+                void createApple();
+                void addSnakeMap();
             private:
         };
     }

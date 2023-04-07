@@ -45,6 +45,22 @@ static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
     {sf::Keyboard::Key::Num7, "KEY_7_PRESSED"},
     {sf::Keyboard::Key::Num8, "KEY_8_PRESSED"},
     {sf::Keyboard::Key::Num9, "KEY_9_PRESSED"},
+    {sf::Keyboard::Key::Space, "KEY_SPACE_PRESSED"},
+    {sf::Keyboard::Key::Return, "KEY_ENTER_PRESSED"},
+    {sf::Keyboard::Key::Escape, "KEY_ESC_PRESSED"},
+    {sf::Keyboard::Key::Up, "KEY_UP_PRESSED"},
+    {sf::Keyboard::Key::Down, "KEY_DOWN_PRESSED"},
+    {sf::Keyboard::Key::Left, "KEY_LEFT_PRESSED"},
+    {sf::Keyboard::Key::Right, "KEY_RIGHT_PRESSED"},
+    {sf::Keyboard::Key::Tab, "KEY_TAB_PRESSED"},
+    {sf::Keyboard::Key::BackSpace, "KEY_BACKSPACE_PRESSED"},
+    {sf::Keyboard::Key::Delete, "KEY_DEL_PRESSED"},
+    {sf::Keyboard::Key::LShift, "KEY_SHIFT_PRESSED"},
+    {sf::Keyboard::Key::RShift, "KEY_SHIFT_PRESSED"},
+    {sf::Keyboard::Key::LControl, "KEY_CTRL_PRESSED"},
+    {sf::Keyboard::Key::RControl, "KEY_CTRL_PRESSED"},
+    {sf::Keyboard::Key::LAlt, "KEY_ALT_PRESSED"},
+    {sf::Keyboard::Key::RAlt, "KEY_ALT_PRESSED"},
     {sf::Keyboard::Key::F1, "KEY_F1_PRESSED"},
     {sf::Keyboard::Key::F2, "KEY_F2_PRESSED"},
     {sf::Keyboard::Key::F3, "KEY_F3_PRESSED"},
@@ -64,23 +80,35 @@ SFML_EventHandler::SFML_EventHandler(sf::RenderWindow &window) : _window(window)
     this->_windowSize = this->_window.getSize();
 }
 
-void SFML_EventHandler::run(float deltaTime,
+void SFML_EventHandler::run(double deltaTime,
 Arcade::ECS::IEventManager &eventManager,
 Arcade::ECS::IEntityManager &currentScene)
 {
     sf::Event event;
     auto windowSize = this->_window.getSize();
 
-    if (_window.pollEvent(event) && event.type == sf::Event::Closed) {
-        eventManager.addEvent("QUIT");
+    if (_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            eventManager.addEvent("QUIT");
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            for (auto key : KeyboardKeys) {
+                if (event.key.code == key.first) {
+                    eventManager.addEvent(key.second);
+                }
+            }
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                eventManager.addEvent("MOUSE_KEY1_PRESSED");
+            }
+            if (event.mouseButton.button == sf::Mouse::Right) {
+                eventManager.addEvent("MOUSE_KEY2_PRESSED");
+            }
+        }
     }
     if (this->_windowSize != windowSize) {
         this->_windowSize = windowSize;
         eventManager.addEvent("WINDOW_RESIZE");
-    }
-    for (auto &key : KeyboardKeys) {
-        if (sf::Keyboard::isKeyPressed(key.first)) {
-            eventManager.addEvent(key.second);
-        }
     }
 }

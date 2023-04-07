@@ -20,14 +20,11 @@ namespace Snake {
             SnakeGameModule();
             ~SnakeGameModule() = default;
 
-            void update(float deltaTime, Arcade::ECS::IEventManager &eventManager) final;
+            void update(double deltaTime, Arcade::ECS::IEventManager &eventManager) final;
 
             Arcade::ECS::IEntityManager &getCurrentEntityManager() final;
 
         private:
-            void createSnake();
-            void addSnakeHeadSprite(Arcade::ECS::IEntity &head);
-            Direction _snakeDirection = Direction::RIGHT;
             Arcade::ECS::SystemManager _systemManager;
             std::vector<std::unique_ptr<Arcade::Game::IScene>> _scenes;
     };

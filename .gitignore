@@ -61,7 +61,12 @@ _deps
 
 lib/*
 !lib/.gitkeep
+!lib/menu/.gitkeep
 .clang-format
-.idea/
 .cmake/
+.idea/
 build.ninja
+
+libloader_test
+vgcore.*
+*.cbp

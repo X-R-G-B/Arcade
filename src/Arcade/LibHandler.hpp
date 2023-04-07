@@ -15,7 +15,8 @@
 #include <type_traits>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
-#include "Api.hpp"
+#include "Api2.hpp"
+#include "IMainMenuModule.hpp"
 #include "Exceptions.hpp"
 
 /**
@@ -36,6 +37,11 @@ class LibHandler {
                 _type = LibType::GAME;
                 _funcCreator = "getGameModule";
                 _funcDestructor = "destroyGameModule";
+            }
+            else if (std::is_same<T, Arcade::MainMenu::IMainMenuModule>::value) {
+                _type = LibType::MENU;
+                _funcCreator = "getMainMenuModule";
+                _funcDestructor = "destroyMainMenuModule";
             } else {
                 throw ArcadeExceptions("LibHandler: wrong type (type handler are IDisplayModule IGameModule)");
             }
@@ -57,11 +63,13 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library in getLibType");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load library in getLibType:: " + error);
             }
             func = (retType_t) dlsym(lib, "getType");
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function getType");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function getType::" + error);
             }
             type = func();
             if (destroyAfter) {
@@ -82,11 +90,13 @@ class LibHandler {
                 destroyAfter = true;
             }
             if (lib == nullptr) {
-                throw ArcadeExceptions("Failed to load library in getLibName");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load library in getLibName::" + error);
             }
             func = (retType_t) dlsym(lib, "getName");
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function getName");
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function getName::" + error);
             }
             name = func();
             if (destroyAfter) {
@@ -95,7 +105,7 @@ class LibHandler {
             return name;
         }
 
-        void loadLib(const std::string &path)
+        void loadLib(const std::string &path, Arcade::MainMenu::Context *context = nullptr)
         {
             typedef T *(*retType_t)();
             retType_t func = nullptr;
@@ -124,9 +134,16 @@ class LibHandler {
             }
             func = (retType_t) dlsym(_lib, _funcCreator.c_str());
             if (func == nullptr) {
-                throw ArcadeExceptions("Failed to load function " + _funcCreator);
+                std::string error = dlerror();
+                throw ArcadeExceptions("Failed to load function " + _funcCreator + ":: " + error);
             }
-            _module = func();
+            if (_type == LibType::MENU) {
+                typedef T *(*retType1_t)(Arcade::MainMenu::Context *);
+                retType1_t func1 = (retType1_t) func;
+                _module = func1(context);
+            } else {
+                _module = func();
+            }
         }
 
         T *getModule()

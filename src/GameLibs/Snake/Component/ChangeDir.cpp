@@ -6,7 +6,6 @@
 */
 
 #include "ChangeDir.hpp"
-#include "ArcadeStruct.hpp"
 #include "SnakeCompType.hpp"
 
 Snake::Component::ChangeDir::ChangeDir(const std::string &id, const Direction &direction, const Arcade::Vector2f &pos):

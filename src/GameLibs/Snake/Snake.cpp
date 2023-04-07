@@ -6,18 +6,20 @@
 */
 
 #include <memory>
+#include "InputsSystem.hpp"
 #include "Api.hpp"
 #include "Snake.hpp"
 #include "MoveInput.hpp"
 #include "MoveForward.hpp"
 #include "GameScene.hpp"
 #include "AppleSystem.hpp"
-#include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "SnakeCompType.hpp"
 #include "Restart.hpp"
-#include "MagicValue.hpp"
 #include "HeadCollision.hpp"
+#include "EatSystem.hpp"
+#include "SnakeGrowSystem.hpp"
+#include "MoveDirection.hpp"
 
 extern "C" {
     LibType getType()
@@ -41,48 +43,27 @@ extern "C" {
     }
 }
 
-void Snake::SnakeGameModule::addSnakeHeadSprite(Arcade::ECS::IEntity &head)
-{
-    std::shared_ptr<Arcade::Graph::Sprite> headS = std::make_shared<Arcade::Graph::Sprite>(SNAKE_HEAD_SPRITE_COMP);
-
-    headS->path = SNAKE_HEAD_PATH;
-    //supposed values for instance
-    headS->pos.x = 200;
-    headS->pos.y = 200;
-    headS->pos.z = 0;
-    headS->rect.left = 0;
-    headS->rect.top = 0;
-    headS->rect.width = 20;
-    headS->rect.height = 20;
-    headS->currentRectIndex = 0;
-    //TODO set tty data after snake sprite
-    head.addComponent(headS);
-    head.addComponent(std::make_shared<Component::Forward>(FORWARD_KEY, Direction::RIGHT));
-}
-
-void Snake::SnakeGameModule::createSnake()
-{
-    Arcade::ECS::IEntityManager &EntityManager = _scenes.front()->getEntityManager();
-    Arcade::ECS::IEntity &snake = EntityManager.createEntity(SNAKE);
-    Arcade::ECS::IEntity &head = EntityManager.createEntity(SNAKE_HEAD);
-
-    snake.addComponent(std::make_shared<Component::SnakeGrow>(SNAKE_GROW_COMPONENT));
-    addSnakeHeadSprite(head);
-}
-
 Snake::SnakeGameModule::SnakeGameModule()
 {
     _scenes.push_back(std::make_unique<Snake::Scene::GameScene>());
     _scenes.front()->init();
-    _systemManager.addSystem("Apple", std::make_unique<Snake::System::AppleSystem>());
-    _systemManager.addSystem("MoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("AMoveInput", std::make_unique<Snake::System::MoveInput>());
+    _systemManager.addSystem("InputsSystem", std::make_unique<Snake::System::InputsSystem>());
     _systemManager.addSystem("MoveForward", std::make_unique<Snake::System::MoveForward>());
+    _systemManager.addSystem("MoveDirection", std::make_unique<Snake::System::MoveDirection>());
     _systemManager.addSystem("Restart", std::make_unique<Snake::System::Restart>(_scenes.front()));
-    createSnake();
-    _systemManager.addSystem("collisionSystem", std::make_unique<Snake::System::HeadCollision>());
+    _systemManager.addSystem("AAcollisionSystem", std::make_unique<Snake::System::HeadCollision>());
+    _systemManager.addSystem("AppleGeneration", std::make_unique<Snake::System::AppleSystem>());
+    _systemManager.addSystem("EatSystem", std::make_unique<Snake::System::EatSystem>());
+    _systemManager.addSystem("AAGrowSystem", std::make_unique<Snake::System::SnakeGrowSystem>());
 }
 
-void Snake::SnakeGameModule::update(float deltaTime, Arcade::ECS::IEventManager &eventManager)
+Arcade::ECS::IEntityManager &Snake::SnakeGameModule::getCurrentEntityManager()
+{
+    return _scenes.front()->getEntityManager();
+}
+
+void Snake::SnakeGameModule::update(double deltaTime, Arcade::ECS::IEventManager &eventManager)
 {
     _systemManager.update(deltaTime, eventManager, getCurrentEntityManager());
 }

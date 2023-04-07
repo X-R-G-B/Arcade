@@ -8,44 +8,50 @@
 #include "Music.hpp"
 #include "Exceptions.hpp"
 
-Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win) : _win(win)
+Arcade::Sfml::MusicSystem::MusicSystem(sf::RenderWindow &win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
+    : _win(win), _components(components)
 {
 }
 
-void Arcade::Sfml::MusicSystem::handleComponent(ECS::IComponent &IComp, ECS::IEntity &entity)
+std::shared_ptr<Arcade::Sfml::SfMusic> Arcade::Sfml::MusicSystem::getComponent(std::shared_ptr<Graph::IMusic> MusicComp)
 {
-    Graph::IMusic &MusicComp = static_cast<Graph::IMusic&>(IComp);
+    for (auto const &comp : _components) {
+        if (comp->id == MusicComp->id) {
+           return std::static_pointer_cast<SfMusic>(comp);
+        }
+    }
 
-    try {
-        entity.getComponents(MusicComp.id + "_Sfml");
-        entity.addComponent(std::make_shared<SfMusic>(MusicComp.id + "_Sfml", MusicComp.path, MusicComp.loop, MusicComp.play));
-    } catch (std::exception &e) {
-    }
-    ECS::IComponent &comp = entity.getComponents(MusicComp.id + "_Sfml");
-    if (comp.type != ECS::CompType::SFMUSIC) {
-        return;
-    }
-    SfMusic &music = static_cast<SfMusic&>(comp);
-    if (MusicComp.play && music.music.getStatus() != sf::SoundSource::Status::Playing) {
-        music.music.play();
-    } else if (MusicComp.play == false && music.music.getStatus() == sf::SoundSource::Status::Playing) {
-        music.music.stop();
+    std::shared_ptr<SfMusic> music = std::make_shared<SfMusic>(MusicComp->id, MusicComp->path, MusicComp->loop, MusicComp->play);
+    _components.push_back(music);
+    return music;
+}
+
+void Arcade::Sfml::MusicSystem::handleComponent(std::shared_ptr<Graph::IMusic> MusicComp)
+{
+    std::shared_ptr<SfMusic> music = getComponent(MusicComp);
+    if (MusicComp->play && music->music.getStatus() != sf::SoundSource::Status::Playing) {
+        music->music.play();
+    } else if (MusicComp->play == false && music->music.getStatus() == sf::SoundSource::Status::Playing) {
+        music->music.stop();
     }
 }
 
-void Arcade::Sfml::MusicSystem::run(float deltaTime,
+void Arcade::Sfml::MusicSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<ECS::IEntity>>> _containMusicEntities =
-        currentEntityManager.getEntitiesByComponentType(ECS::CompType::MUSIC);
-    std::vector<std::shared_ptr<ECS::IComponent>> _components;
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> musicComponents;
 
-    for (auto const &entity : *(_containMusicEntities.get())) {
-        _components = entity->getComponents(ECS::CompType::MUSIC);
-        for (auto const &component : _components) {
-            handleComponent(*(component.get()), *(entity.get()));
-        }
+    try {
+        musicComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::MUSIC);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (musicComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &music : *musicComponents) {
+        handleComponent(std::static_pointer_cast<Graph::IMusic>(music));
     }
 }
 
