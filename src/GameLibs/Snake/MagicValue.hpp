@@ -24,6 +24,9 @@
 #define EATED_EVENT "EATED"
 #define RESTART_EVENT "RESTART"
 #define SNAKE "snake"
+#define SAVE_SCORE_NAME "snake"
+#define SCORE_TITLE "Current Score: "
+#define MAX_SCORE_TITLE "Max Score: "
 #define SNAKE_GROW_COMPONENT "snakeGrow"
 #define APPLE_ENTITY "Apple"
 #define APPLE_SPRITE_COMP "apple"
@@ -42,7 +45,7 @@
 #define MAP_PARCELLS_X 17
 #define MAP_PARCELLS_Y 15
 
-#define SAVE_FILE_SNAKE ".snake.txt"
+#define PATH_SCORE "./assets/score.txt"
 
 #define SCORE_ENTITY "SCORE_ENTITY"
 #define SCORE_ENTITY_COMP_CURRENT "SCORE_ENTITY_COMP_CURRENT"
