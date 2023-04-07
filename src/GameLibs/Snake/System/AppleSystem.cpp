@@ -18,7 +18,6 @@ Snake::System::AppleSystem::AppleSystem()
     std::srand(std::time(nullptr));
 }
 
-#include <iostream>
 void Snake::System::AppleSystem::modifyApplePos(Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     std::shared_ptr<Arcade::ECS::IEntity> apple = currentEntityManager.getEntitiesById(APPLE_ENTITY);

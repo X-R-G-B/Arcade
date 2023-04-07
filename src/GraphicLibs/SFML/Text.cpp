@@ -38,10 +38,17 @@ void Arcade::Sfml::TextSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents =
-        currentEntityManager.getComponentsByComponentType(ECS::CompType::TEXT);
-
-    for (auto const &text : *(textComponents.get())) {
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> textComponents;
+ 
+    try {
+        textComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::TEXT);
+    } catch (const std::exception &e) {
+        return;
+    }
+    if (textComponents.get() == nullptr) {
+        return;
+    }
+    for (auto const &text : *textComponents) {
         handleComponent(std::static_pointer_cast<Graph::IText>(text));
     }
 }

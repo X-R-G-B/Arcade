@@ -16,7 +16,6 @@
 #include "MagicValue.hpp"
 #include "ChangeDir.hpp"
 
-#include <iostream>
 static const std::map<Snake::Direction, std::vector<std::pair<std::string, Snake::Direction>>>
 directionsChoice = {
     {
