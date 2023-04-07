@@ -29,7 +29,7 @@ void Snake::System::Restart::run(double deltaTime,
     auto snake = currentEntityManager.getEntitiesById(SNAKE);
     try {
         auto &growCompGrow = static_cast<Snake::Component::SnakeGrow &>(snake->getComponents(SNAKE_GROW_COMPONENT));
-        SaveScore::SaveScore saveScore(SAVE_SCORE_NAME);
+        SaveScore::SaveScore saveScore(PATH_SCORE);
         auto score = saveScore.loadScore();
         if (score.find("grow") == score.end()) {
             score["grow"] = std::to_string(growCompGrow.size);
