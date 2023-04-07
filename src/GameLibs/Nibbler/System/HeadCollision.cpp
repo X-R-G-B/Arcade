@@ -42,9 +42,20 @@ void Nibbler::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntity
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {
             if (checkCollision(*bodySprite, headS)) {
-                eventManager.addEvent(RESTART_EVENT);
+                eventManager.addEvent(COLLISION_EVENT);
                 return;
             }
+        }
+    }
+}
+
+void Nibbler::System::HeadCollision::checkHeadWallCollision(Arcade::ECS::IEntityManager &currentScene, std::shared_ptr<Arcade::Graph::Sprite> headS, Arcade::ECS::IEventManager &eventManager)
+{
+    auto wall;//TODO = ??
+
+    for (auto const wall : walls) {
+        if (checkCollision(wall, headS)) {
+            event.addEvent(COLLIION_EVENT);
         }
     }
 }
@@ -57,6 +68,7 @@ void Nibbler::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMa
     Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
 
     checkHeadBodyCollision(currentScene, headS, eventManager);
+    checkHeadWallCollision(currentScene, headS, eventManager);
     if (checkCollision(apple, headS)) {
         eventManager.addEvent(EATED_EVENT);
         return;
@@ -65,6 +77,6 @@ void Nibbler::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMa
             headS->pos.x + headS->rect.width > MAP_RIGHT ||
             headS->pos.y < NIBBLER_PADDING_WINDOW_Y ||
             headS->pos.y + headS->rect.height > MAP_BOTTOM) {
-        eventManager.addEvent(RESTART_EVENT);
+        eventManager.addEvent(COLLISION_EVENT);
     }
 }
