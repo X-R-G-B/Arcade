@@ -79,6 +79,9 @@ void Nibbler::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventMa
 
     for (auto &dirIt : directionsComponents) {
         auto direction = std::static_pointer_cast<Nibbler::Component::ChangeDir>(dirIt);
+        if (direction.get() == nullptr) {
+            continue;
+        }
         for (auto &bodiesEnt : *bodies) {
             bool last = checkHitChangeDir(direction, bodiesEnt, lastSnakeBody);
             if (last) {
