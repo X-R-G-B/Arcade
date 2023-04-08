@@ -78,6 +78,10 @@ bool Nibbler::System::AutoTurnSystem::isAbleToMove(const Arcade::Vector2f &pos,
 const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls,
 std::vector<std::shared_ptr<Arcade::ECS::IEntity>> &bodies)
 {
+    if (pos.x < NIBBLER_PADDING_WINDOW_X || pos.x >= MAP_RIGHT
+        || pos.y < NIBBLER_PADDING_WINDOW_Y || pos.y >= MAP_BOTTOM) {
+        return false;
+    }
     for (const auto &wall : walls) {
         auto sprite = std::static_pointer_cast<Nibbler::Component::NibblerWallComponent>(wall);
         if (pos.x >= sprite->pos.x && pos.x < sprite->pos.x + PARCELL_SIZE
@@ -102,35 +106,60 @@ Arcade::ECS::IEntityManager &currentEntityManager)
     std::vector<std::shared_ptr<Arcade::ECS::IEntity>> bodies =
     *currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     bool isMoved = false;
+    float padding = 15;
 
     if (!eventManager.isEventTriggered(COLLISION_EVENT).first) {
         return;
     }
     switch (curDir.direction) {
         case Direction::UP:
-        case Direction::DOWN:
-            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - PARCELL_SIZE, sprite.pos.y), walls, bodies)) {
+            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - PARCELL_SIZE, sprite.pos.y + padding), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
-                MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::LEFT,
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::LEFT,
                 toNextCase(sprite.pos, curDir.direction)));
                 isMoved = true;
-            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + PARCELL_SIZE, sprite.pos.y), walls, bodies)) {
+            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + PARCELL_SIZE, sprite.pos.y + padding), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
-                MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::RIGHT,
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::RIGHT,
+                toNextCase(sprite.pos, curDir.direction)));
+                isMoved = true;
+            }
+            break;
+        case Direction::DOWN:
+            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - PARCELL_SIZE, sprite.pos.y - padding), walls, bodies)) {
+                head->addComponent(std::make_shared<Component::ChangeDir>(
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::LEFT,
+                toNextCase(sprite.pos, curDir.direction)));
+                isMoved = true;
+            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + PARCELL_SIZE, sprite.pos.y - padding), walls, bodies)) {
+                head->addComponent(std::make_shared<Component::ChangeDir>(
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::RIGHT,
                 toNextCase(sprite.pos, curDir.direction)));
                 isMoved = true;
             }
             break;
         case Direction::LEFT:
-        case Direction::RIGHT:
-            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y - PARCELL_SIZE), walls, bodies)) {
+            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + padding, sprite.pos.y - PARCELL_SIZE), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
-                MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::UP,
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::UP,
                 toNextCase(sprite.pos, curDir.direction)));
                 isMoved = true;
-            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x, sprite.pos.y + PARCELL_SIZE), walls, bodies)) {
+            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x + padding, sprite.pos.y + PARCELL_SIZE), walls, bodies)) {
                 head->addComponent(std::make_shared<Component::ChangeDir>(
-                MOVE_INPUT_COMPS + std::to_string(++nb_move), Direction::DOWN,
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::DOWN,
+                toNextCase(sprite.pos, curDir.direction)));
+                isMoved = true;
+            }
+            break;
+        case Direction::RIGHT:
+            if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - padding, sprite.pos.y - PARCELL_SIZE), walls, bodies)) {
+                head->addComponent(std::make_shared<Component::ChangeDir>(
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::UP,
+                toNextCase(sprite.pos, curDir.direction)));
+                isMoved = true;
+            } else if (isAbleToMove(Arcade::Vector2f(sprite.pos.x - padding, sprite.pos.y + PARCELL_SIZE), walls, bodies)) {
+                head->addComponent(std::make_shared<Component::ChangeDir>(
+                MOVE_INPUT_COMPS_AUTOTURN + std::to_string(++nb_move), Direction::DOWN,
                 toNextCase(sprite.pos, curDir.direction)));
                 isMoved = true;
             }

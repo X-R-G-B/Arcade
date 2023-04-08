@@ -79,7 +79,7 @@ void Nibbler::System::MoveInput::run(
             head->addComponent(std::make_shared<Component::ChangeDir>(
                 MOVE_INPUT_COMPS + std::to_string(++nb_move),
                 action,
-                toNextCase(sprite.pos, curDir.direction)
+                pos
             ));
             break;
         }

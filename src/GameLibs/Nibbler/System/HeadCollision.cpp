@@ -68,16 +68,18 @@ void Nibbler::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMa
     std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
     Arcade::ECS::IComponent &apple = currentScene.getEntitiesById(APPLE_ENTITY)->getComponents(APPLE_SPRITE_COMP);
 
-    checkHeadBodyCollision(currentScene, headS, eventManager);
-    checkHeadWallCollision(currentScene, headS, eventManager);
     if (checkCollision(apple, headS)) {
         eventManager.addEvent(EATED_EVENT);
         return;
     }
     if (headS->pos.x < NIBBLER_PADDING_WINDOW_X ||
-            headS->pos.x + headS->rect.width > MAP_RIGHT ||
-            headS->pos.y < NIBBLER_PADDING_WINDOW_Y ||
-            headS->pos.y + headS->rect.height > MAP_BOTTOM) {
+        headS->pos.x + PARCELL_SIZE >= MAP_RIGHT ||
+        headS->pos.y < NIBBLER_PADDING_WINDOW_Y ||
+        headS->pos.y + PARCELL_SIZE >= MAP_BOTTOM) {
+        std::puts("sah");
         eventManager.addEvent(COLLISION_EVENT);
+        return;
     }
+    checkHeadBodyCollision(currentScene, headS, eventManager);
+    checkHeadWallCollision(currentScene, headS, eventManager);
 }
