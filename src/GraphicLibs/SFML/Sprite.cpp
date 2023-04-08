@@ -13,22 +13,22 @@ Arcade::Sfml::SpriteSystem::SpriteSystem(sf::RenderWindow &win, std::vector<std:
 {
 }
 
-std::shared_ptr<Arcade::Sfml::SfSprite> Arcade::Sfml::SpriteSystem::getComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
+std::shared_ptr<Arcade::Sfml::SfSprite> Arcade::Sfml::SpriteSystem::getComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity)
 {
     for (auto const &comp : _components) {
-        if (comp->id == SpriteComp->id) {
+        if (comp->id == SpriteComp->id + idEntity) {
            return std::static_pointer_cast<SfSprite>(comp);
         }
     }
 
-    std::shared_ptr<SfSprite> sprite = std::make_shared<SfSprite>(SpriteComp->id, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, _win);
+    std::shared_ptr<SfSprite> sprite = std::make_shared<SfSprite>(SpriteComp->id + idEntity, SpriteComp->path, SpriteComp->pos, SpriteComp->rect, _win);
     _components.push_back(sprite);
     return sprite;
 }
 
-void Arcade::Sfml::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp)
+void Arcade::Sfml::SpriteSystem::handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity)
 {
-    std::shared_ptr<SfSprite> sprite = getComponent(SpriteComp);
+    std::shared_ptr<SfSprite> sprite = getComponent(SpriteComp, idEntity);
     sprite->sprite.setPosition(sf::Vector2f(SpriteComp->pos.x, SpriteComp->pos.y));
     sprite->sprite.setTextureRect(sf::Rect(SpriteComp->rect.top, SpriteComp->rect.left, SpriteComp->rect.height, SpriteComp->rect.width));
     _win.draw(sprite->sprite);
@@ -38,18 +38,26 @@ void Arcade::Sfml::SpriteSystem::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>> spriteComponents;
+    std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> entities;
  
     try {
-        spriteComponents = currentEntityManager.getComponentsByComponentType(ECS::CompType::SPRITE);
+        entities = currentEntityManager.getEntitiesByComponentType(ECS::CompType::SPRITE);
     } catch (const std::exception &e) {
         return;
     }
-    if (spriteComponents.get() == nullptr) {
+    if (entities.get() == nullptr) {
         return;
     }
-    for (auto const &sprite : *spriteComponents) {
-        handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite));
+    for (auto const &entity : *entities) {
+        try {
+            const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &sprites =
+                entity->getComponents(Arcade::ECS::CompType::SPRITE);
+            for (auto const &sprite : sprites) {
+                handleComponent(std::static_pointer_cast<Graph::ISprite>(sprite), entity->getId());
+            }
+        } catch (...) {
+            continue;
+        }
     }
 }
 

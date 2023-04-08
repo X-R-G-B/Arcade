@@ -34,8 +34,8 @@ namespace Arcade {
             private:
                 sf::RenderWindow &_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SfSprite> getComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
-                void handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
+                std::shared_ptr<SfSprite> getComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity);
+                void handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity);
         };
     }
 }

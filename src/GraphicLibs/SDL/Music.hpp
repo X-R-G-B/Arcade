@@ -9,6 +9,7 @@
 
 #include "SDL.hpp"
 #include "IMusic.hpp"
+#include <string>
 
 namespace Arcade {
     namespace SDL {
@@ -30,8 +31,8 @@ namespace Arcade {
             private:
                 SDL_Renderer *_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SDLMusic> getComponent(std::shared_ptr<Graph::IMusic> TextComp);
-                void handleComponent(std::shared_ptr<Graph::IMusic> TextComp);
+                std::shared_ptr<SDLMusic> getComponent(std::shared_ptr<Graph::IMusic> TextComp, const std::string &idEntity);
+                void handleComponent(std::shared_ptr<Graph::IMusic> TextComp, const std::string &idEntity);
         };
     }
 }
