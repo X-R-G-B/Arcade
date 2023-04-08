@@ -42,3 +42,14 @@
 #define MAP_BOTTOM (NIBBLER_PADDING_WINDOW_Y + PARCELL_SIZE * MAP_PARCELLS_Y)
 #define NBR_OF_WALLS 20
 #define COLLISION_EVENT "COLLISION_EVENT"
+
+#define PATH_SCORE "./assets/score.txt"
+
+#define SCORE_ENTITY "SCORE_ENTITY"
+#define SCORE_ENTITY_COMP_CURRENT "SCORE_ENTITY_COMP_CURRENT"
+#define SCORE_ENTITY_COMP_MAX "SCORE_ENTITY_COMP_MAX"
+#define SAVE_SCORE_NAME "nibbler"
+#define SCORE_TITLE "Current Score: "
+#define MAX_SCORE_TITLE "Max Score: "
+
+#define PATH_FONT "./assets/fonts/arial.ttf"

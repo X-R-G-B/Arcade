@@ -22,6 +22,7 @@ namespace Nibbler {
                 void createSnake();
                 void createApple();
                 void addNibblerMap();
+                void addScore();
             private:
                 void addNibblerWallSquare(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &src_pos, int id);
                 void addNibblerWall(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, int id);

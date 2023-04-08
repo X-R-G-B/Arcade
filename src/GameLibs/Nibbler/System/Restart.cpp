@@ -5,6 +5,7 @@
 ** EntryPoint
 */
 
+#include "NibblerCompType.hpp"
 #include "Restart.hpp"
 #include "MagicValue.hpp"
 
@@ -16,8 +17,9 @@ void Nibbler::System::Restart::run(double deltaTime,
     Arcade::ECS::IEventManager &eventManager,
     Arcade::ECS::IEntityManager &currentEntityManager)
 {
-    if (eventManager.isEventTriggered(RESTART_EVENT).first) {
-        _scene->close();
-        _scene->init();
+    if (!eventManager.isEventTriggered(RESTART_EVENT).first) {
+        return;
     }
+    _scene->close();
+    _scene->init();
 }

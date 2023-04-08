@@ -11,3 +11,9 @@ target_include_directories(arcade_menu_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_sources(arcade_menu_main PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/SaveScore.cpp"
 )
+
+target_include_directories(arcade_nibbler PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_sources(arcade_nibbler PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/SaveScore.cpp"
+)
