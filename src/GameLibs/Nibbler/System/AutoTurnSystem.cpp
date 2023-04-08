@@ -82,10 +82,10 @@ std::vector<std::shared_ptr<Arcade::ECS::IEntity>> &bodies)
         auto sprite = std::static_pointer_cast<Nibbler::Component::NibblerWallComponent>(wall);
         if (pos.x >= sprite->pos.x && pos.x < sprite->pos.x + PARCELL_SIZE
             && pos.y >= sprite->pos.y && pos.y < sprite->pos.y + PARCELL_SIZE) {
-            return true;
+            return false;
         }
     }
-    return checkAllBodiesCollision(pos, bodies);
+    return !checkAllBodiesCollision(pos, bodies);
 }
 
 void Nibbler::System::AutoTurnSystem::run(

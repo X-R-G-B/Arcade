@@ -32,8 +32,8 @@ Arcade::ECS::Entity::getComponents(Arcade::ECS::CompType type) const
     auto it = this->_components.find(type);
 
     if (it == this->_components.end()) {
-        auto empty = std::make_shared<std::vector<std::shared_ptr<Arcade::ECS::IComponent>>>();
-        return *empty;
+        static std::vector<std::shared_ptr<Arcade::ECS::IComponent>> empty;
+        return empty;
     }
     return it->second;
 }

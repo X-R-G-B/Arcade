@@ -73,19 +73,13 @@ bool Nibbler::System::MoveDirection::checkHitChangeDir(
 void Nibbler::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto snake = entityManager.getEntitiesById(NIBBLER_HEAD);
-    std::vector<std::shared_ptr<Arcade::ECS::IComponent>> directionsComponents;
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     auto &lastSnakeBody = entityManager.getEntitiesById(NIBBLER)->getComponents(NIBBLER_GROW_COMPONENT);
-
-    try {
-        directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
-    } catch (ArcadeExceptions &e) {
-        return;
-    }
+    auto directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
 
     for (auto &dirIt : directionsComponents) {
         auto direction = std::static_pointer_cast<Nibbler::Component::ChangeDir>(dirIt);
-        for (auto bodiesEnt : *bodies) {
+        for (auto &bodiesEnt : *bodies) {
             bool last = checkHitChangeDir(direction, bodiesEnt, lastSnakeBody);
             if (last) {
                 snake->removeComponent(direction->id);

@@ -27,7 +27,7 @@ Nibbler::Scene::GameScene::GameScene()
 
 bool Nibbler::Scene::GameScene::checkWallCollision(Arcade::ECS::IEntity &nibblerWalls, const Arcade::Vector3f &pos, std::vector<std::string> &idToIgnore)
 {
-    const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
+    auto &walls = nibblerWalls.getComponents(Arcade::ECS::CompType::SPRITE);
 
     if (pos.x < NIBBLER_PADDING_WINDOW_X || pos.x >= MAP_RIGHT || pos.y < NIBBLER_PADDING_WINDOW_Y || pos.y >= MAP_BOTTOM) {
         return true;
