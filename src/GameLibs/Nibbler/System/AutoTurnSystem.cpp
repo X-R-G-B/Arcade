@@ -103,7 +103,7 @@ Arcade::ECS::IEntityManager &currentEntityManager)
     *currentEntityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     bool isMoved = false;
 
-    if (eventManager.isEventTriggered(COLLISION_EVENT).first) {
+    if (!eventManager.isEventTriggered(COLLISION_EVENT).first) {
         return;
     }
     switch (curDir.direction) {
