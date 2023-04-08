@@ -52,3 +52,7 @@
 #define SCORE_ENTITY_COMP_MAX "SCORE_ENTITY_COMP_MAX"
 
 #define PATH_FONT "./assets/fonts/arial.ttf"
+
+#define MUSIC_ENTITY "MUSIC_ENTITY"
+#define MUSIC_COMP "MUSIC_COMP"
+#define MUSIC_PATH "./assets/music/stranger-things.mp3"
