@@ -16,6 +16,8 @@ namespace Snake {
                 void run(double deltaTime,
                     Arcade::ECS::IEventManager &eventManager,
                     Arcade::ECS::IEntityManager &currentEntityManager) final;
+            private:
+                int _id = 0;
         };
     }
 }
