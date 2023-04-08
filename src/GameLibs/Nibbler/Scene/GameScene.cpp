@@ -6,8 +6,10 @@
 */
 
 #include <memory>
+#include <iostream>
 #include <random>
 #include <functional>
+#include <sstream>
 #include "GameScene.hpp"
 #include "Sprite.hpp"
 #include "EntityManager.hpp"
@@ -267,5 +269,23 @@ bool Nibbler::Scene::GameScene::init()
 
 void Nibbler::Scene::GameScene::close()
 {
+    auto snake = this->getEntityManager().getEntitiesById(NIBBLER);
+    try {
+        auto &growCompGrow = static_cast<Nibbler::Component::SnakeGrow &>(snake->getComponents(NIBBLER_GROW_COMPONENT));
+        SaveScore::SaveScore saveScore(PATH_SCORE);
+        auto score = saveScore.loadScore();
+        if (score.find(SAVE_SCORE_NAME) == score.end()) {
+            score[SAVE_SCORE_NAME] = std::to_string(growCompGrow.size);
+        } else {
+            std::stringstream ss(score.at(SAVE_SCORE_NAME));
+            int res;
+            ss >> res;
+            score[SAVE_SCORE_NAME] = std::to_string(std::max(res, growCompGrow.size));
+        }
+        saveScore.saveScore(score);
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "Could not get what is necessary to write score!" << std::endl;
+    }
     this->getEntityManager().removeAllEntities();
 }
