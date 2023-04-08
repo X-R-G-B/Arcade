@@ -23,7 +23,7 @@ void Nibbler::System::Score::run(double deltaTime, Arcade::ECS::IEventManager &e
     auto scores = currentEntityManager.getEntitiesById(SCORE_ENTITY);
     auto &scoreCur = static_cast<Arcade::Graph::Text &>(scores->getComponents(SCORE_ENTITY_COMP_CURRENT));
     auto &scoreMax = static_cast<Arcade::Graph::Text &>(scores->getComponents(SCORE_ENTITY_COMP_MAX));
-    auto &growComp = static_cast<Snake::Component::SnakeGrow &>(grow);
+    auto &growComp = static_cast<Nibbler::Component::SnakeGrow &>(grow);
     std::stringstream ss;
     std::string str;
     int Score;

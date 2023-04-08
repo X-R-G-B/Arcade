@@ -14,4 +14,5 @@ target_sources(arcade_nibbler PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/InputsSystem.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/AutoTurnSystem.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/CheckDisappearingBodies.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Score.cpp"
 )
