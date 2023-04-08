@@ -6,6 +6,7 @@
 */
 
 #include "CheckDisappearingBodies.hpp"
+#include "GameScene.hpp"
 #include "Direction.hpp"
 #include "Exceptions.hpp"
 #include "MagicValue.hpp"
@@ -125,12 +126,26 @@ void Nibbler::System::CheckDisappearingBodies::addNewBodyPartToSnake(Arcade::ECS
     growCompGrow.lastIdBodyComp = id;
 }
 
+void Nibbler::System::CheckDisappearingBodies::checkDisappearingHead(Arcade::ECS::IEntityManager &entityManager, const int padding)
+{
+    std::shared_ptr<Arcade::ECS::IEntity> head = entityManager.getEntitiesById(NIBBLER_HEAD);
+    std::shared_ptr<Arcade::Graph::Sprite> headS = static_pointer_cast<Arcade::Graph::Sprite>(head->getComponents(Arcade::ECS::CompType::SPRITE).front());
+
+    if (headS->pos.x < NIBBLER_PADDING_WINDOW_X - padding || headS->pos.x > MAP_RIGHT + padding
+            || headS->pos.y < NIBBLER_PADDING_WINDOW_Y - padding || headS->pos.y > MAP_BOTTOM + padding) {
+        entityManager.removeEntity(NIBBLER_HEAD);
+        auto &newHead = entityManager.createEntity(NIBBLER_HEAD);
+        Nibbler::Scene::GameScene::addSnakeHeadSprite(newHead);
+    }
+}
+
 void Nibbler::System::CheckDisappearingBodies::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &currentEntityManager)
 {
     auto snake = currentEntityManager.getEntitiesById(NIBBLER);
     auto bodiesNbr = (static_cast<Nibbler::Component::SnakeGrow &>(snake->getComponents(NIBBLER_GROW_COMPONENT))).size;
-    int padding = 200;
+    const int padding = 200;
 
+    checkDisappearingHead(currentEntityManager, padding);
     for (int i = 0; i < bodiesNbr; i++) {
         auto body = currentEntityManager.getEntitiesById(NIBBLER_BODY_PART + std::to_string(i));
         auto &BodyPos = static_cast<Arcade::Graph::Sprite &>(body->getComponents(NIBBLER_SPRITE)).pos;

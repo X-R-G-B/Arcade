@@ -30,6 +30,7 @@ namespace Nibbler {
                 std::shared_ptr<Arcade::ECS::IEntity> getLastBody(Arcade::ECS::IEntityManager &entityManager, int size);
                 Nibbler::Component::Forward &getMovableFromBodyEntity(std::shared_ptr<Arcade::ECS::IEntity> entity);
                 Arcade::Graph::Sprite &getSpriteFromBodyEntity(std::shared_ptr<Arcade::ECS::IEntity> entity);
+                void checkDisappearingHead(Arcade::ECS::IEntityManager &entityManager, const int padding);
         };
     }
 }
