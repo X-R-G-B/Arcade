@@ -5,22 +5,22 @@
 ** EntryPoint
 */
 
+#include "Nibbler.hpp"
 #include <memory>
 #include "Api.hpp"
-#include "Nibbler.hpp"
-#include "MoveInput.hpp"
-#include "MoveForward.hpp"
-#include "GameScene.hpp"
 #include "AppleSystem.hpp"
-#include "SnakeGrow.hpp"
-#include "NibblerCompType.hpp"
-#include "Restart.hpp"
-#include "HeadCollision.hpp"
+#include "AutoTurnSystem.hpp"
+#include "CheckDisappearingBodies.hpp"
 #include "EatSystem.hpp"
-#include "SnakeGrowSystem.hpp"
+#include "GameScene.hpp"
+#include "HeadCollision.hpp"
 #include "InputsSystem.hpp"
 #include "MoveDirection.hpp"
-#include "AutoTurnSystem.hpp"
+#include "MoveForward.hpp"
+#include "MoveInput.hpp"
+#include "NibblerCompType.hpp"
+#include "Restart.hpp"
+#include "SnakeGrowSystem.hpp"
 
 extern "C" {
     LibType getType()
@@ -58,6 +58,7 @@ Nibbler::NibblerGameModule::NibblerGameModule()
     _systemManager.addSystem("EatSystem", std::make_unique<Nibbler::System::EatSystem>());
     _systemManager.addSystem("AAGrowSystem", std::make_unique<Nibbler::System::SnakeGrowSystem>());
 //    _systemManager.addSystem("ZScoreSystem", std::make_unique<Nibbler::System::Score>());
+    _systemManager.addSystem("CheckDisappearingBodies", std::make_unique<Nibbler::System::CheckDisappearingBodies>());
     _systemManager.addSystem("ZAutoTurnSystem", std::make_unique<Nibbler::System::AutoTurnSystem>());
 }
 

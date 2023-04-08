@@ -76,7 +76,6 @@ void Nibbler::System::HeadCollision::run(double deltaTime, Arcade::ECS::IEventMa
         headS->pos.x + PARCELL_SIZE >= MAP_RIGHT ||
         headS->pos.y < NIBBLER_PADDING_WINDOW_Y ||
         headS->pos.y + PARCELL_SIZE >= MAP_BOTTOM) {
-        std::puts("sah");
         eventManager.addEvent(COLLISION_EVENT);
         return;
     }
