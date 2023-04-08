@@ -119,6 +119,9 @@ void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventMana
 
     for (auto &dirIt : directionsComponents) {
         auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(dirIt);
+        if (direction.get() == nullptr) {
+            continue;
+        }
         for (auto &bodiesEnt : *bodies) {
             bool last = checkHitChangeDir(direction, bodiesEnt, lastSnakeBody);
             if (last) {
