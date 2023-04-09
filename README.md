@@ -2,9 +2,10 @@
 
 ## Dependencies
 
-- https://miniaud.io/index.html
 - sdl2
 - sdl2_image
+- sdl2_mixer
+- sdl2_ttf
 - SFML
 - ncurses
 
@@ -26,8 +27,7 @@ Change game/graphical lib at runtime
 ## Install
 
 ```bash
-cmake .
-make
+mkdir build && cd build && cmake . && make -j8
 ```
 
 ## Usage
