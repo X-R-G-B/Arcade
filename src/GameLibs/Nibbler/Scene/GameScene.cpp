@@ -20,6 +20,7 @@
 #include "Forward.hpp"
 #include "SnakeGrow.hpp"
 #include "Text.hpp"
+#include "Music.hpp"
 #include "SaveScore.hpp"
 
 #define APPLE_SPRITE_COMP_PATH "assets/snake/normal/apple.png"
@@ -264,6 +265,12 @@ bool Nibbler::Scene::GameScene::init()
     createApple();
     createSnake();
     addScore();
+    auto &entMusic = getEntityManager().createEntity(MUSIC_ENTITY);
+    auto music = std::make_shared<Arcade::Graph::Music>(MUSIC_COMP);
+    music->loop = true;
+    music->play = true;
+    music->path = MUSIC_PATH;
+    entMusic.addComponent(music);
     return (true);
 }
 
