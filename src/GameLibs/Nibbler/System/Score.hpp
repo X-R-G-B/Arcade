@@ -2,24 +2,21 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** EatSystem
+** Score
 */
 
-#pragma once
-
 #include "ISystem.hpp"
+#include "IScene.hpp"
 
-namespace Snake {
+namespace Nibbler {
     namespace System {
-        class EatSystem : public Arcade::ECS::ISystem {
+        class Score : public Arcade::ECS::ISystem {
             public:
-                EatSystem() = default;
-
                 void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
             private:
+                double _float = 0;
         };
     }
 }

@@ -70,11 +70,11 @@ Ncurses::DisplayModule::~DisplayModule()
 void Ncurses::DisplayModule::update(double delta, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     _frames += delta;
-    if (_frames < 16.66666) {
+    if (_frames < 1.66666) {
         return;
     }
     clear();
-    _frames -= 16.66666;
+    _frames -= 1.666666;
     if (COLS < 240 || LINES < 67) {
         _systems.update(delta, eventManager, _entityManager);
     } else {

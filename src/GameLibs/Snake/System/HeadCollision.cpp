@@ -36,8 +36,7 @@ void Snake::System::HeadCollision::checkHeadBodyCollision(Arcade::ECS::IEntityMa
         if (body->getId() == SNAKE_HEAD ||
                 body->getId() == std::string(SNAKE_BODY_PART) + "0" ||
                 body->getId() == std::string(SNAKE_BODY_PART) + "1" ||
-                body->getId() == std::string(SNAKE_BODY_PART) + "2" ||
-                body->getId() == std::string(SNAKE_BODY_PART) + "3") {
+                body->getId() == std::string(SNAKE_BODY_PART) + "2") {
             continue;
         }
         for (auto const &bodySprite : body->getComponents(Arcade::ECS::CompType::SPRITE)) {

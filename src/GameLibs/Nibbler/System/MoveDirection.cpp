@@ -12,7 +12,7 @@
 #include "IComponent.hpp"
 #include "MoveDirection.hpp"
 #include "MagicValue.hpp"
-#include "SnakeCompType.hpp"
+#include "NibblerCompType.hpp"
 #include "SnakeGrow.hpp"
 #include "Sprite.hpp"
 #include "MoveInput.hpp"
@@ -39,13 +39,13 @@
 
 static const double PADDING_SIZE = PARCELL_SIZE / 12.0;
 
-bool Snake::System::MoveDirection::checkHitChangeDir(
-    std::shared_ptr<Snake::Component::ChangeDir> changeDir,
+bool Nibbler::System::MoveDirection::checkHitChangeDir(
+    std::shared_ptr<Nibbler::Component::ChangeDir> changeDir,
     std::shared_ptr<Arcade::ECS::IEntity> entity,
     Arcade::ECS::IComponent &bodyGrow)
 {
     auto &bodySpriteComps = entity->getComponents(Arcade::ECS::CompType::SPRITE);
-    auto &bodyGrowComp = static_cast<Snake::Component::SnakeGrow &>(bodyGrow);
+    auto &bodyGrowComp = static_cast<Nibbler::Component::SnakeGrow &>(bodyGrow);
     bool hit = false;
 
     for (auto &bodySpriteComp : bodySpriteComps) {
@@ -53,12 +53,12 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
         if (bodySprite->pos.x + PADDING_SIZE < changeDir->pos.x ||
             bodySprite->pos.x + PARCELL_SIZE - (PADDING_SIZE) > changeDir->pos.x + PARCELL_SIZE ||
             bodySprite->pos.y + PADDING_SIZE < changeDir->pos.y ||
-            bodySprite->pos.y + PARCELL_SIZE - (PADDING_SIZE) > changeDir->pos.y + PARCELL_SIZE
+            bodySprite->pos.y + PARCELL_SIZE - PADDING_SIZE > changeDir->pos.y + PARCELL_SIZE
         ) {
             continue;
         }
-        auto &bodyDir = static_cast<Snake::Component::Forward &>(entity->getComponents(FORWARD_KEY));
-        // auto nextCase = Snake::System::MoveInput::toNextCase(bodySprite->pos, bodyDir.direction);
+        auto &bodyDir = static_cast<Nibbler::Component::Forward &>(entity->getComponents(FORWARD_KEY));
+        // auto nextCase = Nibbler::System::MoveInput::toNextCase(bodySprite->pos, bodyDir.direction);
         // bodySprite->pos.x = nextCase.x;
         // bodySprite->pos.y = nextCase.y;
         bodyDir.direction = changeDir->direction;
@@ -70,15 +70,15 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
     return hit;
 }
 
-void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
+void Nibbler::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
-    auto snake = entityManager.getEntitiesById(SNAKE_HEAD);
+    auto snake = entityManager.getEntitiesById(NIBBLER_HEAD);
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
-    auto &lastSnakeBody = entityManager.getEntitiesById(SNAKE)->getComponents(SNAKE_GROW_COMPONENT);
-    auto &directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
+    auto &lastSnakeBody = entityManager.getEntitiesById(NIBBLER)->getComponents(NIBBLER_GROW_COMPONENT);
+    auto directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
 
     for (auto &dirIt : directionsComponents) {
-        auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(dirIt);
+        auto direction = std::static_pointer_cast<Nibbler::Component::ChangeDir>(dirIt);
         if (direction.get() == nullptr) {
             continue;
         }

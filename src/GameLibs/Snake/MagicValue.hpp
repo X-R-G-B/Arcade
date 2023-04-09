@@ -15,9 +15,6 @@
 #define MOVE_INPUT_COMPS "MOVE_INPUT_COMPS"
 #define LAST_SNAKE_BODY_COMP "LAST_SNAKE_BODY_COMP"
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
-
 #define SNAKE_MOVE_PER_DTIME 2
 
 #define FORWARD_KEY "direction"
@@ -32,8 +29,6 @@
 #define APPLE_SPRITE_COMP "apple"
 #define SNAKE_HEAD_PATH "./assets/snake/normal/fill_body.png"
 #define SNAKEBODYPATH "assets/snake/normal/fill_body.png"
-#define SCREENSIZEX 1920
-#define SCREENSIZEY 1080
 #define SNAKE_MAP_ID "snake_map"
 #define SNAKE_BODY_PART "snake_body_part_"
 

@@ -2,24 +2,28 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** EatSystem
+** Snake Move System
 */
 
 #pragma once
 
 #include "ISystem.hpp"
+#include "Forward.hpp"
+#include "ISprite.hpp"
+#include "Direction.hpp"
 
-namespace Snake {
+namespace Nibbler {
     namespace System {
-        class EatSystem : public Arcade::ECS::ISystem {
+        class MoveForward : public Arcade::ECS::ISystem {
             public:
-                EatSystem() = default;
-
                 void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
             private:
+                void moveForward(
+                Nibbler::Component::Forward &curDir,
+                Arcade::Graph::ISprite &sprite,
+                double deltaTime);
         };
     }
 }

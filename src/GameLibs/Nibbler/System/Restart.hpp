@@ -2,24 +2,22 @@
 ** EPITECH PROJECT, 2023
 ** Arcade
 ** File description:
-** EatSystem
+** EntryPoint
 */
 
-#pragma once
-
 #include "ISystem.hpp"
+#include "IScene.hpp"
 
-namespace Snake {
+namespace Nibbler {
     namespace System {
-        class EatSystem : public Arcade::ECS::ISystem {
+        class Restart : public Arcade::ECS::ISystem {
             public:
-                EatSystem() = default;
-
+                Restart(std::unique_ptr<Arcade::Game::IScene> &scene);
                 void run(double deltaTime,
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
             private:
+                std::unique_ptr<Arcade::Game::IScene> &_scene;
         };
     }
 }

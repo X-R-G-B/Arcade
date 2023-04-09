@@ -9,7 +9,7 @@
 
 #include "ISystem.hpp"
 
-namespace Snake {
+namespace Nibbler {
     namespace System {
         class EatSystem : public Arcade::ECS::ISystem {
             public:
