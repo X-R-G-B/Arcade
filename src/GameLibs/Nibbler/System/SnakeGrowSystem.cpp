@@ -119,9 +119,9 @@ void Nibbler::System::SnakeGrowSystem::addNewBodyPartToSnake(Arcade::ECS::IEntit
     body.path = NIBBLERBODYPATH;
     body.rect = {0, 0, PARCELL_SIZE, PARCELL_SIZE};
     body.currentRectIndex = 0;
-    body.ttyData.defaultChar = "#";
-    body.ttyData.background = {0, 255, 255, 0};
-    body.ttyData.foreground = {0, 255, 0, 0};
+    body.ttyData.defaultChar = "#####\n#####\n#####";
+    body.ttyData.background = {255, 255, 255, 0};
+    body.ttyData.foreground = {255, 255, 255, 0};
     placeNewBody(entityManager, forward, body, idNbr);
     entity.addComponent(forward);
     growCompGrow.lastIdBodyComp = id;
