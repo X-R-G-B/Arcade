@@ -53,7 +53,7 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
         if (bodySprite->pos.x + PADDING_SIZE < changeDir->pos.x ||
             bodySprite->pos.x + PARCELL_SIZE - (PADDING_SIZE) > changeDir->pos.x + PARCELL_SIZE ||
             bodySprite->pos.y + PADDING_SIZE < changeDir->pos.y ||
-            bodySprite->pos.y + PARCELL_SIZE - PADDING_SIZE > changeDir->pos.y + PARCELL_SIZE
+            bodySprite->pos.y + PARCELL_SIZE - (PADDING_SIZE) > changeDir->pos.y + PARCELL_SIZE
         ) {
             continue;
         }
@@ -73,19 +73,16 @@ bool Snake::System::MoveDirection::checkHitChangeDir(
 void Snake::System::MoveDirection::run(double deltaTime, Arcade::ECS::IEventManager &eventManager, Arcade::ECS::IEntityManager &entityManager)
 {
     auto snake = entityManager.getEntitiesById(SNAKE_HEAD);
-    std::vector<std::shared_ptr<Arcade::ECS::IComponent>> directionsComponents;
     auto bodies = entityManager.getEntitiesByComponentType(Arcade::ECS::CompType::FORWARD);
     auto &lastSnakeBody = entityManager.getEntitiesById(SNAKE)->getComponents(SNAKE_GROW_COMPONENT);
-
-    try {
-        directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
-    } catch (ArcadeExceptions &e) {
-        return;
-    }
+    auto &directionsComponents = snake->getComponents(Arcade::ECS::CompType::CHANGEDIR);
 
     for (auto &dirIt : directionsComponents) {
         auto direction = std::static_pointer_cast<Snake::Component::ChangeDir>(dirIt);
-        for (auto bodiesEnt : *bodies) {
+        if (direction.get() == nullptr) {
+            continue;
+        }
+        for (auto &bodiesEnt : *bodies) {
             bool last = checkHitChangeDir(direction, bodiesEnt, lastSnakeBody);
             if (last) {
                 snake->removeComponent(direction->id);

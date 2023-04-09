@@ -8,6 +8,7 @@
 #include "SDL.hpp"
 #include "IText.hpp"
 #include "ISystem.hpp"
+#include <string>
 
 namespace Arcade {
     namespace SDL {
@@ -35,8 +36,8 @@ namespace Arcade {
             private:
                 SDL_Renderer *_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SDLText> getComponent(std::shared_ptr<Graph::IText> TextComp);
-                void handleComponent(std::shared_ptr<Graph::IText> TextComp);
+                std::shared_ptr<SDLText> getComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity);
+                void handleComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity);
 
         };
     }

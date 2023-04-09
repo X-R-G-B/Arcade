@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.13)
 project(
     Arcade
     VERSION 1.0
@@ -12,6 +12,11 @@ add_executable(arcade)
 set_target_properties(arcade PROPERTIES
     CXX_STANDARD 20
     COMPILE_FLAGS "-fno-gnu-unique"
+)
+
+add_custom_command(TARGET arcade PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:arcade>/assets
 )
 ##############################################################################
 # arcade main menu

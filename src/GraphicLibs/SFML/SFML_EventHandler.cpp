@@ -87,7 +87,7 @@ Arcade::ECS::IEntityManager &currentScene)
     sf::Event event;
     auto windowSize = this->_window.getSize();
 
-    if (_window.pollEvent(event)) {
+    while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             eventManager.addEvent("QUIT");
         }
