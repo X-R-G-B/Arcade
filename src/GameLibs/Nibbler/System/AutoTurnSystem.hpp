@@ -18,7 +18,7 @@ namespace Nibbler {
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
 
-                static Arcade::Vector2f toNextCase(const Arcade::Vector3f &pos, const Nibbler::Direction &direction);
+                static Arcade::Vector2f toNextCase(const Arcade::Vector2f &pos, const Nibbler::Direction &direction);
             private:
                 bool isAbleToMove(const Arcade::Vector2f &pos, const std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &walls,
                     std::vector<std::shared_ptr<Arcade::ECS::IEntity>> &bodies);

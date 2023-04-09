@@ -138,7 +138,7 @@ void Nibbler::Scene::GameScene::addNibblerWall(Arcade::ECS::IEntity &nibblerWall
     auto funcNbr = generateRandomInt(addNibblerWallFuncs.size() - 1);
 
     addNibblerWallFuncs[funcNbr](*this, nibblerWalls, pos, nbrOfWalls);
-    this->addNibblerWallSquare(nibblerWalls, pos, nbrOfWalls);
+//    this->addNibblerWallSquare(nibblerWalls, pos, nbrOfWalls);
 }
 
 void Nibbler::Scene::GameScene::addNibblerParcel(Arcade::ECS::IEntity &nibblerMap, const Arcade::Vector3f &pos, int id, Arcade::ECS::IEntity &nibblerWalls)
