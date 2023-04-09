@@ -7,7 +7,6 @@
 
 #include "Music.hpp"
 #include "Exceptions.hpp"
-#include <iostream>
 
 Arcade::SDL::MusicSystem::MusicSystem(SDL_Renderer *win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
     : _win(win), _components(components)
