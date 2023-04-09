@@ -9,8 +9,8 @@
 #include "NibblerCompType.hpp"
 #include "NibblerWallComponent.hpp"
 
-static const Arcade::Graph::Color foregroundColor(160, 80, 0, 0);
-static const Arcade::Graph::Color backgroundColor(120, 80, 0, 0);
+static const Arcade::Graph::Color foregroundColor(255, 255, 0, 0);
+static const Arcade::Graph::Color backgroundColor(255, 255, 0, 0);
 
 #define WALL_PATH "assets/snake/normal/box_02.png"
 #define DEFAULT_CHAR "#####\n#####\n#####"

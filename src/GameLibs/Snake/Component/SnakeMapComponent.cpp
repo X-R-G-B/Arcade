@@ -8,10 +8,10 @@
 #include "GraphStruct.hpp"
 #include "SnakeMapComponent.hpp"
 
-static const Arcade::Graph::Color foregroundColorDark(0, 220, 0, 0);
-static const Arcade::Graph::Color backgroundColorDark(0, 220, 0, 0);
-static const Arcade::Graph::Color foregroundColorBright(0, 150, 0, 0);
-static const Arcade::Graph::Color backgroundColorBright(0, 150, 0, 0);
+static const Arcade::Graph::Color foregroundColorDark(0, 255, 0, 0);
+static const Arcade::Graph::Color backgroundColorDark(0, 255, 0, 0);
+static const Arcade::Graph::Color foregroundColorBright(0, 200, 0, 0);
+static const Arcade::Graph::Color backgroundColorBright(0, 200, 0, 0);
 
 #define DARK_PARCELL "assets/snake/normal/bg_green_01.png"
 #define LIGHT_PARCELL "assets/snake/normal/bg_green_02.png"
