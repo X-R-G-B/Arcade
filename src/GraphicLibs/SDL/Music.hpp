@@ -20,6 +20,7 @@ namespace Arcade {
                 ~SDLMusic();
 
                 Mix_Music *music;
+                bool isPlaying;
         };
 
         class MusicSystem : public ECS::ISystem {

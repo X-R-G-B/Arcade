@@ -53,7 +53,7 @@ Nibbler::NibblerGameModule::NibblerGameModule()
     _systemManager.addSystem("InputsSystem", std::make_unique<Nibbler::System::InputsSystem>());
     _systemManager.addSystem("MoveForward", std::make_unique<Nibbler::System::MoveForward>());
     _systemManager.addSystem("MoveDirection", std::make_unique<Nibbler::System::MoveDirection>());
-    _systemManager.addSystem("Restart", std::make_unique<Nibbler::System::Restart>(_scenes.front()));
+    _systemManager.addSystem("ZZRestart", std::make_unique<Nibbler::System::Restart>(_scenes.front()));
     _systemManager.addSystem("AAcollisionSystem", std::make_unique<Nibbler::System::HeadCollision>());
     _systemManager.addSystem("AppleGeneration", std::make_unique<Nibbler::System::AppleSystem>());
     _systemManager.addSystem("EatSystem", std::make_unique<Nibbler::System::EatSystem>());

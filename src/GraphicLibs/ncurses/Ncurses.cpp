@@ -11,7 +11,7 @@
 #include "Sprite.hpp"
 #include "TEXT.hpp"
 #include "SPRITE.hpp"
-#include "MUSIC.hpp"
+// #include "MUSIC.hpp"
 #include "EVENTS.hpp"
 #include "Api.hpp"
 
@@ -51,7 +51,7 @@ Ncurses::DisplayModule::DisplayModule(): _frames(0)
     keypad(stdscr, TRUE);
     _systems.addSystem("Text", std::make_unique<Ncurses::System::TextSystem>(_colorsUsed));
     _systems.addSystem("Sprite", std::make_unique<Ncurses::System::SpriteSystem>(_colorsUsed));
-    _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
+    // _systems.addSystem("Music", std::make_unique<Ncurses::System::MusicSystem>());
     _systems.addSystem("Events", std::make_unique<Ncurses::System::EventsSystem>());
     auto &entity = _entityManager.createEntity("No Place to display");
     auto textComp = std::make_shared<Arcade::Graph::Text>("Resize");
