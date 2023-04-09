@@ -44,6 +44,7 @@ void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> Text
     if (text->_text == nullptr) {
         throw ArcadeExceptions("Unable to load text texture");
     }
+    SDL_FreeSurface(surface);
     SDL_RenderCopy(text->_win, text->_text, NULL, &text->_rect);
 }
 

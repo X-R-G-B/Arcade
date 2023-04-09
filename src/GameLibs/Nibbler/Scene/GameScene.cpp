@@ -91,10 +91,13 @@ void Nibbler::Scene::GameScene::addNibblerWallSquare(Arcade::ECS::IEntity &nibbl
     int borderToDelete = generateRandomInt(3);
 
     for (int i = 0; i < 4; i++) {
-        if (!checkWallCollision(nibblerWalls, pos, toIgnore) && i != borderToDelete) {
-            wallId = std::string(NIBBLER_WALL_ID) + "_" + std::to_string(id) + "_nbr_" + std::to_string(i);
-            nibblerWalls.addComponent(std::make_shared<Nibbler::Component::NibblerWallComponent>(wallId, pos));
-            toIgnore.push_back(wallId);
+        if (pos.x != NIBBLER_PADDING_WINDOW_X + PARCELL_SIZE * 10 &&
+            pos.y != NIBBLER_PADDING_WINDOW_Y + 8 * PARCELL_SIZE) {
+            if (!checkWallCollision(nibblerWalls, pos, toIgnore) && i != borderToDelete) {
+                wallId = std::string(NIBBLER_WALL_ID) + "_" + std::to_string(id) + "_nbr_" + std::to_string(i);
+                nibblerWalls.addComponent(std::make_shared<Nibbler::Component::NibblerWallComponent>(wallId, pos));
+                toIgnore.push_back(wallId);
+            }
         }
         switch (i) {
             case 0:
@@ -154,7 +157,7 @@ void Nibbler::Scene::GameScene::addNibblerParcel(Arcade::ECS::IEntity &nibblerMa
         return;
     }
     nibblerMap.addComponent(std::make_shared<Nibbler::Component::NibblerMapComponent>(
-            std::string(NIBBLER_MAP_ID) + "_" + std::to_string(id), pos, darkColor));
+                std::string(NIBBLER_MAP_ID) + "_" + std::to_string(id), pos, darkColor));
 }
 
 void Nibbler::Scene::GameScene::addNibblerMap()
