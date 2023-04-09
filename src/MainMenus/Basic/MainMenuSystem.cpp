@@ -31,6 +31,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
         text->fontPath = PATH_FONT;
         text->text = textText;
         text->textColor = {255, 0, 0, 255};
+        text->backgroundColor = {255, 255, 255, 255};
         text->pos = compPos;
         compPos.y += 24;
         gamesEntity->addComponent(text);
@@ -42,6 +43,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
         text->fontPath = PATH_FONT;
         text->text = textText;
         text->textColor = {255, 0, 0, 255};
+        text->backgroundColor = {255, 255, 255, 255};
         text->pos = compPos;
         compPos.y += 24;
         graphicsEntity->addComponent(text);
@@ -59,6 +61,7 @@ void BasicMenu::MainMenuSystem::run(double deltaTime, Arcade::ECS::IEventManager
         text->fontPath = PATH_FONT;
         text->text = textText.first + " : " + textText.second;
         text->textColor = {255, 0, 0, 255};
+        text->backgroundColor = {255, 255, 255, 255};
         text->pos = compPos;
         compPos.y += 24;
         graphicsEntity->addComponent(text);

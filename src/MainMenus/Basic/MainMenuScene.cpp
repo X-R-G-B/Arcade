@@ -30,6 +30,7 @@ bool BasicMenu::MainMenuScene::init()
     text->fontPath = PATH_FONT;
     text->text = "Game Libs availible:";
     text->textColor = {255, 0, 0, 255};
+    text->backgroundColor = {255, 255, 255, 255};
     text->pos = compPos;
     gamesEntity.addComponent(text);
     compPos.x = 1920.0 / 2.0;
@@ -38,6 +39,7 @@ bool BasicMenu::MainMenuScene::init()
     text->fontPath = PATH_FONT;
     text->text = "Graphic Libs availible:";
     text->textColor = {255, 0, 0, 255};
+    text->backgroundColor = {255, 255, 255, 255};
     text->pos = compPos;
     graphicsEntity.addComponent(text);
     compPos.x = 1920.0 / 3.0;
@@ -46,6 +48,7 @@ bool BasicMenu::MainMenuScene::init()
     text->fontPath = PATH_FONT;
     text->text = "Scores:";
     text->textColor = {255, 0, 0, 255};
+    text->backgroundColor = {255, 255, 255, 255};
     text->pos = compPos;
     graphicsEntity.addComponent(text);
     return (true);
