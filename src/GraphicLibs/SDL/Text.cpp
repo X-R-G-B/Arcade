@@ -30,7 +30,20 @@ std::shared_ptr<Arcade::SDL::SDLText> Arcade::SDL::TextSystem::getComponent(std:
 void Arcade::SDL::TextSystem::handleComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity)
 {
     std::shared_ptr<SDLText> text = this->getComponent(TextComp, idEntity);
+    SDL_Color SDLtextColor = {(uint8_t) TextComp->textColor.r,
+                              (uint8_t) TextComp->textColor.g,
+                              (uint8_t) TextComp->textColor.b,
+                              (uint8_t) TextComp->textColor.a };
+    SDL_Surface *surface = nullptr;
 
+    surface = TTF_RenderText_Solid(text->_font, TextComp->text.data(), SDLtextColor);
+    if (surface == nullptr) {
+        throw ArcadeExceptions("Unable to load text surface");
+    }
+    text->_text = SDL_CreateTextureFromSurface(text->_win, surface);
+    if (text->_text == nullptr) {
+        throw ArcadeExceptions("Unable to load text texture");
+    }
     SDL_RenderCopy(text->_win, text->_text, NULL, &text->_rect);
 }
 
