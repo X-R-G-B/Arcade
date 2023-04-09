@@ -12,6 +12,7 @@
 #include "GraphStruct.hpp"
 #include "IText.hpp"
 #include "Sfml.hpp"
+#include <string>
 
 namespace Arcade {
 
@@ -36,8 +37,8 @@ namespace Arcade {
             private:
                 sf::RenderWindow &_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SfText> getComponent(std::shared_ptr<Graph::IText> TextComp);
-                void handleComponent(std::shared_ptr<Graph::IText> TextComp);
+                std::shared_ptr<SfText> getComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity);
+                void handleComponent(std::shared_ptr<Graph::IText> TextComp, const std::string &idEntity);
 
         };
     }

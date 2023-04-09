@@ -53,3 +53,8 @@
 #define MAX_SCORE_TITLE "Max Score: "
 
 #define PATH_FONT "./assets/fonts/arial.ttf"
+
+#define MUSIC_ENTITY "MUSIC_ENTITY"
+#define MUSIC_COMP "MUSIC_COMP"
+#define MUSIC_PATH "./assets/music/stranger-things.ogg"
+#define MUSIC_PATH_AWARD "./assets/music/award.ogg"
