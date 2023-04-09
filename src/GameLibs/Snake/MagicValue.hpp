@@ -50,5 +50,5 @@
 
 #define MUSIC_ENTITY "MUSIC_ENTITY"
 #define MUSIC_COMP "MUSIC_COMP"
-#define MUSIC_PATH "./assets/music/stranger-things.mp3"
-#define MUSIC_PATH_AWARD "./assets/music/award.mp3"
+#define MUSIC_PATH "./assets/music/stranger-things.ogg"
+#define MUSIC_PATH_AWARD "./assets/music/award.ogg"
