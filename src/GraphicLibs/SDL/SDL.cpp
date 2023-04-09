@@ -7,6 +7,7 @@
 
 #include "SDL.hpp"
 #include "Sprite.hpp"
+#include "Music.hpp"
 #include "Text.hpp"
 #include "Api.hpp"
 #include "Exceptions.hpp"
@@ -15,6 +16,7 @@ Arcade::SDL::DisplayModule::DisplayModule()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     this->_win = SDL_CreateWindow("Window", SDL_WINDOWPOS_CENTERED,
                                   SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_RESIZABLE);
     if (this->_win == nullptr) {
@@ -24,7 +26,7 @@ Arcade::SDL::DisplayModule::DisplayModule()
     if (this->_renderer == nullptr) {
         throw ArcadeExceptions("ici error caugth");
     }
-    this->_systems.addSystem("musicSystem", std::make_unique<TextSystem>(this->_renderer, this->_components));
+    this->_systems.addSystem("musicSystem", std::make_unique<MusicSystem>(this->_renderer, this->_components));
     this->_systems.addSystem("textSystem", std::make_unique<TextSystem>(this->_renderer, this->_components));
     this->_systems.addSystem("spriteSystem", std::make_unique<SpriteSystem>(*this->_renderer, this->_components));
     _systems.addSystem("eventHandler", std::make_unique<EventHandler>());

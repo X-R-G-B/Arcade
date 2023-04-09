@@ -7,6 +7,7 @@
 
 #include "Music.hpp"
 #include "Exceptions.hpp"
+#include <iostream>
 
 Arcade::SDL::MusicSystem::MusicSystem(SDL_Renderer *win, std::vector<std::shared_ptr<Arcade::ECS::IComponent>> &components)
     : _win(win), _components(components)
@@ -30,19 +31,16 @@ void Arcade::SDL::MusicSystem::handleComponent(std::shared_ptr<Graph::IMusic> Mu
 {
     std::shared_ptr<SDLMusic> music = getComponent(MusicComp, idEntity);
 
-    if (MusicComp->play && MusicComp->loop) {
-        Mix_PlayMusic(music->music, -1);
-    } else if (MusicComp->play) {
-        Mix_PlayMusic(music->music, 1);
-    } else {
-        Mix_HaltMusic();
+    if (MusicComp->play && music->isPlaying == false) {
+        Mix_PlayMusic(music->music, MusicComp->loop ? -1 : 1);
+
     }
 }
 
 void Arcade::SDL::MusicSystem::run(double deltaTime, ECS::IEventManager &eventManager, ECS::IEntityManager &entityManager)
 {
     std::unique_ptr<std::vector<std::shared_ptr<Arcade::ECS::IEntity>>> entities;
- 
+
     try {
         entities = entityManager.getEntitiesByComponentType(ECS::CompType::MUSIC);
     } catch (const std::exception &e) {
@@ -73,11 +71,11 @@ Arcade::SDL::SDLMusic::SDLMusic(const std::string id, const std::string &path,
     if (music == nullptr) {
         throw ArcadeExceptions("Wrong path for music : " + path);
     }
-    if (play && loop) {
-        Mix_PlayMusic(this->music, -1);
-    }
     if (play) {
-        Mix_PlayMusic(this->music, 1);
+        Mix_PlayMusic(this->music, loop ? -1 : 1);
+        this->isPlaying = true;
+    } else {
+        this->isPlaying = false;
     }
 }
 
