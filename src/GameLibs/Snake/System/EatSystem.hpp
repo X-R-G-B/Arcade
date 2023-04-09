@@ -16,10 +16,10 @@ namespace Snake {
                 EatSystem() = default;
 
                 void run(double deltaTime,
-                Arcade::ECS::IEventManager &eventManager,
-                Arcade::ECS::IEntityManager &currentEntityManager) final;
-            protected:
+                    Arcade::ECS::IEventManager &eventManager,
+                    Arcade::ECS::IEntityManager &currentEntityManager) final;
             private:
+                int _id = 0;
         };
     }
 }

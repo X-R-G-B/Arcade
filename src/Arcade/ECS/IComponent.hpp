@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Archi Arcade Promo 2026 Toulouse
 ** File description:
-** Component that will be added to entity
+** Components that will be added to entity
 */
 
 #pragma once

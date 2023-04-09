@@ -19,6 +19,7 @@ namespace Nibbler {
                 Arcade::ECS::IEventManager &eventManager,
                 Arcade::ECS::IEntityManager &currentEntityManager) final;
             protected:
+                int _id = 0;
             private:
         };
     }
