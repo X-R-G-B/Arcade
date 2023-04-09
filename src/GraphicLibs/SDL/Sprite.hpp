@@ -9,6 +9,7 @@
 
 #include "SDL.hpp"
 #include "ISprite.hpp"
+#include <string>
 
 namespace Arcade {
     namespace SDL {
@@ -36,8 +37,8 @@ namespace Arcade {
             private:
                 SDL_Renderer &_win;
                 std::vector<std::shared_ptr<ECS::IComponent>> &_components;
-                std::shared_ptr<SDLSprite> getComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
-                void handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp);
+                std::shared_ptr<SDLSprite> getComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity);
+                void handleComponent(std::shared_ptr<Graph::ISprite> SpriteComp, const std::string &idEntity);
         };
     }
 }
