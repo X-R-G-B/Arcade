@@ -38,3 +38,5 @@ mkdir build && cd build && cmake . && make -j8
 ./arcade ./lib/arcade_ncurses.so
 ./arcade
 ```
+
+## Archi: https://github.com/ARCADE-TEK-2026/archi_arcade
