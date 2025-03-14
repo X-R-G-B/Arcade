@@ -1,13 +1,8 @@
 # Arcade
 
-## Dependencies
+Student project: Make multiple games with the graphics render library that can be switch at runtime.
 
-- sdl2
-- sdl2_image
-- sdl2_mixer
-- sdl2_ttf
-- SFML
-- ncurses
+When you play the games, you can switch to a SFML, SDL2, or ncurses backend.
 
 ## Game implemented
 
@@ -25,6 +20,17 @@
 Change game/graphical lib at runtime
 
 ## Install
+
+### Dependencies
+
+- sdl2
+- sdl2_image
+- sdl2_mixer
+- sdl2_ttf
+- SFML
+- ncurses
+
+### Build
 
 ```bash
 mkdir build && cd build && cmake . && make -j8
